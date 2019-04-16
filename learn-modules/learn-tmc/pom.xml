@@ -3,25 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>learn</artifactId>
+        <artifactId>learn-modules</artifactId>
         <groupId>me.own.learn</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>learn-modules</artifactId>
+    <artifactId>learn-tmc</artifactId>
     <packaging>pom</packaging>
+    <description>商旅管理模块，对接泰坦云第三方接口</description>
     <modules>
-        <module>learn-user</module>
-        <module>learn-tmc</module>
+        <module>learn-sync</module>
+        <module>learn-tmc-built</module>
     </modules>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>me.own.commons</groupId>
-            <artifactId>base</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>
