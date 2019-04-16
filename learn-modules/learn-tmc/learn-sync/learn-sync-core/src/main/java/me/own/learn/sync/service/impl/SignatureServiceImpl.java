@@ -2,17 +2,16 @@ package me.own.learn.sync.service.impl;
 
 import me.own.learn.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.dao.SignatureDao;
-import me.own.learn.sync.dot.SignatureDto;
+import me.own.learn.sync.bo.SignatureBo;
+import me.own.learn.sync.exception.SignatureNotFoundException;
 import me.own.learn.sync.po.Signature;
 import me.own.learn.sync.service.SignatureService;
+import me.own.learn.sync.utils.SignatureUtils;
 import me.own.learn.sync.vo.SignatureVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 /**
  * @author yexudong
@@ -27,23 +26,23 @@ public class SignatureServiceImpl implements SignatureService {
     private SignatureDao signatureDao;
 
     @Override
-    @Transactional
-    public SignatureVo create(SignatureDto signatureDto) {
-        Signature signature = Mapper.Default().map(signatureDto, Signature.class);
-        signature.setEnable(true);
-        signature.setRefreshTime(new Date());
+    public SignatureVo create(String requestType) {
+        SignatureBo signatureBo = SignatureUtils.requestSignature(requestType);
+        Signature signature = Mapper.Default().map(signatureBo, Signature.class);
         signatureDao.create(signature);
-        LOGGER.info("create new signature {}", signature.getId());
+        LOGGER.info("create new signature {} type {}", signature.getSignature(), signature.getRequestType());
         return Mapper.Default().map(signature, SignatureVo.class);
     }
 
     @Override
-    public SignatureVo refresh(SignatureDto signatureDto) {
-        return null;
+    public SignatureVo getByRequestType(String requestType) {
+        Signature signature = signatureDao.get(requestType);
+        if (signature == null) {
+            SignatureVo signatureVo = this.create(requestType);
+            LOGGER.info("create signature {} type {} when expire.", signatureVo.getSignature(), signatureVo.getRequestType());
+            return signatureVo;
+        }
+        return Mapper.Default().map(signature, SignatureVo.class);
     }
 
-    @Override
-    public SignatureVo getByRequestType(String requestType) {
-        return null;
-    }
 }

@@ -1,22 +1,14 @@
-package me.own.learn.sync.dot;
+package me.own.learn.sync.bo;
 
 /**
  * @author yexudong
  * @date 2019/4/16 18:17
  */
-public class SignatureDto {
-    private Long id;
+public class SignatureBo {
     private String requestType;
     private String signature;
     private Long timestamp;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getRequestType() {
         return requestType;
@@ -41,4 +33,5 @@ public class SignatureDto {
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
+
 }

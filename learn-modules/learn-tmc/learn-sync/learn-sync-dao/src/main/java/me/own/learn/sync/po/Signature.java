@@ -1,35 +1,27 @@
 package me.own.learn.sync.po;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author yexudong
  * @date 2019/4/16 18:08
  */
-@Entity(name = "sync_signature")
-public class Signature implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private String requestType;
-    @Column
-    private String signature;
-    @Column
-    private Long timestamp;
-    @Column
-    private Boolean enable;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date refreshTime;
 
-    public Long getId() {
-        return id;
+public class Signature implements Serializable {
+
+    private String requestType;
+
+    private String signature;
+
+    private Long timestamp;
+
+    public Signature() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Signature(String requestType, String signature, Long timestamp) {
+        this.requestType = requestType;
+        this.signature = signature;
+        this.timestamp = timestamp;
     }
 
     public String getRequestType() {
@@ -54,21 +46,5 @@ public class Signature implements Serializable {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public Boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public Date getRefreshTime() {
-        return refreshTime;
-    }
-
-    public void setRefreshTime(Date refreshTime) {
-        this.refreshTime = refreshTime;
     }
 }

@@ -1,6 +1,6 @@
 package me.own.learn.sync.service;
 
-import me.own.learn.sync.dot.SignatureDto;
+import me.own.learn.sync.bo.SignatureBo;
 import me.own.learn.sync.vo.SignatureVo;
 
 /**
@@ -12,18 +12,10 @@ public interface SignatureService {
     /**
      * 产生签名
      *
-     * @param signatureDto
+     * @param requestType
      * @return
      */
-    SignatureVo create(SignatureDto signatureDto);
-
-    /**
-     * 刷新签名
-     *
-     * @param signatureDto
-     * @return
-     */
-    SignatureVo refresh(SignatureDto signatureDto);
+    SignatureVo create(String requestType);
 
 
     /**
@@ -33,4 +25,5 @@ public interface SignatureService {
      * @return
      */
     SignatureVo getByRequestType(String requestType);
+
 }
