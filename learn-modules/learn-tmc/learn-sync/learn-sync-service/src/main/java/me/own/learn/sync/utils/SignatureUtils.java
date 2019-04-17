@@ -2,7 +2,7 @@ package me.own.learn.sync.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.own.learn.commons.base.utils.http.HttpUtils;
-import me.own.learn.sync.bo.SignatureBo;
+import me.own.learn.sync.bo.SignatureResultBo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,16 +36,16 @@ public class SignatureUtils {
         }
     }
 
-    public static SignatureBo requestSignature(String requestType) {
+    public static SignatureResultBo requestSignature(String requestType) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> form = new HashMap<>();
         form.put("partnerCode", partnerCode);
         form.put("securityKey", securityKey);
         form.put("requestType", requestType);
-        String result = HttpUtils.post(form, RequestUrl);
+        String result = HttpUtils.postJson(form, RequestUrl);
         LOGGER.info("request signature result {}", result);
         try {
-            return mapper.readValue(result, SignatureBo.class);
+            return mapper.readValue(result, SignatureResultBo.class);
         } catch (IOException e) {
             LOGGER.error("parse json error:", e);
         }

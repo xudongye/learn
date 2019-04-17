@@ -4,19 +4,9 @@ package me.own.learn.sync.bo;
  * @author yexudong
  * @date 2019/4/16 18:17
  */
-public class SignatureBo {
-    private String requestType;
+public class SignatureResultBo {
     private String signature;
     private Long timestamp;
-
-
-    public String getRequestType() {
-        return requestType;
-    }
-
-    public void setRequestType(String requestType) {
-        this.requestType = requestType;
-    }
 
     public String getSignature() {
         return signature;

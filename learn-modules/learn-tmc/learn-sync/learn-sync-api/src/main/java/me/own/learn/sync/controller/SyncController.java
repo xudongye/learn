@@ -37,10 +37,8 @@ public class SyncController {
         List<Map<String, Object>> signatures = EnumUtil.getEnumNameValueList(SyncConstant.Signature.class);
         List<SignatureVo> vos = new ArrayList<>();
         for (Map<String, Object> signature : signatures) {
-            for (String s : signature.keySet()) {
-                SignatureVo signatureVo = signatureService.create(String.valueOf(signature.get(s)));
-                vos.add(signatureVo);
-            }
+            SignatureVo signatureVo = signatureService.create((String) signature.get("name"));
+            vos.add(signatureVo);
         }
         return new ResponseEntity(vos, HttpStatus.CREATED);
     }

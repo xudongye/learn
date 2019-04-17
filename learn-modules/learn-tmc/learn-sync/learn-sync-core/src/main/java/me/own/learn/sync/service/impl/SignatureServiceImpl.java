@@ -2,8 +2,8 @@ package me.own.learn.sync.service.impl;
 
 import me.own.learn.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.dao.SignatureDao;
-import me.own.learn.sync.bo.SignatureBo;
-import me.own.learn.sync.exception.SignatureNotFoundException;
+import me.own.learn.sync.bo.SignatureResultBo;
+import me.own.learn.sync.exception.SignatureFailureException;
 import me.own.learn.sync.po.Signature;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.utils.SignatureUtils;
@@ -27,8 +27,11 @@ public class SignatureServiceImpl implements SignatureService {
 
     @Override
     public SignatureVo create(String requestType) {
-        SignatureBo signatureBo = SignatureUtils.requestSignature(requestType);
-        Signature signature = Mapper.Default().map(signatureBo, Signature.class);
+        SignatureResultBo signatureResultBo = SignatureUtils.requestSignature(requestType);
+        if (signatureResultBo == null) {
+            throw new SignatureFailureException();
+        }
+        Signature signature = new Signature(requestType, signatureResultBo.getSignature(), signatureResultBo.getTimestamp());
         signatureDao.create(signature);
         LOGGER.info("create new signature {} type {}", signature.getSignature(), signature.getRequestType());
         return Mapper.Default().map(signature, SignatureVo.class);

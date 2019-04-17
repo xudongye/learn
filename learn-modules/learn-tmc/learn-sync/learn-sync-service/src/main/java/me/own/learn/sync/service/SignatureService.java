@@ -1,6 +1,5 @@
 package me.own.learn.sync.service;
 
-import me.own.learn.sync.bo.SignatureBo;
 import me.own.learn.sync.vo.SignatureVo;
 
 /**
