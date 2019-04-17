@@ -41,7 +41,7 @@
     <!--<property name="defaultEncoding" value="UTF-8"/>-->
     <!--</bean>-->
 
-    <!--<bean class="me.own.learn.configuration.delegate.LishuConfigurationServiceDelegate" factory-method="getInstance"/>-->
+    <bean class="me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate" factory-method="getInstance"/>
 
     <!--serve the template.css file as /resources/template.css-->
     <mvc:resources mapping="/resources/*" location="/WEB-INF/classes/"/>

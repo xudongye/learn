@@ -2,6 +2,7 @@ package me.own.learn.sync.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.own.learn.commons.base.utils.http.HttpUtils;
+import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
 import me.own.learn.sync.bo.SignatureResultBo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class SignatureUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SignatureUtils.class);
 
-    private static String partnerCode;
+    private static String partnerCode = LearnConfigurationServiceDelegate.getInstance().getConfiguration().getTmc().getPartnerCode();
 
     private static String securityKey;
 
@@ -51,5 +52,6 @@ public class SignatureUtils {
         }
         return null;
     }
+
 
 }

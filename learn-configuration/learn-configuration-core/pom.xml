@@ -23,5 +23,10 @@
             <artifactId>learn-configuration-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.8.5</version>
+        </dependency>
     </dependencies>
 </project>
