@@ -29,8 +29,8 @@ public class SignatureUtils {
     static {
         try {
             InitialContext context = new InitialContext();
-            partnerCode = (String) context.lookup("java:comp/env/sms/partnerCode");
-            securityKey = (String) context.lookup("java:comp/env/sms/securityKey");
+            partnerCode = (String) context.lookup("java:comp/env/tmc/partnerCode");
+            securityKey = (String) context.lookup("java:comp/env/tmc/securityKey");
         } catch (NamingException e) {
             LOGGER.error("FATAL:titan account initialize error.", e);
         }

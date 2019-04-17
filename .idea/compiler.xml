@@ -21,26 +21,5 @@
         <module name="learn-user-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="base" target="1.7" />
-      <module name="commons" target="1.7" />
-      <module name="learn" target="1.7" />
-      <module name="learn-api" target="1.7" />
-      <module name="learn-modules" target="1.7" />
-      <module name="learn-sync" target="1.7" />
-      <module name="learn-sync-api" target="1.7" />
-      <module name="learn-sync-built" target="1.7" />
-      <module name="learn-sync-core" target="1.7" />
-      <module name="learn-sync-dao" target="1.7" />
-      <module name="learn-sync-service" target="1.7" />
-      <module name="learn-tmc" target="1.7" />
-      <module name="learn-tmc-built" target="1.7" />
-      <module name="learn-user" target="1.7" />
-      <module name="learn-user-api" target="1.7" />
-      <module name="learn-user-built" target="1.7" />
-      <module name="learn-user-core" target="1.7" />
-      <module name="learn-user-dao" target="1.7" />
-      <module name="learn-user-service" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>
