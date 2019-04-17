@@ -8,6 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="base" />
         <module name="learn-api" />
+        <module name="learn-configuration-built" />
+        <module name="learn-configuration-core" />
+        <module name="learn-configuration-dao" />
+        <module name="learn-configuration-service" />
         <module name="learn-sync-api" />
         <module name="learn-sync-built" />
         <module name="learn-sync-core" />
