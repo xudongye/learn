@@ -9,14 +9,14 @@ import me.own.learn.configuration.template.LearnTmcConfigurationTemplate;
  */
 public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
-    private LearnTmcConfigurationTemplate tmc;
+    private LearnTmcConfigurationBean tmc;
 
-    public void setTmc(LearnTmcConfigurationTemplate tmc) {
+    public void setTmc(LearnTmcConfigurationBean tmc) {
         this.tmc = tmc;
     }
 
     @Override
-    public LearnTmcConfigurationTemplate getTmc() {
+    public LearnTmcConfigurationBean getTmc() {
         return tmc;
     }
 }

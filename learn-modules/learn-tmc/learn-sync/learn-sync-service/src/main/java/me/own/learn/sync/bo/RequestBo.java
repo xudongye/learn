@@ -52,4 +52,16 @@ public class RequestBo {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return '{' +
+                "\"header\":{" +
+                "\"partnerCode\":\"" + partnerCode + "\"" +
+                ",\"version\":\"" + version + "\"" +
+                ",\"requestType\":\"" + requestType + "\"" +
+                ",\"signature\":\"" + signature + "\"" +
+                ",\"timestamp\":" + timestamp + '}'
+                + '}';
+    }
 }

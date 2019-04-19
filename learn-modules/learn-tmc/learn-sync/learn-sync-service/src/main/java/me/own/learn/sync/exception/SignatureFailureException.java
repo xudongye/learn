@@ -1,6 +1,7 @@
 package me.own.learn.sync.exception;
 
 import me.own.learn.commons.base.exception.BusinessException;
+import org.springframework.http.HttpStatus;
 
 /**
  * @author:simonye
@@ -16,5 +17,10 @@ public class SignatureFailureException extends BusinessException {
     @Override
     public String getErrorMsg() {
         return "signature failure.";
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

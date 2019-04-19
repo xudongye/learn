@@ -42,13 +42,13 @@
 		<param-value>6000</param-value>
 	</context-param>
 	<context-param>
-		<param-name>aiConfigurationName</param-name>
-		<param-value>${ai.configuration.name}</param-value>
+		<param-name>learnConfigurationName</param-name>
+		<param-value>${learn.configuration.name}</param-value>
 	</context-param>
 	<!--global test mode, use for test and develop-->
 	<context-param>
 		<param-name>debugMode</param-name>
-		<param-value>${ai.debug.mode}</param-value>
+		<param-value>${learn.debug.mode}</param-value>
 	</context-param>
 	<context-param>
 		<param-name>spring.profiles.active</param-name>

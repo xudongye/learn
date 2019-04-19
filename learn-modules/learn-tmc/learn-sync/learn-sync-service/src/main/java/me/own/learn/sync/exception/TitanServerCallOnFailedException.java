@@ -1,21 +1,21 @@
 package me.own.learn.sync.exception;
 
-import me.own.learn.commons.base.exception.ObjectNotFoundException;
+import me.own.learn.commons.base.exception.BusinessException;
 import org.springframework.http.HttpStatus;
 
 /**
- * @author:simonye
- * @date 21:01 2019/4/16
- **/
-public class SignatureNotFoundException extends ObjectNotFoundException {
+ * @author yexudong
+ * @date 2019/4/19 10:55
+ */
+public class TitanServerCallOnFailedException extends BusinessException {
     @Override
     public String getErrorCode() {
-        return "20102";
+        return "20103";
     }
 
     @Override
     public String getErrorMsg() {
-        return "signature not found.";
+        return "titan server call on failed";
     }
 
     @Override

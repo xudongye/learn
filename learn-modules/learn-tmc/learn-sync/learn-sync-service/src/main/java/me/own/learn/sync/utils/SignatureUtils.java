@@ -1,5 +1,6 @@
 package me.own.learn.sync.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.own.learn.commons.base.utils.http.HttpUtils;
 import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
@@ -21,7 +22,7 @@ public class SignatureUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SignatureUtils.class);
 
-    private static String partnerCode = LearnConfigurationServiceDelegate.getInstance().getConfiguration().getTmc().getPartnerCode();
+    private static String partnerCode;
 
     private static String securityKey;
 
@@ -43,9 +44,9 @@ public class SignatureUtils {
         form.put("partnerCode", partnerCode);
         form.put("securityKey", securityKey);
         form.put("requestType", requestType);
-        String result = HttpUtils.postJson(form, RequestUrl);
-        LOGGER.info("request signature result {}", result);
         try {
+            String result = HttpUtils.postJsonStr(mapper.writeValueAsString(form), RequestUrl);
+            LOGGER.info("request signature result {}", result);
             return mapper.readValue(result, SignatureResultBo.class);
         } catch (IOException e) {
             LOGGER.error("parse json error:", e);

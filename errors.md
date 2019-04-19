@@ -12,3 +12,4 @@
 泰坦云数据同步模块|
 20101|signature failure|签名失败| |SignatureFailureException
 20102|signature not found|签名不存在| |SignatureNotFoundException
+20103|titan server call on failed|泰坦云服务器访问失败| |TitanServerCallOnFailedException

@@ -32,7 +32,7 @@ public class SyncController {
     @Autowired
     private SignatureService signatureService;
 
-    @RequestMapping(value = "/signature", method = RequestMethod.POST)
+    @RequestMapping(value = "/signatures", method = RequestMethod.POST)
     public ResponseEntity getSignature(HttpServletRequest request) {
         List<Map<String, Object>> signatures = EnumUtil.getEnumNameValueList(SyncConstant.Signature.class);
         List<SignatureVo> vos = new ArrayList<>();
@@ -41,5 +41,13 @@ public class SyncController {
             vos.add(signatureVo);
         }
         return new ResponseEntity(vos, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/countries", method = RequestMethod.POST)
+    public ResponseEntity getCountries(HttpServletRequest request) {
+
+        syncService.syncCountries();
+
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }
