@@ -1,14 +1,18 @@
 package me.own.learn.sync.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.own.learn.commons.base.utils.http.HttpUtils;
 import me.own.learn.commons.base.utils.mapper.Mapper;
 import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
+import me.own.learn.sync.bo.CountryBo;
 import me.own.learn.sync.bo.RequestBo;
 import me.own.learn.sync.bo.ResponseBo;
-import me.own.learn.sync.bo.SignatureResultBo;
 import me.own.learn.sync.constant.SyncConstant;
+import me.own.learn.sync.db.CountryRepository;
 import me.own.learn.sync.exception.TitanServerCallOnFailedException;
+import me.own.learn.sync.po.Country;
+import me.own.learn.sync.service.SearchService;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
 import me.own.learn.sync.vo.SignatureVo;
@@ -18,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author:simonye
@@ -37,11 +41,23 @@ public class SyncServiceImpl implements SyncService {
     @Autowired
     private SignatureService signatureService;
 
+    @Autowired
+    private SearchService searchService;
+
+    ObjectMapper mapper = new ObjectMapper();
+
 
     @Override
-    public void syncCountries() {
-        Object countryes = responseBody(SyncConstant.Signature.queryCountryList.getName());
-
+    public List<CountryBo> syncCountries() {
+        Object result = responseBody(SyncConstant.Signature.queryCountryList.getName());
+        LinkedHashMap<String, Object> countryMap = (LinkedHashMap<String, Object>) result;
+        List<CountryBo> countryBos = mapper.convertValue(countryMap.get("countries"),
+                new TypeReference<List<CountryBo>>() {
+                });
+        for (CountryBo countryBo : countryBos) {
+            searchService.save(countryBo);
+        }
+        return countryBos;
     }
 
     @Override
