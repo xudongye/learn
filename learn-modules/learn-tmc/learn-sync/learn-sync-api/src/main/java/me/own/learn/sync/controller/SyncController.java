@@ -4,6 +4,7 @@ import me.own.learn.commons.base.utils.enums.EnumUtil;
 import me.own.learn.sync.constant.SyncConstant;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
+import me.own.learn.sync.vo.CountryVo;
 import me.own.learn.sync.vo.SignatureVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,8 +47,8 @@ public class SyncController {
     @RequestMapping(value = "/countries", method = RequestMethod.POST)
     public ResponseEntity getCountries(HttpServletRequest request) {
 
-        syncService.syncCountries();
+        List<CountryVo> countryVos = syncService.syncCountries();
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(countryVos, HttpStatus.CREATED);
     }
 }

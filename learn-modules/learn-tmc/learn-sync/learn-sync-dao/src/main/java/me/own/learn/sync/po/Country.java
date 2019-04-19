@@ -13,15 +13,14 @@ import java.util.List;
  * @date 2019/4/19 13:02
  */
 @Document(indexName = "countries", type = "country", shards = 1,
-        replicas = 0, refreshInterval = "-1", indexStoreType = "memory")
+        replicas = 0, refreshInterval = "-1")
 public class Country implements Serializable {
 
     @Id
     private Long id;
     private String countryCode;
     private String countryName;
-    @Field(type = FieldType.Nested)
-    private List<City> cities;
+
 
     public Long getId() {
         return id;
@@ -47,11 +46,4 @@ public class Country implements Serializable {
         this.countryName = countryName;
     }
 
-    public List<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(List<City> cities) {
-        this.cities = cities;
-    }
 }

@@ -15,6 +15,7 @@ import me.own.learn.sync.po.Country;
 import me.own.learn.sync.service.SearchService;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
+import me.own.learn.sync.vo.CountryVo;
 import me.own.learn.sync.vo.SignatureVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class SyncServiceImpl implements SyncService {
 
 
     @Override
-    public List<CountryBo> syncCountries() {
+    public List<CountryVo> syncCountries() {
         Object result = responseBody(SyncConstant.Signature.queryCountryList.getName());
         LinkedHashMap<String, Object> countryMap = (LinkedHashMap<String, Object>) result;
         List<CountryBo> countryBos = mapper.convertValue(countryMap.get("countries"),
@@ -57,7 +58,7 @@ public class SyncServiceImpl implements SyncService {
         for (CountryBo countryBo : countryBos) {
             searchService.save(countryBo);
         }
-        return countryBos;
+        return Mapper.Default().mapArray(countryBos, CountryVo.class);
     }
 
     @Override

@@ -25,5 +25,35 @@
         <module name="learn-user-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ai-configuration" target="1.7" />
+      <module name="ai-configuration-built" target="1.7" />
+      <module name="ai-configuration-core" target="1.7" />
+      <module name="ai-configuration-service" target="1.7" />
+      <module name="base" target="1.8" />
+      <module name="commons" target="1.8" />
+      <module name="learn" target="1.8" />
+      <module name="learn-api" target="1.8" />
+      <module name="learn-configuration" target="1.8" />
+      <module name="learn-configuration-built" target="1.8" />
+      <module name="learn-configuration-core" target="1.8" />
+      <module name="learn-configuration-dao" target="1.8" />
+      <module name="learn-configuration-service" target="1.8" />
+      <module name="learn-modules" target="1.8" />
+      <module name="learn-sync" target="1.8" />
+      <module name="learn-sync-api" target="1.8" />
+      <module name="learn-sync-built" target="1.8" />
+      <module name="learn-sync-core" target="1.8" />
+      <module name="learn-sync-dao" target="1.8" />
+      <module name="learn-sync-service" target="1.8" />
+      <module name="learn-tmc" target="1.8" />
+      <module name="learn-tmc-built" target="1.8" />
+      <module name="learn-user" target="1.8" />
+      <module name="learn-user-api" target="1.8" />
+      <module name="learn-user-built" target="1.8" />
+      <module name="learn-user-core" target="1.8" />
+      <module name="learn-user-dao" target="1.8" />
+      <module name="learn-user-service" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,6 +1,6 @@
 package me.own.learn.sync.service;
 
-import me.own.learn.sync.bo.CountryBo;
+import me.own.learn.sync.vo.CountryVo;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface SyncService {
     /**
      * 同步国家信息
      */
-    List<CountryBo> syncCountries();
+    List<CountryVo> syncCountries();
 
     /**
      * 同步城市信息
