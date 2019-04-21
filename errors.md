@@ -13,3 +13,4 @@
 20101|signature failure|签名失败| |SignatureFailureException
 20102|signature not found|签名不存在| |SignatureNotFoundException
 20103|titan server call on failed|泰坦云服务器访问失败| |TitanServerCallOnFailedException
+20104|country not found|国家名不存在| |CountryNotFoundException

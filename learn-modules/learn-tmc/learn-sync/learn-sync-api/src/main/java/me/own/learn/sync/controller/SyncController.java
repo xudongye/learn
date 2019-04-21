@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,11 +45,31 @@ public class SyncController {
         return new ResponseEntity(vos, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/countries", method = RequestMethod.POST)
-    public ResponseEntity getCountries(HttpServletRequest request) {
+    /**
+     * @param request
+     * @param countryNames
+     * @return
+     */
+    @RequestMapping(value = "/countries", method = RequestMethod.GET)
+    public ResponseEntity syncCountry(HttpServletRequest request,
+                                      @RequestParam(required = false) String[] countryNames) {
 
-        List<CountryVo> countryVos = syncService.syncCountries();
+        List<CountryVo> countryVos = syncService.syncCountries(countryNames);
 
-        return new ResponseEntity(countryVos, HttpStatus.CREATED);
+        return new ResponseEntity(countryVos, HttpStatus.OK);
     }
+
+    /**
+     * @param request
+     * @param cityNames
+     * @return
+     */
+    @RequestMapping(value = "/cities", method = RequestMethod.GET)
+    public ResponseEntity syncCity(HttpServletRequest request,
+                                   @RequestParam String countryCode,
+                                   @RequestParam(required = false) String[] cityNames) {
+        CountryVo countryVo = syncService.syncCities(countryCode, cityNames);
+        return new ResponseEntity(countryVo, HttpStatus.OK);
+    }
+
 }

@@ -1,5 +1,6 @@
 package me.own.learn.sync.service;
 
+import me.own.learn.sync.vo.CityVo;
 import me.own.learn.sync.vo.CountryVo;
 
 import java.util.List;
@@ -12,13 +13,20 @@ public interface SyncService {
 
     /**
      * 同步国家信息
+     *
+     * @param countryNames
+     * @return
      */
-    List<CountryVo> syncCountries();
+    List<CountryVo> syncCountries(String[] countryNames);
 
     /**
      * 同步城市信息
+     *
+     * @param countryCode
+     * @param cityNames
+     * @return
      */
-    void syncCities();
+    CountryVo syncCities(String countryCode, String[] cityNames);
 
     /**
      * 同步酒店信息

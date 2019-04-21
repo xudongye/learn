@@ -13,5 +13,9 @@ public interface SearchService {
 
     List<CountryVo> findByCountryName(String countryName);
 
+    CountryVo findByCountryCode(String countryCode);
+
     CountryVo save(CountryBo countryBo);
+
+    CountryVo refresh(CountryBo countryBo);
 }

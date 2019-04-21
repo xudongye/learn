@@ -12,7 +12,7 @@ import java.util.List;
  * @author yexudong
  * @date 2019/4/19 13:02
  */
-@Document(indexName = "countries", type = "country", shards = 1,
+@Document(indexName = "country", type = "cn", shards = 1,
         replicas = 0, refreshInterval = "-1")
 public class Country implements Serializable {
 
@@ -20,6 +20,8 @@ public class Country implements Serializable {
     private Long id;
     private String countryCode;
     private String countryName;
+    @Field(type = FieldType.Nested)
+    private List<Province> provinces;
 
 
     public Long getId() {
@@ -46,4 +48,11 @@ public class Country implements Serializable {
         this.countryName = countryName;
     }
 
+    public List<Province> getProvinces() {
+        return provinces;
+    }
+
+    public void setProvinces(List<Province> provinces) {
+        this.provinces = provinces;
+    }
 }

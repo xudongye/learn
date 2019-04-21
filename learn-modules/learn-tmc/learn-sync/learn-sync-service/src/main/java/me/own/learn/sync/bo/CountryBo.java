@@ -9,7 +9,7 @@ import java.util.List;
 public class CountryBo {
     private String countryCode;
     private String countryName;
-    private List<CityBo> cities;
+    private List<ProvinceBo> provinces;
 
     public String getCountryCode() {
         return countryCode;
@@ -27,11 +27,11 @@ public class CountryBo {
         this.countryName = countryName;
     }
 
-    public List<CityBo> getCities() {
-        return cities;
+    public List<ProvinceBo> getProvinces() {
+        return provinces;
     }
 
-    public void setCities(List<CityBo> cities) {
-        this.cities = cities;
+    public void setProvinces(List<ProvinceBo> provinces) {
+        this.provinces = provinces;
     }
 }

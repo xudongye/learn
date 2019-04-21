@@ -13,5 +13,6 @@ public interface CountryRepository extends ElasticsearchRepository<Country, Stri
 
     List<Country> findCountriesByCountryName(String countryName);
 
-    void deleteById(String id);
+    Country findByCountryCode(String countryCode);
+
 }

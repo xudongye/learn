@@ -6,12 +6,22 @@ package me.own.learn.sync.bo;
  */
 public class RequestBo {
 
+    private Object businessRequest;
+
     private String partnerCode;
     private String version;
 
     private String requestType;
     private String signature;
     private Long timestamp;
+
+    public Object getBusinessRequest() {
+        return businessRequest;
+    }
+
+    public void setBusinessRequest(Object businessRequest) {
+        this.businessRequest = businessRequest;
+    }
 
     public String getPartnerCode() {
         return partnerCode;
@@ -56,6 +66,7 @@ public class RequestBo {
     @Override
     public String toString() {
         return '{' +
+                "\"businessRequest\":{" + businessRequest + '}' +
                 "\"header\":{" +
                 "\"partnerCode\":\"" + partnerCode + "\"" +
                 ",\"version\":\"" + version + "\"" +
@@ -64,4 +75,6 @@ public class RequestBo {
                 ",\"timestamp\":" + timestamp + '}'
                 + '}';
     }
+
+
 }
