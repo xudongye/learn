@@ -3,17 +3,18 @@ package me.own.learn.sync.exception;
 import me.own.learn.commons.base.exception.BusinessException;
 
 /**
- * @author:simonye
- * @date 21:23 2019/4/20
- **/
-public class CountryExistException extends BusinessException {
+ * @author yexudong
+ * @date 2019/4/22 12:51
+ */
+public class ParameterParseException extends BusinessException {
+
     @Override
     public String getErrorCode() {
-        return "20105";
+        return "20107";
     }
 
     @Override
     public String getErrorMsg() {
-        return "country exist.";
+        return "parameter parse error.";
     }
 }

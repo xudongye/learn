@@ -5,8 +5,17 @@ package me.own.learn.sync.vo;
  * @date 17:51 2019/4/20
  **/
 public class CityVo {
+    private Long id;
     private String cityCode;
     private String cityName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCityCode() {
         return cityCode;

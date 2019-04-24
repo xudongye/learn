@@ -4,8 +4,7 @@ import me.own.learn.commons.base.utils.enums.EnumUtil;
 import me.own.learn.sync.constant.SyncConstant;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
-import me.own.learn.sync.vo.CountryVo;
-import me.own.learn.sync.vo.SignatureVo;
+import me.own.learn.sync.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,26 +49,47 @@ public class SyncController {
      * @param countryNames
      * @return
      */
-    @RequestMapping(value = "/countries", method = RequestMethod.GET)
-    public ResponseEntity syncCountry(HttpServletRequest request,
-                                      @RequestParam(required = false) String[] countryNames) {
+    @RequestMapping(value = "/countries-code", method = RequestMethod.GET)
+    public ResponseEntity matchCountry(HttpServletRequest request,
+                                       @RequestParam(required = false) String[] countryNames) {
 
-        List<CountryVo> countryVos = syncService.syncCountries(countryNames);
+        List<CountryVo> countryVos = syncService.matchCountries(countryNames);
 
         return new ResponseEntity(countryVos, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/hotel-id", method = RequestMethod.GET)
+    public ResponseEntity matchHotel(HttpServletRequest request,
+                                     @RequestParam String cityCode,
+                                     @RequestParam(required = false) String hotelName) {
+        return null;
+    }
+
+
     /**
      * @param request
-     * @param cityNames
+     * @param countryName
+     * @param countryCode
      * @return
      */
     @RequestMapping(value = "/cities", method = RequestMethod.GET)
     public ResponseEntity syncCity(HttpServletRequest request,
                                    @RequestParam String countryCode,
-                                   @RequestParam(required = false) String[] cityNames) {
-        CountryVo countryVo = syncService.syncCities(countryCode, cityNames);
-        return new ResponseEntity(countryVo, HttpStatus.OK);
+                                   @RequestParam String countryName) {
+        List<ProvinceVo> provinceVos = syncService.syncCities(countryCode, countryName);
+        return new ResponseEntity(provinceVos, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/business-district", method = RequestMethod.GET)
+    public ResponseEntity syncBusinessDistrict(HttpServletRequest request,
+                                               @RequestParam String cityCode) {
+
+        Map<String, Object> data = new HashMap<>();
+        List<DistrictKeyVo> districtKeyVos = syncService.syncDistricts(cityCode);
+        List<BusinessKeyVo> businessKeyVos = syncService.syncBusiness(cityCode);
+        data.put("district", districtKeyVos);
+        data.put("business", businessKeyVos);
+        return new ResponseEntity(data, HttpStatus.OK);
     }
 
 }

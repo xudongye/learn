@@ -8,9 +8,18 @@ import java.util.List;
  * @date 22:26 2019/4/20
  **/
 public class ProvinceVo {
+    private Long id;
     private String provinceCode;
     private String provinceName;
     private List<CityVo> citys;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getProvinceCode() {
         return provinceCode;

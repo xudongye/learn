@@ -1,13 +1,12 @@
-package me.own.learn.sync.po;
-
-import java.io.Serializable;
+package me.own.learn.sync.bo;
 
 /**
- * @author:simonye
- * @date 1:01 2019/4/20
- **/
-public class District implements Serializable {
+ * @author yexudong
+ * @date 2019/4/24 15:19
+ */
+public class DistrictKeyBo {
     private String districtCode;
+    private String cityCode;
     private String districtName;
 
     public String getDistrictCode() {
@@ -16,6 +15,14 @@ public class District implements Serializable {
 
     public void setDistrictCode(String districtCode) {
         this.districtCode = districtCode;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
     public String getDistrictName() {

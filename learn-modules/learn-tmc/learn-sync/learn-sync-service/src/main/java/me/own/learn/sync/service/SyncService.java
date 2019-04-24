@@ -1,7 +1,9 @@
 package me.own.learn.sync.service;
 
-import me.own.learn.sync.vo.CityVo;
+import me.own.learn.sync.vo.BusinessKeyVo;
 import me.own.learn.sync.vo.CountryVo;
+import me.own.learn.sync.vo.DistrictKeyVo;
+import me.own.learn.sync.vo.ProvinceVo;
 
 import java.util.List;
 
@@ -12,24 +14,32 @@ import java.util.List;
 public interface SyncService {
 
     /**
-     * 同步国家信息
+     * 匹配国家信息
      *
      * @param countryNames
      * @return
      */
-    List<CountryVo> syncCountries(String[] countryNames);
+    List<CountryVo> matchCountries(String[] countryNames);
 
     /**
      * 同步城市信息
      *
      * @param countryCode
-     * @param cityNames
+     * @param countryName
      * @return
      */
-    CountryVo syncCities(String countryCode, String[] cityNames);
+    List<ProvinceVo> syncCities(String countryCode, String countryName);
+
+
+    List<DistrictKeyVo> syncDistricts(String cityCode);
+
+    List<BusinessKeyVo> syncBusiness(String cityCode);
 
     /**
      * 同步酒店信息
+     *
+     * @param cityCode
+     * @param hotelName
      */
-    void syncHotels();
+    void syncHotels(String cityCode, String hotelName);
 }

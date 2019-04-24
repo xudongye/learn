@@ -14,3 +14,6 @@
 20102|signature not found|签名不存在| |SignatureNotFoundException
 20103|titan server call on failed|泰坦云服务器访问失败| |TitanServerCallOnFailedException
 20104|country not found|国家名不存在| |CountryNotFoundException
+20105|country exist|该已经存在| |CountryExistException
+20106|titan response failed|泰坦云接口返回失败结果| |ResponseFailedException
+20107|parameter parse error|请求参数解析异常| |ParameterParseException

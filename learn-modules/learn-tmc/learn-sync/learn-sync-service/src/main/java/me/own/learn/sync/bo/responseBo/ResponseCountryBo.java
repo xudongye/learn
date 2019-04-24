@@ -11,6 +11,12 @@ import java.util.List;
 public class ResponseCountryBo {
     private List<CountryBo> countries;
 
+    public ResponseCountryBo() {
+    }
+
+    public ResponseCountryBo(List<CountryBo> countries) {
+        this.countries = countries;
+    }
     public List<CountryBo> getCountries() {
         return countries;
     }

@@ -1,12 +1,16 @@
 package me.own.learn.sync.bo.responseBo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * @author yexudong
  * @date 2019/4/19 10:45
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseBaseBo<E> implements Serializable {
+    private static final long serialVersionUID = 4543583458127221425L;
     private E bussinessResponse;
     private String retrunCode;
     private String retrunMsg;

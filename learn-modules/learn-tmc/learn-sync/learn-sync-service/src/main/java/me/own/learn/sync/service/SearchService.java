@@ -1,9 +1,13 @@
 package me.own.learn.sync.service;
 
-import me.own.learn.sync.bo.CountryBo;
-import me.own.learn.sync.vo.CountryVo;
+import me.own.learn.sync.bo.BusinessKeyBo;
+import me.own.learn.sync.bo.CityKeyBo;
+import me.own.learn.sync.bo.DistrictKeyBo;
+import me.own.learn.sync.vo.BusinessKeyVo;
+import me.own.learn.sync.vo.CityKeyVo;
+import me.own.learn.sync.vo.DistrictKeyVo;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 /**
  * @author yexudong
@@ -11,11 +15,16 @@ import java.util.List;
  */
 public interface SearchService {
 
-    List<CountryVo> findByCountryName(String countryName);
+    Page<CityKeyVo> findByCityKey(String keyword, int pageNum, int pageSize);
 
-    CountryVo findByCountryCode(String countryCode);
+    Page<DistrictKeyVo> findByDistrictKey(String keyword, int pageNum, int pageSize);
 
-    CountryVo save(CountryBo countryBo);
+    Page<BusinessKeyVo> findByBusinessKey(String keyword, int pageNum, int pageSize);
 
-    CountryVo refresh(CountryBo countryBo);
+    CityKeyVo insertCityKey(CityKeyBo cityKeyBo);
+
+    DistrictKeyVo insertDistrictKey(DistrictKeyBo districtKeyBo);
+
+    BusinessKeyVo insertBusinessKey(BusinessKeyBo businessKeyBo);
+
 }
