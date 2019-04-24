@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static me.own.learn.sync.utils.ResponseUtils.businessResponse;
 import static me.own.learn.sync.utils.ResponseUtils.readValue;
 
 /**
@@ -42,9 +41,10 @@ public class SyncServiceImpl implements SyncService {
 
     @Override
     public List<CountryVo> matchCountries(String[] countryNames) {
-        String countryMap = businessResponse(new HashMap<>(), signatureService.getByRequestType(SyncConstant.Signature.queryCountryList.getName()));
-        ResponseBaseBo<ResponseCountryBo> response = readValue(countryMap, new TypeReference<ResponseBaseBo<ResponseCountryBo>>() {
-        });
+        ResponseBaseBo<ResponseCountryBo> response = readValue(new HashMap<>(),
+                signatureService.getByRequestType(SyncConstant.Signature.queryCountryList.getName()),
+                new TypeReference<ResponseBaseBo<ResponseCountryBo>>() {
+                });
         List<CountryBo> countryBos = response.getBussinessResponse().getCountries();
         List<CountryBo> resultCns = new ArrayList<>();
         if (countryNames.length != 0) {
@@ -66,9 +66,10 @@ public class SyncServiceImpl implements SyncService {
 
         Map<String, Object> businessRequest = new HashMap<>();
         businessRequest.put("countryCode", countryCode);
-        String provinceMap = businessResponse(businessRequest, signatureService.getByRequestType(SyncConstant.Signature.queryCityList.getName()));
-        ResponseBaseBo<ResponseCityBo> response = readValue(provinceMap, new TypeReference<ResponseBaseBo<ResponseCityBo>>() {
-        });
+        ResponseBaseBo<ResponseCityBo> response = readValue(businessRequest,
+                signatureService.getByRequestType(SyncConstant.Signature.queryCityList.getName()),
+                new TypeReference<ResponseBaseBo<ResponseCityBo>>() {
+                });
         List<ProvinceBo> provinceBos = response.getBussinessResponse().getProvinces();
         if (CollectionUtils.isEmpty(provinceBos)) {
             throw new ResultSizeEmptyException();
@@ -90,9 +91,10 @@ public class SyncServiceImpl implements SyncService {
     public List<DistrictKeyVo> syncDistricts(String cityCode) {
         Map<String, Object> businessRequest = new HashMap<>();
         businessRequest.put("cityCode", cityCode);
-        String dtMap = businessResponse(businessRequest, signatureService.getByRequestType(SyncConstant.Signature.queryDistrictList.getName()));
-        ResponseBaseBo<ResponseDistrictBo> response = readValue(dtMap, new TypeReference<ResponseBaseBo<ResponseDistrictBo>>() {
-        });
+        ResponseBaseBo<ResponseDistrictBo> response = readValue(businessRequest,
+                signatureService.getByRequestType(SyncConstant.Signature.queryDistrictList.getName()),
+                new TypeReference<ResponseBaseBo<ResponseDistrictBo>>() {
+                });
         List<DistrictKeyBo> districtKeyBos = response.getBussinessResponse().getDistricts();
         for (DistrictKeyBo districtKeyBo : districtKeyBos) {
             searchService.insertDistrictKey(districtKeyBo);
@@ -105,9 +107,10 @@ public class SyncServiceImpl implements SyncService {
 
         Map<String, Object> businessRequest = new HashMap<>();
         businessRequest.put("cityCode", cityCode);
-        String bnMap = businessResponse(businessRequest, signatureService.getByRequestType(SyncConstant.Signature.queryBusinessList.getName()));
-        ResponseBaseBo<ResponseBusinessBo> response = readValue(bnMap, new TypeReference<ResponseBaseBo<ResponseBusinessBo>>() {
-        });
+        ResponseBaseBo<ResponseBusinessBo> response = readValue(businessRequest,
+                signatureService.getByRequestType(SyncConstant.Signature.queryBusinessList.getName()),
+                new TypeReference<ResponseBaseBo<ResponseBusinessBo>>() {
+                });
         List<BusinessKeyBo> businessKeyBos = response.getBussinessResponse().getBusinesses();
         for (BusinessKeyBo businessKeyBo : businessKeyBos) {
             searchService.insertBusinessKey(businessKeyBo);
@@ -117,7 +120,18 @@ public class SyncServiceImpl implements SyncService {
 
     @Override
     public void syncHotels(String cityCode, String hotelName) {
-        
+        int pageNo = 1;
+        Map<String, Object> businessRequest = new HashMap<>();
+        businessRequest.put("cityCode", cityCode);
+        businessRequest.put("pageNo", pageNo);
+        ResponseBaseBo<ResponseHotelIdBo> response = readValue(businessRequest,
+                signatureService.getByRequestType(SyncConstant.Signature.queryHotelIdList.getName()),
+                new TypeReference<ResponseBaseBo<ResponseHotelIdBo>>() {
+                });
+        for (int i = pageNo; i < response.getBussinessResponse().getTotalPage(); i++) {
+
+        }
+
     }
 
 }

@@ -45,10 +45,10 @@ public class ResponseUtils {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <E> ResponseBaseBo<E> readValue(String result, TypeReference typeReference) {
+    public static <E> ResponseBaseBo<E> readValue(Map<String, Object> businessRequest, SignatureVo signature, TypeReference typeReference) {
         ResponseBaseBo<E> response = null;
         try {
-            response = mapper.readValue(result, typeReference);
+            response = mapper.readValue(businessResponse(businessRequest, signature), typeReference);
         } catch (IOException e) {
             LOGGER.error("json parse error {}", e);
         }
@@ -62,7 +62,7 @@ public class ResponseUtils {
     }
 
 
-    public static String businessResponse(Map<String, Object> businessRequest, SignatureVo signature) {
+    private static String businessResponse(Map<String, Object> businessRequest, SignatureVo signature) {
         String partnerCode = delegate.getConfiguration().getTmc().getPartnerCode();
         String version = delegate.getConfiguration().getTmc().getVersion();
         Map<String, Object> header = new HashMap<>();
