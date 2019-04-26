@@ -58,11 +58,18 @@ public class SyncController {
         return new ResponseEntity(countryVos, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/hotel-info", method = RequestMethod.GET)
+    public ResponseEntity matchHotelInfo(HttpServletRequest request,
+                                         @RequestParam String cityCode) {
+        syncService.syncHotelInfos(cityCode);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(value = "/hotel-id", method = RequestMethod.GET)
     public ResponseEntity matchHotel(HttpServletRequest request,
-                                     @RequestParam String cityCode,
-                                     @RequestParam(required = false) String hotelName) {
-        return null;
+                                     @RequestParam String cityCode) {
+        syncService.syncHotels(cityCode);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
 

@@ -8,7 +8,8 @@ import java.util.Date;
  * @author yexudong
  * @date 2019/4/24 17:44
  */
-@Entity(name = "hotel_id")
+@Entity
+@Table(name = "hotel_id")
 public class HotelId implements Serializable {
     @Id
     private Long hotelId;

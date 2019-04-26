@@ -39,7 +39,10 @@ public interface SyncService {
      * 同步酒店信息
      *
      * @param cityCode
-     * @param hotelName
      */
-    void syncHotels(String cityCode, String hotelName);
+    void syncHotels(String cityCode);
+
+    void syncHotelInfos(String cityCode);
+
+    void completeHotelInfoByHotelId(Long hotelId);
 }

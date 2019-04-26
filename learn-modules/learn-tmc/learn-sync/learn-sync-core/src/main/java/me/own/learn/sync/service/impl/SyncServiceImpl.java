@@ -1,11 +1,15 @@
 package me.own.learn.sync.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Lists;
 import me.own.learn.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.bo.*;
 import me.own.learn.sync.bo.responseBo.*;
 import me.own.learn.sync.constant.SyncConstant;
+import me.own.learn.sync.dao.HotelBaseInfoDao;
+import me.own.learn.sync.dao.HotelIdDao;
 import me.own.learn.sync.exception.ResultSizeEmptyException;
+import me.own.learn.sync.po.HotelBaseInfo;
 import me.own.learn.sync.service.SearchService;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
@@ -18,7 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.BatchUpdateException;
 import java.util.*;
 
 import static me.own.learn.sync.utils.ResponseUtils.readValue;
@@ -37,6 +43,12 @@ public class SyncServiceImpl implements SyncService {
 
     @Autowired
     private SearchService searchService;
+
+    @Autowired
+    private HotelIdDao hotelIdDao;
+
+    @Autowired
+    private HotelBaseInfoDao hotelBaseInfoDao;
 
 
     @Override
@@ -119,19 +131,59 @@ public class SyncServiceImpl implements SyncService {
     }
 
     @Override
-    public void syncHotels(String cityCode, String hotelName) {
+    @Transactional
+    public void syncHotels(String cityCode) {
         int pageNo = 1;
-        Map<String, Object> businessRequest = new HashMap<>();
-        businessRequest.put("cityCode", cityCode);
-        businessRequest.put("pageNo", pageNo);
-        ResponseBaseBo<ResponseHotelIdBo> response = readValue(businessRequest,
-                signatureService.getByRequestType(SyncConstant.Signature.queryHotelIdList.getName()),
-                new TypeReference<ResponseBaseBo<ResponseHotelIdBo>>() {
-                });
-        for (int i = pageNo; i < response.getBussinessResponse().getTotalPage(); i++) {
+        ResponseBaseBo<ResponseHotelIdBo> response = null;
+        do {
+            Map<String, Object> businessRequest = new HashMap<>();
+            businessRequest.put("cityCode", cityCode);
+            businessRequest.put("pageNo", pageNo);
+            response = readValue(businessRequest,
+                    signatureService.getByRequestType(SyncConstant.Signature.queryHotelIdList.getName()),
+                    new TypeReference<ResponseBaseBo<ResponseHotelIdBo>>() {
+                    });
+            pageNo++;
+            hotelIdDao.batchAddHotelIds(response.getBussinessResponse().getHotelIds(), cityCode);
 
+        } while (pageNo <= response.getBussinessResponse().getTotalPage());
+        LOGGER.info("sync total page hotelIds {} success", response.getBussinessResponse().getTotalPage());
+    }
+
+    @Override
+    @Transactional
+    public void syncHotelInfos(String cityCode) {
+        List<Long> hotelIds = hotelIdDao.getIdsByCityCode(cityCode);
+        List<List<Long>> tenIds = Lists.partition(hotelIds, 10);
+        for (List<Long> tenId : tenIds) {
+            ResponseBaseBo<ResponseHotelInfoBo> response = queryHotelInfo(tenId);
+            List<HotelInfoBo> hotelInfos = response.getBussinessResponse().getHotelInfos();
+            if (CollectionUtils.isNotEmpty(hotelInfos)) {
+                hotelBaseInfoDao.batchAddHotelInfo(Mapper.Default().mapArray(hotelInfos, HotelBaseInfo.class));
+            } else {
+                LOGGER.error("hotelInfo is null by ids {}", tenId);
+                hotelIdDao.updateNeedSync(tenId);
+            }
         }
+    }
 
+    @Override
+    @Transactional
+    public void completeHotelInfoByHotelId(Long hotelId) {
+        List<Long> ids = new ArrayList<>();
+        ids.add(hotelId);
+        ResponseBaseBo<ResponseHotelInfoBo> response = queryHotelInfo(ids);
+
+    }
+
+    private ResponseBaseBo<ResponseHotelInfoBo> queryHotelInfo(List<Long> tenId) {
+        Map<String, Object> businessRequest = new HashMap<>();
+        businessRequest.put("hotelIds", tenId);
+        ResponseBaseBo<ResponseHotelInfoBo> response = readValue(businessRequest,
+                signatureService.getByRequestType(SyncConstant.Signature.queryHotelInfo.getName()),
+                new TypeReference<ResponseBaseBo<ResponseHotelInfoBo>>() {
+                });
+        return response;
     }
 
 }
