@@ -7,22 +7,37 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="base" />
+        <module name="learn-admin-api" />
+        <module name="learn-admin-built" />
+        <module name="learn-admin-core" />
+        <module name="learn-admin-dao" />
+        <module name="learn-admin-service" />
         <module name="learn-api" />
+        <module name="learn-authorization-api" />
+        <module name="learn-authorization-built" />
+        <module name="learn-authorization-core" />
+        <module name="learn-authorization-dao" />
+        <module name="learn-authorization-service" />
         <module name="learn-configuration-built" />
         <module name="learn-configuration-core" />
         <module name="learn-configuration-dao" />
         <module name="learn-configuration-service" />
+        <module name="learn-role-api" />
+        <module name="learn-role-built" />
+        <module name="learn-role-core" />
+        <module name="learn-role-dao" />
+        <module name="learn-role-service" />
+        <module name="learn-store-api" />
+        <module name="learn-store-built" />
+        <module name="learn-store-core" />
+        <module name="learn-store-dao" />
+        <module name="learn-store-service" />
         <module name="learn-sync-api" />
         <module name="learn-sync-built" />
         <module name="learn-sync-core" />
         <module name="learn-sync-dao" />
         <module name="learn-sync-service" />
         <module name="learn-tmc-built" />
-        <module name="learn-user-api" />
-        <module name="learn-user-built" />
-        <module name="learn-user-core" />
-        <module name="learn-user-dao" />
-        <module name="learn-user-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -30,6 +45,15 @@
       <module name="ai-configuration-built" target="1.7" />
       <module name="ai-configuration-core" target="1.7" />
       <module name="ai-configuration-service" target="1.7" />
+      <module name="learn-store-user" target="1.8" />
+      <module name="learn-store-user-built" target="1.8" />
+      <module name="learn-store-user-dao" target="1.8" />
+      <module name="learn-user" target="1.8" />
+      <module name="learn-user-api" target="1.8" />
+      <module name="learn-user-built" target="1.8" />
+      <module name="learn-user-core" target="1.8" />
+      <module name="learn-user-dao" target="1.8" />
+      <module name="learn-user-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

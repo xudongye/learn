@@ -123,6 +123,30 @@
             <version>1.0-SNAPSHOT</version>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-store-built</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-authorization-built</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-admin-built</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-role-built</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
 
     </dependencies>
 </project>

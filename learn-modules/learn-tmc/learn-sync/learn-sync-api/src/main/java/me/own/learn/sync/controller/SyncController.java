@@ -33,7 +33,7 @@ public class SyncController {
     @Autowired
     private SignatureService signatureService;
 
-    @RequestMapping(value = "/signatures", method = RequestMethod.POST)
+    @RequestMapping(value = "/signatures", method = RequestMethod.GET)
     public ResponseEntity getSignature(HttpServletRequest request) {
         List<Map<String, Object>> signatures = EnumUtil.getEnumNameValueList(SyncConstant.Signature.class);
         List<SignatureVo> vos = new ArrayList<>();
