@@ -1,23 +1,16 @@
-package me.own.learn.role.po;
+package me.own.learn.role.vo;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author yexudong
- * @date 2019/5/28 15:13
+ * @date 2019/5/29 16:17
  */
-@Entity(name = "learn_permission")
-public class Permission implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PermissionVo {
     private Long id;
     private String name;
     private String description;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
     private Boolean deleted;
     private Integer minLevel;

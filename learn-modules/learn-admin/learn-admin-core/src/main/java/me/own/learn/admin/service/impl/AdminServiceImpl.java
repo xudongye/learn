@@ -43,14 +43,16 @@ public class AdminServiceImpl implements AdminService {
     public PageQueryResult<AdminVo> page(int pageNum, int pageSize, AdminQueryCondition condition) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(Admin.class);
         query.setDeletedFalseCondition();
-        if (condition.getCellphone() != null) {
-            query.setSimpleCondition("cellphone", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
-        }
-        if (condition.getEmail() != null) {
-            query.setSimpleCondition("email", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
-        }
-        if (condition.getName() != null) {
-            query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Equal);
+        if (condition != null) {
+            if (condition.getCellphone() != null) {
+                query.setSimpleCondition("cellphone", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getEmail() != null) {
+                query.setSimpleCondition("email", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getName() != null) {
+                query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Equal);
+            }
         }
         //FIXME
         List<QueryOrder> orders = new ArrayList<>();

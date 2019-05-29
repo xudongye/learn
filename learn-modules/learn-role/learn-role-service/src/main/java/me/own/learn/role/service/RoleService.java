@@ -1,7 +1,9 @@
 package me.own.learn.role.service;
 
 import me.own.learn.commons.base.dao.PageQueryResult;
+import me.own.learn.role.dto.PermissionDto;
 import me.own.learn.role.dto.RoleDto;
+import me.own.learn.role.vo.PermissionVo;
 import me.own.learn.role.vo.RoleVo;
 
 /**
@@ -16,5 +18,13 @@ public interface RoleService {
 
     RoleVo update(RoleDto roleDto);
 
-    void delete(long id);
+    void deleteRole(long roleId);
+
+    RoleVo givePerm(long roleId, Long[] permIds);
+
+    PermissionVo create(PermissionDto permissionDto);
+
+    PermissionVo update(PermissionDto permissionDto);
+
+    void deletedPerm(long permId);
 }

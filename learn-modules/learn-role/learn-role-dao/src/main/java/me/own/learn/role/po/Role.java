@@ -1,5 +1,7 @@
 package me.own.learn.role.po;
 
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class Role implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
     @ManyToMany
+    @Where(clause = "deleted = 0")
     @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
     private List<Permission> permissions;
 
