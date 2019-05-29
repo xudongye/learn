@@ -8,6 +8,8 @@ public class AdminQueryCondition {
     private String name;
     private String cellphone;
     private String email;
+    private Long createFrom;
+    private Long createTo;
 
     public String getName() {
         return name;
@@ -31,5 +33,21 @@ public class AdminQueryCondition {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getCreateFrom() {
+        return createFrom;
+    }
+
+    public void setCreateFrom(Long createFrom) {
+        this.createFrom = createFrom;
+    }
+
+    public Long getCreateTo() {
+        return createTo;
+    }
+
+    public void setCreateTo(Long createTo) {
+        this.createTo = createTo;
     }
 }

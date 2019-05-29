@@ -9,8 +9,8 @@ import me.own.learn.commons.base.utils.enums.EnumName;
 public class RoleConstant {
 
     public enum RoleLevel implements EnumName {
-        superAdmin(1, "superAdmin"),//超级管理员
-        generalAdmin(2, "generalAdmin"),//普通管理员
+        superAdmin(1, "超级管理员"),//超级管理员
+        generalAdmin(2, "自定义管理员"),//自定义管理员
         ;
 
         RoleLevel(int code, String name) {

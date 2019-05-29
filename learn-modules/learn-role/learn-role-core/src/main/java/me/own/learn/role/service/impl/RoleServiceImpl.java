@@ -65,9 +65,19 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public RoleVo getById(long roleId) {
+        Role role = roleDao.get(roleId);
+        if (role == null || role.getDeleted()) {
+            throw new RoleNotFoundException();
+        }
+        return Mapper.Default().map(role, RoleVo.class);
+    }
+
+    @Override
     @Transactional
     public RoleVo create(RoleDto roleDto) {
-        if (roleExist(roleDto.getLevel())) {
+        if (roleExist(roleDto.getName())) {
             throw new RoleExistException();
         }
         Role role = Mapper.Default().map(roleDto, Role.class);
@@ -78,10 +88,10 @@ public class RoleServiceImpl implements RoleService {
         return Mapper.Default().map(role, RoleVo.class);
     }
 
-    private boolean roleExist(Long roleLevel) {
+    private boolean roleExist(String name) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(Role.class);
         query.setDeletedFalseCondition();
-        query.setSimpleCondition("level", roleLevel + "", QueryConstants.SimpleQueryMode.Equal);
+        query.setSimpleCondition("name", name, QueryConstants.SimpleQueryMode.Equal);
         return roleDao.getCount(query) > 0;
     }
 

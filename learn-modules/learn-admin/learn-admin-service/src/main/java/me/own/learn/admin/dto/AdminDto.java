@@ -12,8 +12,7 @@ public class AdminDto {
     private String headImg;
     private String cellphone;
     private String email;
-    private Long createFrom;
-    private Long createTo;
+    private Long roleId;
 
     public Long getId() {
         return id;
@@ -63,19 +62,11 @@ public class AdminDto {
         this.email = email;
     }
 
-    public Long getCreateFrom() {
-        return createFrom;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setCreateFrom(Long createFrom) {
-        this.createFrom = createFrom;
-    }
-
-    public Long getCreateTo() {
-        return createTo;
-    }
-
-    public void setCreateTo(Long createTo) {
-        this.createTo = createTo;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

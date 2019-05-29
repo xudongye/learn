@@ -14,6 +14,8 @@ public interface RoleService {
 
     PageQueryResult<RoleVo> page(int pageNum, int pageSize, RoleQueryCondition condition);
 
+    RoleVo getById(long roleId);
+
     RoleVo create(RoleDto roleDto);
 
     RoleVo update(RoleDto roleDto);
