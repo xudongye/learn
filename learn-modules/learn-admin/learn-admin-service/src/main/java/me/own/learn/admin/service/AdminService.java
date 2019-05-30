@@ -19,4 +19,6 @@ public interface AdminService {
     void delete(long id);
 
     AdminVo bindRole(long adminId, long roleId);
+
+    AdminVo getByLoginLabel(String loginLabel);
 }

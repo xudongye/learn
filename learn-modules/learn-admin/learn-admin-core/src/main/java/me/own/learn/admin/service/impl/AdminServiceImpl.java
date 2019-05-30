@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * @author yexudong
  * @date 2019/5/28 14:25
@@ -138,6 +139,16 @@ public class AdminServiceImpl implements AdminService {
         admin.setModifyTime(new Date());
         adminDao.update(admin);
         LOGGER.info("admin bind role {}", roleId);
+        return Mapper.Default().map(admin, AdminVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AdminVo getByLoginLabel(String loginLabel) {
+        Admin admin = adminDao.getByLoginLabel(loginLabel);
+        if (admin == null || admin.getDeleted()) {
+            throw new AdminNotFoundException();
+        }
         return Mapper.Default().map(admin, AdminVo.class);
     }
 

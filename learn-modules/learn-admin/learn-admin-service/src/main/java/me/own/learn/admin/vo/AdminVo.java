@@ -1,11 +1,14 @@
 package me.own.learn.admin.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
  * @author yexudong
  * @date 2019/5/28 14:18
  */
+@JsonIgnoreProperties(value = {"password", "roleId"})
 public class AdminVo {
     private Long id;
     private String name;

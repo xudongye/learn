@@ -8,4 +8,6 @@ import me.own.learn.commons.base.dao.BaseDao;
  * @date 2019/5/28 14:13
  */
 public interface AdminDao extends BaseDao<Admin> {
+
+    Admin getByLoginLabel(String loginLabel);
 }
