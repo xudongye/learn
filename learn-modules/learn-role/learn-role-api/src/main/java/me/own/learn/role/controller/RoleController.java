@@ -6,6 +6,7 @@ import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.model.AdminAccessToken;
 import me.own.learn.commons.base.dao.PageQueryResult;
 import me.own.learn.commons.base.utils.enums.EnumUtil;
+import me.own.learn.commons.base.utils.request.RequestUtils;
 import me.own.learn.role.constant.RoleConstant;
 import me.own.learn.role.dto.PermissionDto;
 import me.own.learn.role.dto.RoleDto;
@@ -75,8 +76,11 @@ public class RoleController {
     public ResponseEntity pageRole(HttpServletRequest request,
                                    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                   @RequestBody(required = false) RoleQueryCondition condition) {
+                                   @RequestParam(required = false) RoleQueryCondition condition) {
 
+        if (condition == null) {
+            condition = RequestUtils.buildQueryFilter(request, RoleQueryCondition.class);
+        }
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<RoleVo> roleVoPageQueryResult = roleService.page(pageNum, pageSize, condition);
         response.put("code", 200);

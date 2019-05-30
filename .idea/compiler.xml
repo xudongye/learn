@@ -12,6 +12,11 @@
         <module name="learn-admin-core" />
         <module name="learn-admin-dao" />
         <module name="learn-admin-service" />
+        <module name="learn-agent-api" />
+        <module name="learn-agent-built" />
+        <module name="learn-agent-core" />
+        <module name="learn-agent-dao" />
+        <module name="learn-agent-service" />
         <module name="learn-api" />
         <module name="learn-authorization-api" />
         <module name="learn-authorization-built" />
@@ -22,6 +27,11 @@
         <module name="learn-configuration-core" />
         <module name="learn-configuration-dao" />
         <module name="learn-configuration-service" />
+        <module name="learn-customer-api" />
+        <module name="learn-customer-built" />
+        <module name="learn-customer-core" />
+        <module name="learn-customer-dao" />
+        <module name="learn-customer-service" />
         <module name="learn-role-api" />
         <module name="learn-role-built" />
         <module name="learn-role-core" />

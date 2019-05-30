@@ -52,7 +52,7 @@ public class AdminServiceImpl implements AdminService {
                 query.setSimpleCondition("email", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
             }
             if (condition.getName() != null) {
-                query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Equal);
+                query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Like);
             }
         }
         //FIXME
