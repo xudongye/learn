@@ -3,6 +3,7 @@ package me.own.learn.authorization.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import me.own.learn.authorization.dto.AdminLoginDto;
+import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.AdminLoginService;
 import me.own.learn.authorization.service.TokenService;
 import me.own.learn.authorization.service.model.AdminAccessToken;
@@ -48,6 +49,7 @@ public class AdminLoginController {
 
     @ApiOperation("管理员登出")
     @RequestMapping(method = RequestMethod.DELETE)
+    @AdminAuthenticationRequired
     public ResponseEntity logout(
             HttpServletRequest request,
             HttpServletResponse response,

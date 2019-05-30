@@ -8,6 +8,7 @@ import me.own.learn.admin.service.AdminService;
 import me.own.learn.admin.vo.AdminVo;
 import me.own.learn.commons.base.dao.PageQueryResult;
 import me.own.learn.commons.base.exception.BusinessException;
+import me.own.learn.commons.base.utils.request.RequestUtils;
 import me.own.learn.role.service.RoleService;
 import me.own.learn.role.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,13 @@ public class AdminController {
     @ApiOperation("分页查询管理员")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
+                               @RequestParam(required = false) AdminQueryCondition condition,
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                               @RequestBody(required = false) AdminQueryCondition condition) {
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
+        if (condition == null) {
+            condition = RequestUtils.buildQueryFilter(request, AdminQueryCondition.class);
+        }
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<AdminVo> adminVoPageQueryResult = adminService.page(pageNum, pageSize, condition);
         for (AdminVo adminVo : adminVoPageQueryResult.getItems()) {
