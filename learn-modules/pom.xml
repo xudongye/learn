@@ -19,6 +19,8 @@
         <module>learn-role</module>
         <module>learn-agent</module>
         <module>learn-customer</module>
+        <!--<module>learn-pub-account</module>-->
+        <module>learn-pub-configuration</module>
     </modules>
 
 

@@ -1,6 +1,6 @@
 package me.own.learn.sync.controller;
 
-import me.own.learn.commons.base.utils.enums.EnumUtil;
+import me.own.commons.base.utils.enums.EnumUtil;
 import me.own.learn.sync.constant.SyncConstant;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;

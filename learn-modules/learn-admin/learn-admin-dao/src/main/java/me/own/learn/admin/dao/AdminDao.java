@@ -1,7 +1,7 @@
 package me.own.learn.admin.dao;
 
 import me.own.learn.admin.po.Admin;
-import me.own.learn.commons.base.dao.BaseDao;
+import me.own.commons.base.dao.BaseDao;
 
 /**
  * @author yexudong

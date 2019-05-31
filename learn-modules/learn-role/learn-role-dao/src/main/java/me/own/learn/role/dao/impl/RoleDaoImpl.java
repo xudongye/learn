@@ -1,6 +1,6 @@
 package me.own.learn.role.dao.impl;
 
-import me.own.learn.commons.base.dao.impl.BaseDaoImpl;
+import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.learn.role.dao.RoleDao;
 import me.own.learn.role.po.Role;
 import org.springframework.stereotype.Repository;

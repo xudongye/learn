@@ -1,6 +1,6 @@
 package me.own.learn.sync.exception;
 
-import me.own.learn.commons.base.exception.ObjectNotFoundException;
+import me.own.commons.base.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 
 /**

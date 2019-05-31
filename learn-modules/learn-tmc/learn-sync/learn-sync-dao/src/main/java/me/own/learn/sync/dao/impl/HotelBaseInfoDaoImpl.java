@@ -1,6 +1,6 @@
 package me.own.learn.sync.dao.impl;
 
-import me.own.learn.commons.base.dao.impl.BaseDaoImpl;
+import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.learn.sync.dao.HotelBaseInfoDao;
 import me.own.learn.sync.po.HotelBaseInfo;
 import org.slf4j.Logger;

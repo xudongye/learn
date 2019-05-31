@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import me.own.learn.commons.base.utils.http.HttpUtils;
+import me.own.commons.base.utils.http.HttpUtils;
 import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
 import me.own.learn.sync.bo.responseBo.ResponseBaseBo;
 import me.own.learn.sync.exception.ParameterParseException;

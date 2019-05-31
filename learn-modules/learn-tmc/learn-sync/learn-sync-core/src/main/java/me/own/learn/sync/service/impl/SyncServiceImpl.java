@@ -2,7 +2,7 @@ package me.own.learn.sync.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.bo.*;
 import me.own.learn.sync.bo.responseBo.*;
 import me.own.learn.sync.constant.SyncConstant;

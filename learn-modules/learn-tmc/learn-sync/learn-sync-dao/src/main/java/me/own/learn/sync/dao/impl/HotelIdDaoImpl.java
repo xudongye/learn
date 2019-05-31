@@ -1,6 +1,6 @@
 package me.own.learn.sync.dao.impl;
 
-import me.own.learn.commons.base.dao.impl.BaseDaoImpl;
+import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.learn.sync.dao.HotelIdDao;
 import me.own.learn.sync.po.HotelId;
 import org.apache.commons.collections.CollectionUtils;

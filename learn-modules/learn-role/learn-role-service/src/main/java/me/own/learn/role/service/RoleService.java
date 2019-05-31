@@ -1,6 +1,6 @@
 package me.own.learn.role.service;
 
-import me.own.learn.commons.base.dao.PageQueryResult;
+import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.role.dto.PermissionDto;
 import me.own.learn.role.dto.RoleDto;
 import me.own.learn.role.vo.PermissionVo;

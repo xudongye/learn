@@ -2,7 +2,7 @@ package me.own.learn.admin.service;
 
 import me.own.learn.admin.dto.AdminDto;
 import me.own.learn.admin.vo.AdminVo;
-import me.own.learn.commons.base.dao.PageQueryResult;
+import me.own.commons.base.dao.PageQueryResult;
 
 /**
  * @author yexudong

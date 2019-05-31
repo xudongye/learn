@@ -32,6 +32,11 @@
         <module name="learn-customer-core" />
         <module name="learn-customer-dao" />
         <module name="learn-customer-service" />
+        <module name="learn-pub-configuration-api" />
+        <module name="learn-pub-configuration-built" />
+        <module name="learn-pub-configuration-core" />
+        <module name="learn-pub-configuration-dao" />
+        <module name="learn-pub-configuration-service" />
         <module name="learn-role-api" />
         <module name="learn-role-built" />
         <module name="learn-role-core" />
@@ -48,6 +53,7 @@
         <module name="learn-sync-dao" />
         <module name="learn-sync-service" />
         <module name="learn-tmc-built" />
+        <module name="wechat-pub-account" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -55,6 +61,10 @@
       <module name="ai-configuration-built" target="1.7" />
       <module name="ai-configuration-core" target="1.7" />
       <module name="ai-configuration-service" target="1.7" />
+      <module name="learn-pub-account" target="1.8" />
+      <module name="learn-pub-account-built" target="1.8" />
+      <module name="learn-pub-account-core" target="1.8" />
+      <module name="learn-pub-account-service" target="1.8" />
       <module name="learn-store-user" target="1.8" />
       <module name="learn-store-user-built" target="1.8" />
       <module name="learn-store-user-dao" target="1.8" />

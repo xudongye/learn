@@ -5,7 +5,7 @@ import me.own.learn.authorization.po.Token;
 import me.own.learn.authorization.service.TokenService;
 import me.own.learn.authorization.utils.TokenGenerator;
 import me.own.learn.authorization.vo.TokenVo;
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.commons.base.utils.mapper.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

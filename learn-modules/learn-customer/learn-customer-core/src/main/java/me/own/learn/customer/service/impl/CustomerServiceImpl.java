@@ -1,10 +1,10 @@
 package me.own.learn.customer.service.impl;
 
-import me.own.learn.commons.base.dao.PageQueryResult;
-import me.own.learn.commons.base.dao.QueryConstants;
-import me.own.learn.commons.base.dao.QueryCriteriaUtil;
-import me.own.learn.commons.base.dao.QueryOrder;
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.commons.base.dao.PageQueryResult;
+import me.own.commons.base.dao.QueryConstants;
+import me.own.commons.base.dao.QueryCriteriaUtil;
+import me.own.commons.base.dao.QueryOrder;
+import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.customer.dao.CustomerDao;
 import me.own.learn.customer.dto.CustomerDto;
 import me.own.learn.customer.po.Customer;

@@ -1,7 +1,7 @@
 package me.own.learn.sync.dao.impl;
 
 
-import me.own.learn.commons.base.dao.impl.BaseRedisJsonHashDaoImpl;
+import me.own.commons.base.dao.impl.BaseRedisJsonHashDaoImpl;
 import me.own.learn.sync.dao.SignatureDao;
 import me.own.learn.sync.po.Signature;
 import org.springframework.stereotype.Repository;

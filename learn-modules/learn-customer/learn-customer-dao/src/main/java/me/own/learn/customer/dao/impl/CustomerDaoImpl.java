@@ -1,6 +1,6 @@
 package me.own.learn.customer.dao.impl;
 
-import me.own.learn.commons.base.dao.impl.BaseDaoImpl;
+import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.learn.customer.dao.CustomerDao;
 import me.own.learn.customer.po.Customer;
 import org.springframework.stereotype.Repository;

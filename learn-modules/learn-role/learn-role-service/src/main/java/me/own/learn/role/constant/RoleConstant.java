@@ -1,6 +1,6 @@
 package me.own.learn.role.constant;
 
-import me.own.learn.commons.base.utils.enums.EnumName;
+import me.own.commons.base.utils.enums.EnumName;
 
 /**
  * @author yexudong

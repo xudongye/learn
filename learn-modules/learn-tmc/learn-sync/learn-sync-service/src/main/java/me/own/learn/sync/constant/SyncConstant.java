@@ -1,6 +1,6 @@
 package me.own.learn.sync.constant;
 
-import me.own.learn.commons.base.utils.enums.EnumName;
+import me.own.commons.base.utils.enums.EnumName;
 
 /**
  * @author:simonye

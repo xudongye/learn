@@ -1,9 +1,7 @@
 package me.own.learn.sync.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.own.learn.commons.base.utils.http.HttpUtils;
-import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
+import me.own.commons.base.utils.http.HttpUtils;
 import me.own.learn.sync.bo.SignatureResultBo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

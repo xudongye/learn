@@ -1,6 +1,6 @@
 package me.own.learn.customer.dao;
 
-import me.own.learn.commons.base.dao.BaseDao;
+import me.own.commons.base.dao.BaseDao;
 import me.own.learn.customer.po.Customer;
 
 /**

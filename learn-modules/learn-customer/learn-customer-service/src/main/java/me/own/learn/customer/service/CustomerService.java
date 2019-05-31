@@ -1,6 +1,6 @@
 package me.own.learn.customer.service;
 
-import me.own.learn.commons.base.dao.PageQueryResult;
+import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.customer.dto.CustomerDto;
 import me.own.learn.customer.vo.CustomerVo;
 

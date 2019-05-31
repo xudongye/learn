@@ -1,6 +1,6 @@
 package me.own.learn.authorization.utils;
 
-import me.own.learn.commons.base.utils.encode.EncodeUtils;
+import me.own.commons.base.utils.encode.EncodeUtils;
 
 import java.util.Random;
 

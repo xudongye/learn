@@ -1,6 +1,6 @@
 package me.own.learn.role.dao;
 
-import me.own.learn.commons.base.dao.BaseDao;
+import me.own.commons.base.dao.BaseDao;
 import me.own.learn.role.po.Role;
 
 /**

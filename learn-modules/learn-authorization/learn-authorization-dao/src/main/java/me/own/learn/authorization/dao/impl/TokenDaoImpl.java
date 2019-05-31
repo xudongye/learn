@@ -2,7 +2,7 @@ package me.own.learn.authorization.dao.impl;
 
 import me.own.learn.authorization.dao.TokenDao;
 import me.own.learn.authorization.po.Token;
-import me.own.learn.commons.base.dao.impl.BaseRedisJsonHashDaoImpl;
+import me.own.commons.base.dao.impl.BaseRedisJsonHashDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.TimeUnit;
