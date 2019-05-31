@@ -1,6 +1,6 @@
 package me.own.learn.pubaccount.service.impl;
 
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.pubaccount.service.PubAccountUserService;
 import me.own.learn.pubaccount.service.model.UserInfoBo;
 import org.springframework.stereotype.Component;

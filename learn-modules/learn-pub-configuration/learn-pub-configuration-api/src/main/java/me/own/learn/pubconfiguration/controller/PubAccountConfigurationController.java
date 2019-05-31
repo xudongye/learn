@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/api/learn/v1/pub-configurations")
-@Api(tags = "公众号配置功能模块", description = "公众号配置模块")
+@Api(value = "公众号配置功能模块", description = "公众号配置模块")
 public class PubAccountConfigurationController {
 
     @Autowired

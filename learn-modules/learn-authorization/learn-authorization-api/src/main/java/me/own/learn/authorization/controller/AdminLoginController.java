@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping(value = "/api/learn/v1/admin/tokens")
-@Api(tags = "管理员登录功能模块", description = "管理员登录")
+@Api(value = "管理员登录功能模块", description = "管理员登录")
 public class AdminLoginController {
 
     @Autowired

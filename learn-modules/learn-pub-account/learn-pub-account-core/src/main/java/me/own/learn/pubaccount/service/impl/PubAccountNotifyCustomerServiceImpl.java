@@ -2,15 +2,18 @@ package me.own.learn.pubaccount.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.own.commons.base.utils.mapper.Mapper;
 import me.own.commons.wechat.pubaccount.customservice.CustomServiceMessageSendService;
 import me.own.commons.wechat.pubaccount.customservice.TemplateServiceMessageSendService;
 import me.own.commons.wechat.pubaccount.customservice.impl.CustomServiceMessageSendServiceImpl;
 import me.own.commons.wechat.pubaccount.customservice.impl.TemplateServiceMessageSendServiceImpl;
 import me.own.commons.wechat.pubaccount.message.MessageEntity;
 import me.own.commons.wechat.pubaccount.templateMessage.TemplateMessageEntity;
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.learn.customer.service.CustomerService;
+import me.own.learn.customer.vo.CustomerVo;
 import me.own.learn.pubaccount.service.PubAccountNotifyCustomerService;
 import me.own.learn.pubaccount.service.model.ArticleWeChatMessageEntity;
+import me.own.learn.pubconfiguration.service.PubConfigurationService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +34,13 @@ public class PubAccountNotifyCustomerServiceImpl implements PubAccountNotifyCust
 
     @Autowired
     private CustomerService customerService;
-
     @Autowired
-    private TenantService tenantService;
+    private PubConfigurationService pubConfigurationService;
+
 
     @Override
     public void notifyCustomerText(String appId, String openId, String textMsg) {
-        customServiceMessageSendService.sendText(appId,openId, textMsg);
+        customServiceMessageSendService.sendText(appId, openId, textMsg);
     }
 
     @Override
@@ -71,13 +74,13 @@ public class PubAccountNotifyCustomerServiceImpl implements PubAccountNotifyCust
     }
 
     @Override
-    public void notifyCustomerTemplateMessageText(String appId, String openid, TemplateMessageEntity messageEntity){
+    public void notifyCustomerTemplateMessageText(String appId, String openid, TemplateMessageEntity messageEntity) {
         messageEntity.setTouser(openid);
-        try{
+        try {
             String message = new ObjectMapper().writeValueAsString(messageEntity);
             templateServiceMessageSendService.sendMessage(appId, message);
             LOGGER.debug("send template message to pub account customer {}, with message {}", openid, message);
-        }catch (JsonProcessingException e){
+        } catch (JsonProcessingException e) {
             LOGGER.debug("send template message error to pub account customer {}", openid);
         }
     }
@@ -110,10 +113,10 @@ public class PubAccountNotifyCustomerServiceImpl implements PubAccountNotifyCust
         }
 
         public GetPubAccountAppIdOpenId invoke() {
-            CustomerDto customer = customerService.get(customerId);
+            CustomerVo customer = customerService.getById(customerId);
             openid = customer.getOpenid();
-            Long tenantId = customer.getTenantId();
-            pubAccountAppId = tenantService.get(tenantId).getPubAccountAppId();
+            Long pubAccountId = customer.getPubAccountId();
+            pubAccountAppId = pubConfigurationService.getById(pubAccountId).getPubAccountAppId();
             return this;
         }
     }

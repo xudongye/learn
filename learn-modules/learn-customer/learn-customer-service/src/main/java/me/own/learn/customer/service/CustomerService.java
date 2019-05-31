@@ -10,6 +10,8 @@ import me.own.learn.customer.vo.CustomerVo;
  */
 public interface CustomerService {
 
+    CustomerVo getById(long customerId);
+
     CustomerVo createFromPubAccount(CustomerDto customerDto);
 
     CustomerVo createFromUnName();

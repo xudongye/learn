@@ -32,6 +32,7 @@ public class Customer implements Serializable {
     private Date createTime;
     @Temporal(TemporalType.DATE)
     private Date birthday;
+    private Long pubAccountId;
 
     public Long getId() {
         return id;
@@ -151,5 +152,13 @@ public class Customer implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Long getPubAccountId() {
+        return pubAccountId;
+    }
+
+    public void setPubAccountId(Long pubAccountId) {
+        this.pubAccountId = pubAccountId;
     }
 }

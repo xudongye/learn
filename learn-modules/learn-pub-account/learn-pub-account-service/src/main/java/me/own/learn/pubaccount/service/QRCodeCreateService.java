@@ -1,7 +1,9 @@
 package me.own.learn.pubaccount.service;
 
+import me.own.commons.wechat.pubaccount.account.model.QRCodeCreateResult;
+
 public interface QRCodeCreateService {
-    void createPermQRCode(String appId, String scene_str);
+    QRCodeCreateResult createPermQRCode(String appId, String scene_str);
 
     /**
      * 创建临时二维码

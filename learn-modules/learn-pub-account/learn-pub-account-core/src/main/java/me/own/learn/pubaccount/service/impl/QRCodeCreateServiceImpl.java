@@ -1,10 +1,10 @@
 package me.own.learn.pubaccount.service.impl;
 
-import me.lebooks.commons.base.utils.qrcode.QRUtils;
-import me.lebooks.commons.wechat.pubaccount.account.ParameterizedQRCodeService;
-import me.lebooks.commons.wechat.pubaccount.account.impl.ParameterizedQRCodeServiceImpl;
-import me.lebooks.commons.wechat.pubaccount.account.model.QRCodeCreateResult;
-import me.lebooks.lishu.pubaccount.service.QRCodeCreateService;
+import me.own.commons.base.utils.qrcode.QRUtils;
+import me.own.commons.wechat.pubaccount.account.ParameterizedQRCodeService;
+import me.own.commons.wechat.pubaccount.account.impl.ParameterizedQRCodeServiceImpl;
+import me.own.commons.wechat.pubaccount.account.model.QRCodeCreateResult;
+import me.own.learn.pubaccount.service.QRCodeCreateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,9 @@ public class QRCodeCreateServiceImpl implements QRCodeCreateService {
     ParameterizedQRCodeService qrCodeService = new ParameterizedQRCodeServiceImpl();
 
     @Override
-    public void createPermQRCode(String appId, String scene_str) {
-        qrCodeService.createPermQRCode(appId, scene_str);
+    public QRCodeCreateResult createPermQRCode(String appId, String scene_str) {
+        QRCodeCreateResult result = qrCodeService.createPermQRCode(appId, scene_str);
+        return result;
     }
 
     @Override

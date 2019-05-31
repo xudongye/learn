@@ -22,6 +22,7 @@ public class CustomerVo {
     private String source;
     private Date createTime;
     private Date birthday;
+    private Long pubAccountId;
 
     public Long getId() {
         return id;
@@ -141,5 +142,13 @@ public class CustomerVo {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Long getPubAccountId() {
+        return pubAccountId;
+    }
+
+    public void setPubAccountId(Long pubAccountId) {
+        this.pubAccountId = pubAccountId;
     }
 }

@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/api/learn/v1/admins")
-@Api(tags = "管理员功能模块", description = "管理员功能模块")
+@Api(value = "管理员功能模块", description = "管理员功能模块")
 public class AdminController {
 
     @Autowired

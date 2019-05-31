@@ -1,4 +1,5 @@
 # 配置项的刷新间隔，以毫秒为单位，如果设置为0，则文件一改动即生效
+domain: https://aihotel.youngch-cloud.com
 tmc:
   partnerCode: P10000048
   version: 1.0.0

@@ -12,14 +12,14 @@
     <artifactId>learn-modules</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>learn-tmc</module>
+        <!--<module>learn-tmc</module>-->
         <module>learn-store</module>
         <module>learn-authorization</module>
         <module>learn-admin</module>
         <module>learn-role</module>
         <module>learn-agent</module>
         <module>learn-customer</module>
-        <!--<module>learn-pub-account</module>-->
+        <module>learn-pub-account</module>
         <module>learn-pub-configuration</module>
     </modules>
 

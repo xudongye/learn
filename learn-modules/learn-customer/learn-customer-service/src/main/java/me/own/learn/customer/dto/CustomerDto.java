@@ -20,5 +20,5 @@ public class CustomerDto {
     private String province;
     private String source;
     private Date birthday;
-
+    private Long pubAccountId;
 }

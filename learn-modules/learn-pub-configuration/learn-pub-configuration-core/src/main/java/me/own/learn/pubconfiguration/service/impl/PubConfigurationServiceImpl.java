@@ -9,13 +9,16 @@ import me.own.learn.pubconfiguration.bo.PubAccountArticleMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTemplateMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTextMessageBo;
 import me.own.learn.pubconfiguration.dao.PubAccountConfigurationDao;
+import me.own.learn.pubconfiguration.dao.PubAccountMenuDao;
 import me.own.learn.pubconfiguration.dao.PubAccountMessageDao;
 import me.own.learn.pubconfiguration.dto.PubConfigurationDto;
 import me.own.learn.pubconfiguration.exception.PubConfigurationExistException;
 import me.own.learn.pubconfiguration.exception.PubConfigurationNotFoundException;
 import me.own.learn.pubconfiguration.po.PubAccountConfiguration;
+import me.own.learn.pubconfiguration.po.PubAccountMenu;
 import me.own.learn.pubconfiguration.po.PubAccountMessage;
 import me.own.learn.pubconfiguration.service.PubConfigurationService;
+import me.own.learn.pubconfiguration.vo.PubAccountMenuVo;
 import me.own.learn.pubconfiguration.vo.PubAccountMessageVo;
 import me.own.learn.pubconfiguration.vo.PubConfigurationVo;
 import org.slf4j.Logger;
@@ -42,6 +45,9 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
 
     @Autowired
     private PubAccountMessageDao pubAccountMessageDao;
+
+    @Autowired
+    private PubAccountMenuDao pubAccountMenuDao;
 
     public final ObjectMapper mapper = new ObjectMapper();
 
@@ -105,6 +111,31 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
     }
 
     @Override
+    @Transactional
+    public List<String> domains(String appId) {
+        return pubAccountConfigurationDao.getDomainsByAppId(appId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PubConfigurationVo getById(long pubAccountId) {
+        PubAccountConfiguration pubAccountConfiguration = pubAccountConfigurationDao.get(pubAccountId);
+        if (pubAccountConfiguration == null) {
+            throw new PubConfigurationNotFoundException();
+        }
+        return Mapper.Default().map(pubAccountConfiguration, PubConfigurationVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PubConfigurationVo> getActivePubAccountConfiguration() {
+        QueryCriteriaUtil query = new QueryCriteriaUtil(PubAccountConfiguration.class);
+        query.setSimpleCondition("active", true + "", QueryConstants.SimpleQueryMode.Equal);
+        List<PubAccountConfiguration> pubAccountConfigurations = pubAccountConfigurationDao.getAll(null, null);
+        return Mapper.Default().mapArray(pubAccountConfigurations, PubConfigurationVo.class);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PubAccountMessageVo getMessageContent(String appId, String event) {
         PubAccountMessage pubAccountMessage = pubAccountMessageDao.getByAppIdAndEvent(appId, event);
@@ -146,6 +177,7 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
     }
 
     @Override
+    @Transactional
     public PubAccountTemplateMessageBo getTemplateMessageResolver(String appId, String event) {
         PubAccountMessageVo pubAccountMessageVo = this.getMessageContent(appId, event);
         if (pubAccountMessageVo != null) {
@@ -161,7 +193,12 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
     }
 
     @Override
+    @Transactional
     public String queryMenuContentByAppId(String appId) {
+        PubAccountMenu pubAccountMenu = pubAccountMenuDao.getByAppId(appId);
+        if (pubAccountMenu != null) {
+            return pubAccountMenu.getContent();
+        }
         return null;
     }
 }

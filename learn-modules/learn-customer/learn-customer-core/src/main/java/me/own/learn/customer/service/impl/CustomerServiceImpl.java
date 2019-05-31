@@ -7,6 +7,7 @@ import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.customer.dao.CustomerDao;
 import me.own.learn.customer.dto.CustomerDto;
+import me.own.learn.customer.exception.CustomerNotFoundException;
 import me.own.learn.customer.po.Customer;
 import me.own.learn.customer.service.CustomerQueryCondition;
 import me.own.learn.customer.service.CustomerService;
@@ -32,6 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerDao customerDao;
+
+    @Override
+    @Transactional(readOnly = true)
+    public CustomerVo getById(long customerId) {
+        Customer customer = customerDao.get(customerId);
+        if (customer == null) {
+            throw new CustomerNotFoundException();
+        }
+        return Mapper.Default().map(customer, CustomerVo.class);
+    }
 
     @Override
     @Transactional

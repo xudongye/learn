@@ -5,7 +5,9 @@ import me.own.commons.wechat.pubaccount.menu.MenuService;
 import me.own.commons.wechat.pubaccount.menu.impl.MenuServiceImpl;
 import me.own.commons.wechat.pubaccount.menu.model.PubAccountButton;
 import me.own.commons.wechat.pubaccount.menu.model.PubAccountMenu;
+import me.own.learn.configuration.service.LearnConfigurationService;
 import me.own.learn.pubaccount.service.MenuCreateService;
+import me.own.learn.pubconfiguration.service.PubConfigurationService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +25,10 @@ public class MenuCreateServiceImpl implements MenuCreateService {
     private MenuService menuService = new MenuServiceImpl();
 
     @Autowired
-    private LishuConfigurationService configurationService;
+    private LearnConfigurationService configurationService;
 
     @Autowired
-    private PubAccountMenuService pubAccountMenuService;
+    private PubConfigurationService pubAccountMenuService;
 
     @Override
     public void createMenu(String appId) {

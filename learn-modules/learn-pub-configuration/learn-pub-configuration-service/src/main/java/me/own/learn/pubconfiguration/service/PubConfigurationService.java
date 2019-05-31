@@ -15,14 +15,21 @@ import java.util.List;
  */
 public interface PubConfigurationService {
 
-    public interface PubConfigurationEvent {
+    interface PubConfigurationEvent {
         String ON_SUBSCRIBE = "onSubscribe";
+        String ON_DORAEMON = "doraemon";
     }
 
     //configuration
     PubConfigurationVo create(PubConfigurationDto pubConfigurationDto);
 
     PubConfigurationVo update(PubConfigurationDto pubConfigurationDto);
+
+    List<String> domains(String appId);
+
+    PubConfigurationVo getById(long pubAccountId);
+
+    List<PubConfigurationVo> getActivePubAccountConfiguration();
 
     //message
     PubAccountMessageVo getMessageContent(String appId, String event);
