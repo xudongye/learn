@@ -11,5 +11,11 @@
 
     <artifactId>learn-pub-configuration-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-pub-configuration-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

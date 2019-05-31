@@ -30,7 +30,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/api/learn/v1/roles")
-@Api(tags = "管理员角色角色功能模块", description = "角色功能模块")
+@Api(tags = "管理员角色功能模块", description = "角色功能模块")
 public class RoleController {
 
     @Autowired
