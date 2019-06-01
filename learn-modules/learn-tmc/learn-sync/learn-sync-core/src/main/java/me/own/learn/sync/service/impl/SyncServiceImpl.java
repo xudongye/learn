@@ -2,6 +2,7 @@ package me.own.learn.sync.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
+import me.own.learn.commons.base.utils.enums.EnumUtil;
 import me.own.learn.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.bo.*;
 import me.own.learn.sync.bo.responseBo.*;
@@ -10,6 +11,7 @@ import me.own.learn.sync.dao.HotelBaseInfoDao;
 import me.own.learn.sync.dao.HotelIdDao;
 import me.own.learn.sync.exception.ResultSizeEmptyException;
 import me.own.learn.sync.po.HotelBaseInfo;
+import me.own.learn.sync.service.CommonService;
 import me.own.learn.sync.service.SearchService;
 import me.own.learn.sync.service.SignatureService;
 import me.own.learn.sync.service.SyncService;
@@ -49,6 +51,9 @@ public class SyncServiceImpl implements SyncService {
 
     @Autowired
     private HotelBaseInfoDao hotelBaseInfoDao;
+
+    @Autowired
+    private Map<String, CommonService> commonServices;
 
 
     @Override
@@ -174,6 +179,22 @@ public class SyncServiceImpl implements SyncService {
         ids.add(hotelId);
         ResponseBaseBo<ResponseHotelInfoBo> response = queryHotelInfo(ids);
 
+    }
+
+    @Override
+    public String getOutCommon(int c) {
+        CommonService commonService = getCommonService(c);
+
+        return commonService.getOut();
+    }
+
+    private CommonService getCommonService(int common) {
+        String serviceName = EnumUtil.getEnumObjectName(common, SyncConstant.Common.class) + "CommonServiceImpl";
+        if (commonServices.containsKey(serviceName)) {
+            return commonServices.get(serviceName);
+        } else {
+            return null;
+        }
     }
 
     private ResponseBaseBo<ResponseHotelInfoBo> queryHotelInfo(List<Long> tenId) {

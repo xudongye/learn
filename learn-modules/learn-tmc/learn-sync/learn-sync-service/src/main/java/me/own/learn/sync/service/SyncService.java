@@ -45,4 +45,6 @@ public interface SyncService {
     void syncHotelInfos(String cityCode);
 
     void completeHotelInfoByHotelId(Long hotelId);
+
+    String getOutCommon(int c);
 }

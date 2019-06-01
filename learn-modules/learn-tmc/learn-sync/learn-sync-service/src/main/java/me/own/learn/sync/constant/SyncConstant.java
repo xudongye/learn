@@ -40,4 +40,30 @@ public class SyncConstant {
             return this.name;
         }
     }
+
+    public enum Common implements EnumName {
+
+
+        a(1, "A"),
+        b(2, "B");
+
+        private int code;
+
+        private String name;
+
+        Common(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        @Override
+        public int getCode() {
+            return code;
+        }
+
+        @Override
+        public String getName() {
+            return this.name;
+        }
+    }
 }

@@ -99,4 +99,11 @@ public class SyncController {
         return new ResponseEntity(data, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ResponseEntity testCommon(HttpServletRequest request,
+                                     @RequestParam int c) {
+        String s = syncService.getOutCommon(c);
+        return new ResponseEntity(s, HttpStatus.OK);
+    }
+
 }
