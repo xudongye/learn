@@ -2,8 +2,12 @@ package me.own.learn.sync.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
+<<<<<<< HEAD
 import me.own.learn.commons.base.utils.enums.EnumUtil;
 import me.own.learn.commons.base.utils.mapper.Mapper;
+=======
+import me.own.commons.base.utils.mapper.Mapper;
+>>>>>>> 18db234779ad9e513ea6980ccae4d94e4e4f370f
 import me.own.learn.sync.bo.*;
 import me.own.learn.sync.bo.responseBo.*;
 import me.own.learn.sync.constant.SyncConstant;

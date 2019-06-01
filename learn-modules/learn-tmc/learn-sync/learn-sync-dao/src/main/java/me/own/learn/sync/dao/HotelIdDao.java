@@ -1,6 +1,6 @@
 package me.own.learn.sync.dao;
 
-import me.own.learn.commons.base.dao.BaseDao;
+import me.own.commons.base.dao.BaseDao;
 import me.own.learn.sync.po.HotelId;
 
 import java.util.List;

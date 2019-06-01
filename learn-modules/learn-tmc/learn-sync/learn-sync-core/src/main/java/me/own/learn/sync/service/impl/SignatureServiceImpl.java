@@ -1,6 +1,6 @@
 package me.own.learn.sync.service.impl;
 
-import me.own.learn.commons.base.utils.mapper.Mapper;
+import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.sync.dao.SignatureDao;
 import me.own.learn.sync.bo.SignatureResultBo;
 import me.own.learn.sync.exception.SignatureFailureException;

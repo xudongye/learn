@@ -9,10 +9,21 @@ import me.own.learn.configuration.template.LearnTmcConfigurationTemplate;
  */
 public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
+    private String domain;
+
     private LearnTmcConfigurationBean tmc;
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
     public void setTmc(LearnTmcConfigurationBean tmc) {
         this.tmc = tmc;
+    }
+
+    @Override
+    public String getDomain() {
+        return domain;
     }
 
     @Override

@@ -19,7 +19,7 @@
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
 
-    <bean class="me.own.learn.commons.base.exception.handler.RestApiExceptionHandler" />
+    <bean class="me.own.commons.base.exception.handler.RestApiExceptionHandler" />
 	<!-- Json 返回 乱码处理 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">

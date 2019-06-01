@@ -1,6 +1,6 @@
 package me.own.learn.sync.exception;
 
-import me.own.learn.commons.base.exception.BusinessException;
+import me.own.commons.base.exception.BusinessException;
 
 /**
  * @author yexudong

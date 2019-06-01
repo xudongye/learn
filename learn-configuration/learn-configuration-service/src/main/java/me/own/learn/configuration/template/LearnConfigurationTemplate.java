@@ -6,5 +6,7 @@ package me.own.learn.configuration.template;
  */
 public interface LearnConfigurationTemplate {
 
+    String getDomain();
+
     LearnTmcConfigurationTemplate getTmc();
 }
