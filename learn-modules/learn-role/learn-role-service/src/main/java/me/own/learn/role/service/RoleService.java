@@ -28,5 +28,7 @@ public interface RoleService {
 
     PermissionVo update(PermissionDto permissionDto);
 
+    PermissionVo getPermById(long permId);
+
     void deletedPerm(long permId);
 }

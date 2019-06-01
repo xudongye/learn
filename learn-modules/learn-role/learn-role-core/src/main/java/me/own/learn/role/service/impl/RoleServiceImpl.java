@@ -181,6 +181,16 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public PermissionVo getPermById(long permId) {
+        Permission permission = permissionDao.get(permId);
+        if (permission == null || permission.getDeleted()) {
+            throw new PermissionNotFoundException();
+        }
+        return Mapper.Default().map(permission, PermissionVo.class);
+    }
+
+    @Override
     @Transactional
     public void deletedPerm(long permId) {
         Permission permission = permissionDao.get(permId);
