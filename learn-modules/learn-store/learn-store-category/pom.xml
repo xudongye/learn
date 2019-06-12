@@ -3,19 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>learn-modules</artifactId>
+        <artifactId>learn-store</artifactId>
         <groupId>me.own.learn</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <description>分销商商城功能模块</description>
-    <artifactId>learn-store</artifactId>
+    <artifactId>learn-store-category</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>learn-store-built</module>
-        <module>learn-store-category</module>
-        <module>learn-store-product</module>
+        <module>learn-store-category-built</module>
+        <module>learn-store-category-dao</module>
+        <module>learn-store-category-service</module>
+        <module>learn-store-category-core</module>
+        <module>learn-store-category-api</module>
     </modules>
 
 

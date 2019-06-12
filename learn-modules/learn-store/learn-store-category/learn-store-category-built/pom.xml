@@ -3,27 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>learn-store</artifactId>
+        <artifactId>learn-store-category</artifactId>
         <groupId>me.own.learn</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>learn-store-built</artifactId>
+    <artifactId>learn-store-category-built</artifactId>
 
 
     <dependencies>
         <dependency>
             <groupId>me.own.learn</groupId>
-            <artifactId>learn-store-category-built</artifactId>
+            <artifactId>learn-store-category-api</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>me.own.learn</groupId>
-            <artifactId>learn-store-product-built</artifactId>
+            <artifactId>learn-store-category-core</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <type>pom</type>
         </dependency>
     </dependencies>
 </project>
