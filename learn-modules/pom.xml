@@ -22,6 +22,7 @@
         <module>learn-pub-account</module>
         <module>learn-pub-configuration</module>
         <module>learn-menu</module>
+        <module>learn-file</module>
     </modules>
 
 

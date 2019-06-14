@@ -1,0 +1,6 @@
+{
+    "imageActionName": "uploadimage",
+    "imageFieldName": "upfile",
+    "imageMaxSize": 2048000,
+    "imageUrlPrefix": "http://47.102.195.81:8080/learn/static/images/"
+}

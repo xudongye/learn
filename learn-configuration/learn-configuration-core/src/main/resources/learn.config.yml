@@ -1,5 +1,10 @@
 # 配置项的刷新间隔，以毫秒为单位，如果设置为0，则文件一改动即生效
-domain: https://aihotel.youngch-cloud.com
+domain: https://dev.youngch-cloud.com
 tmc:
   partnerCode: P10000048
   version: 1.0.0
+file:
+  root: /alidata/own/upload/learn/static/images/
+  urlPrefix: http://47.102.195.81:8080/learn/static/images/
+  qrCodePath: /alidata/own/upload/learn/static/images/qrcode/
+  qrCodeLogoPath: /alidata/own/upload/learn/static/images/qrcode/logo.jpg

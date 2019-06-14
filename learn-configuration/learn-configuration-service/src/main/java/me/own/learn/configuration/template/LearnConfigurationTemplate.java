@@ -9,4 +9,6 @@ public interface LearnConfigurationTemplate {
     String getDomain();
 
     LearnTmcConfigurationTemplate getTmc();
+
+    LearnFileConfigurationTemplate getFile();
 }

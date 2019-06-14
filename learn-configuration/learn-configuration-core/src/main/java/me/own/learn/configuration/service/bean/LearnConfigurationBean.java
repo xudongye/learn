@@ -1,6 +1,7 @@
 package me.own.learn.configuration.service.bean;
 
 import me.own.learn.configuration.template.LearnConfigurationTemplate;
+import me.own.learn.configuration.template.LearnFileConfigurationTemplate;
 import me.own.learn.configuration.template.LearnTmcConfigurationTemplate;
 
 /**
@@ -13,12 +14,18 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
     private LearnTmcConfigurationBean tmc;
 
+    private LearnFileConfigurationBean file;
+
     public void setDomain(String domain) {
         this.domain = domain;
     }
 
     public void setTmc(LearnTmcConfigurationBean tmc) {
         this.tmc = tmc;
+    }
+
+    public void setFile(LearnFileConfigurationBean file) {
+        this.file = file;
     }
 
     @Override
@@ -29,5 +36,10 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
     @Override
     public LearnTmcConfigurationBean getTmc() {
         return tmc;
+    }
+
+    @Override
+    public LearnFileConfigurationBean getFile() {
+        return file;
     }
 }
