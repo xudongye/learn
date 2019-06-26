@@ -23,6 +23,7 @@
         <module>learn-pub-configuration</module>
         <module>learn-menu</module>
         <module>learn-file</module>
+        <module>learn-captcha</module>
     </modules>
 
 
