@@ -12,6 +12,7 @@
         <module>learn-api</module>
         <module>learn-modules</module>
         <module>learn-configuration</module>
+        <module>learn-event</module>
     </modules>
 
     <properties>
