@@ -27,12 +27,12 @@
     </bean>
 
     <!-- Spring JMS topic Template -->
-    <bean id="lishuTopicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <bean id="learnTopicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="springCF"/>
         <property name="pubSubDomain" value="true"/>
     </bean>
 
-    <bean id="lishuQueueJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <bean id="learnQueueJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="springCF" />
         <property name="deliveryMode" value="2" />
         <property name="pubSubDomain" value="false" />
