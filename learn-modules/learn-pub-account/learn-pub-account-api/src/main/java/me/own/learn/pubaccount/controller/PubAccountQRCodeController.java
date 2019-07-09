@@ -29,7 +29,7 @@ public class PubAccountQRCodeController {
     private QRCodeCreateService qrCodeCreateService;
 
     @ApiOperation("获取公众号自定义带参数二维码接口")
-    @RequestMapping(value = "/api/learn/pub-accounts/{appId}/qrcode/{inviteId}/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/pub-accounts/{appId}/qrcode/{inviteId}/create", method = RequestMethod.GET)
     public ResponseEntity createMenu(HttpServletRequest request, @PathVariable(value = "appId") String appId,
                                      @PathVariable Long inviteId) {
         LOGGER.info("create a qrcode for invite {}", inviteId);

@@ -19,4 +19,6 @@ public interface CategoryService {
     PageQueryResult page(int pageNum, int pageSize, CategoryQueryCondition categoryQueryCondition);
 
     List<CategoryVo> listAll();
+
+    CategoryVo getById(long categoryId);
 }

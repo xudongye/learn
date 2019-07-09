@@ -29,7 +29,7 @@ public class PubAccountMenuController {
     private MenuCreateService menuCreateService;
 
     @ApiOperation("刷新新建公众号菜单")
-    @RequestMapping(value = "/api/learn/pub-accounts/{appId}/menu/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/pub-accounts/{appId}/menu/create", method = RequestMethod.GET)
     public ResponseEntity createMenu(HttpServletRequest request, @PathVariable(value = "appId") String appId) {
         try {
             menuCreateService.createMenu(appId);

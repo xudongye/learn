@@ -1,4 +1,4 @@
-package me.own.learn.product.po;
+package me.own.learn.store.category.po;
 
 import javax.persistence.*;
 import java.io.Serializable;

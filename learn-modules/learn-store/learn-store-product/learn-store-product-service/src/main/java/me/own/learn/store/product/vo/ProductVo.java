@@ -13,17 +13,20 @@ public class ProductVo {
     private String unit;
     //库存
     private Integer inventory;
+
     private String title;
+
     //价格，单位：分
     private Long price;
     private String description;
     //类目id
     private Long categoryId;
     //商品状态，1-正常，2-下架
-    private String status;
+    private Integer status;
     private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
+    private Date soldOutTime;
 
     public Long getId() {
         return id;
@@ -89,11 +92,11 @@ public class ProductVo {
         this.categoryId = categoryId;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -119,5 +122,13 @@ public class ProductVo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Date getSoldOutTime() {
+        return soldOutTime;
+    }
+
+    public void setSoldOutTime(Date soldOutTime) {
+        this.soldOutTime = soldOutTime;
     }
 }

@@ -24,7 +24,7 @@ import java.util.Map;
  * @date 2019/6/17 15:20
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/customers")
+@RequestMapping(value = "/api/v1/customers")
 @Api(value = "会员功能模块", description = "会员管理功能模块")
 public class CustomerController {
 

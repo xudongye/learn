@@ -5,11 +5,11 @@ import me.own.commons.base.dao.QueryConstants;
 import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
-import me.own.learn.product.po.Category;
 import me.own.learn.store.category.dao.CategoryDao;
 import me.own.learn.store.category.dto.CategoryDto;
 import me.own.learn.store.category.exception.CategoryExistException;
 import me.own.learn.store.category.exception.CategoryNotFoundException;
+import me.own.learn.store.category.po.Category;
 import me.own.learn.store.category.service.CategoryQueryCondition;
 import me.own.learn.store.category.service.CategoryService;
 import me.own.learn.store.category.vo.CategoryVo;
@@ -113,5 +113,15 @@ public class CategoryServiceImpl implements CategoryService {
             return Mapper.Default().mapArray(categories, CategoryVo.class);
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CategoryVo getById(long categoryId) {
+        Category category = categoryDao.get(categoryId);
+        if (category == null || category.getDeleted()) {
+            throw new CategoryNotFoundException();
+        }
+        return Mapper.Default().map(category, CategoryVo.class);
     }
 }

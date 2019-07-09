@@ -1,7 +1,7 @@
 package me.own.learn.store.category.dao;
 
 import me.own.commons.base.dao.BaseDao;
-import me.own.learn.product.po.Category;
+import me.own.learn.store.category.po.Category;
 
 /**
  * @author yexudong

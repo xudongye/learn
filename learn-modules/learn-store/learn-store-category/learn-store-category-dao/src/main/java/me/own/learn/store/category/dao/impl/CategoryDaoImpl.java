@@ -1,8 +1,8 @@
 package me.own.learn.store.category.dao.impl;
 
 import me.own.commons.base.dao.impl.BaseDaoImpl;
-import me.own.learn.product.po.Category;
 import me.own.learn.store.category.dao.CategoryDao;
+import me.own.learn.store.category.po.Category;
 import org.springframework.stereotype.Repository;
 
 /**

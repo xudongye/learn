@@ -20,7 +20,7 @@ public class PubAccountSignController {
     @Autowired
     private SignService signService;
 
-    @RequestMapping(value = "/api/learn/pub-accounts/{appId}/signatures", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/pub-accounts/{appId}/signatures", method = RequestMethod.POST)
     public ResponseEntity signUrl(
             HttpServletRequest request,
             @PathVariable(value = "appId") String appId,

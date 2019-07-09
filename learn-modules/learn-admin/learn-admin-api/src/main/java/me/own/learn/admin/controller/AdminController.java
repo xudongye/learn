@@ -25,7 +25,7 @@ import java.util.Map;
  * @date 2019/5/29 17:50
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/admins")
+@RequestMapping(value = "/api/v1/admins")
 @Api(value = "管理员功能模块", description = "管理员功能模块")
 public class AdminController {
 
@@ -74,7 +74,7 @@ public class AdminController {
         }
         response.put("code", 200);
         response.put("data", adminVoPageQueryResult);
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }

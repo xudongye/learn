@@ -8,7 +8,8 @@ import java.util.Date;
  * @author yexudong
  * @date 2019/6/12 16:28
  */
-@Entity(name = "learn_store_product")
+@Entity
+@Table(name = "learn_store_product")
 public class Product implements Serializable {
 
     @Id
@@ -27,12 +28,14 @@ public class Product implements Serializable {
     //类目id
     private Long categoryId;
     //商品状态，1-正常，2-下架
-    private String status;
+    private Integer status;
     private Boolean deleted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date soldOutTime;
 
     public Long getId() {
         return id;
@@ -98,11 +101,11 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -128,5 +131,13 @@ public class Product implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Date getSoldOutTime() {
+        return soldOutTime;
+    }
+
+    public void setSoldOutTime(Date soldOutTime) {
+        this.soldOutTime = soldOutTime;
     }
 }

@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2019/5/31 11:10
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/pub-configurations")
+@RequestMapping(value = "/api/v1/pub-configurations")
 @Api(value = "公众号配置功能模块", description = "公众号配置模块")
 public class PubAccountConfigurationController {
 

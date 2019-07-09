@@ -27,7 +27,7 @@ import java.util.Map;
  * @date 22:03 2019/6/26
  **/
 @RestController
-@RequestMapping(value = "/api/learn/v1/captchas")
+@RequestMapping(value = "/api/v1/captchas")
 @Api(value = "图片验证码", description = "图片验证码")
 public class CaptchaController {
 

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author yexudong
  * @date 2019/5/28 14:10
  */
-@Entity(name = "lean_admin")
+@Entity(name = "learn_admin")
 public class Admin implements Serializable {
 
     @Id

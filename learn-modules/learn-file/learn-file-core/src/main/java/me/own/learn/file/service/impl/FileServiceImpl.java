@@ -103,6 +103,7 @@ public class FileServiceImpl implements FileService {
             throw new RuntimeException(e);
         }
     }
+
     private void compress(File physicalFile) throws IOException {
         long fileSize = physicalFile.length();
         float quality = (1024 * 1024F) / fileSize;

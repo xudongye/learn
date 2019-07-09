@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 23:04 2019/6/1
  **/
 @RestController
-@RequestMapping(value = "/api/learn/v1/menus")
+@RequestMapping(value = "/api/v1/menus")
 @Api(value = "管理员菜单功能模块", description = "菜单功能模块")
 public class MenuController {
 

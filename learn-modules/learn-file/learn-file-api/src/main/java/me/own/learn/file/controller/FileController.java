@@ -23,7 +23,7 @@ import java.io.IOException;
  * @date 2019/6/14 13:11
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1")
+@RequestMapping(value = "/api/v1")
 @Api(value = "文件上传", description = "文件上传功能")
 public class FileController {
 
