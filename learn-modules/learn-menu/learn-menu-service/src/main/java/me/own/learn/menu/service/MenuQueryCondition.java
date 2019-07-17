@@ -6,10 +6,8 @@ package me.own.learn.menu.service;
  **/
 public class MenuQueryCondition {
     private String name;
-    private String path;
-    private String component;
-    private Long permissionId;
-    private Integer sequence;
+    private String icon;
+    private String url;
 
     public String getName() {
         return name;
@@ -19,35 +17,20 @@ public class MenuQueryCondition {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public String getComponent() {
-        return component;
+    public String getUrl() {
+        return url;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Long getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(Long permissionId) {
-        this.permissionId = permissionId;
-    }
-
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
 }

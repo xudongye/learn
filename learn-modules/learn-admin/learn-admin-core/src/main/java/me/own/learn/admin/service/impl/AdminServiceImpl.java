@@ -1,5 +1,6 @@
 package me.own.learn.admin.service.impl;
 
+import me.own.commons.base.utils.date.DateTimeUtils;
 import me.own.learn.admin.dao.AdminDao;
 import me.own.learn.admin.dto.AdminDto;
 import me.own.learn.admin.exception.AdminNameExistException;
@@ -22,9 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static me.own.commons.base.utils.date.DateTimeUtils.ioFomat;
+import static me.own.commons.base.utils.date.DateTimeUtils.plusOneDay;
 
 
 /**
@@ -46,16 +51,27 @@ public class AdminServiceImpl implements AdminService {
         query.setDeletedFalseCondition();
         if (condition != null) {
             if (condition.getCellphone() != null) {
-                query.setSimpleCondition("cellphone", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
+                query.setSimpleCondition("cellphone", condition.getCellphone(), QueryConstants.SimpleQueryMode.Like);
             }
             if (condition.getEmail() != null) {
-                query.setSimpleCondition("email", condition.getCellphone(), QueryConstants.SimpleQueryMode.Equal);
+                query.setSimpleCondition("email", condition.getEmail(), QueryConstants.SimpleQueryMode.Like);
             }
             if (condition.getName() != null) {
                 query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Like);
             }
+            if (condition.getCreateFrom() != null && null == condition.getCreateTo()) {
+                query.setSimpleCondition("createTime", ioFomat(condition.getCreateFrom()), QueryConstants.SimpleQueryMode.GreaterEqual);
+            }
+            if (condition.getCreateTo() != null && null == condition.getCreateFrom()) {
+                query.setSimpleCondition("createTime", plusOneDay(ioFomat(condition.getCreateTo())), QueryConstants.SimpleQueryMode.LessEqual);
+            }
+            if (null != condition.getCreateFrom() && null != condition.getCreateTo()) {
+                List<String> list = new ArrayList<String>();
+                list.add(ioFomat(condition.getCreateFrom()));
+                list.add(plusOneDay(ioFomat(condition.getCreateTo())));
+                query.setComplexCondition("createTime", list, QueryConstants.ComplexQueryMode.Between, QueryConstants.QueryType.Conjunction);
+            }
         }
-        //FIXME
         List<QueryOrder> orders = new ArrayList<>();
         QueryOrder order = new QueryOrder();
         order.setColumnName("createTime");
@@ -146,6 +162,16 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(readOnly = true)
     public AdminVo getByLoginLabel(String loginLabel) {
         Admin admin = adminDao.getByLoginLabel(loginLabel);
+        if (admin == null || admin.getDeleted()) {
+            throw new AdminNotFoundException();
+        }
+        return Mapper.Default().map(admin, AdminVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AdminVo getById(long adminId) {
+        Admin admin = adminDao.get(adminId);
         if (admin == null || admin.getDeleted()) {
             throw new AdminNotFoundException();
         }

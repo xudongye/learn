@@ -21,4 +21,6 @@ public interface AdminService {
     AdminVo bindRole(long adminId, long roleId);
 
     AdminVo getByLoginLabel(String loginLabel);
+
+    AdminVo getById(long adminId);
 }

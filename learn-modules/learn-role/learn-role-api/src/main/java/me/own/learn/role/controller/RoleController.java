@@ -1,6 +1,7 @@
 package me.own.learn.role.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.model.AdminAccessToken;
@@ -50,6 +51,7 @@ public class RoleController {
     @ApiOperation("角色授权")
     @RequestMapping(value = "/permissions-given", method = RequestMethod.POST)
     @AdminAuthenticationRequired
+    @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
     public ResponseEntity givePerms(HttpServletRequest request, AdminAccessToken aat,
                                     @RequestParam Long roleId,
                                     @RequestParam Long[] permIds) {

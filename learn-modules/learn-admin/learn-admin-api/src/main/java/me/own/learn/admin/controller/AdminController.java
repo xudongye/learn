@@ -1,6 +1,7 @@
 package me.own.learn.admin.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import me.own.learn.admin.dto.AdminDto;
 import me.own.learn.admin.service.AdminQueryCondition;
@@ -9,6 +10,8 @@ import me.own.learn.admin.vo.AdminVo;
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.exception.BusinessException;
 import me.own.commons.base.utils.request.RequestUtils;
+import me.own.learn.authorization.service.AdminAuthenticationRequired;
+import me.own.learn.authorization.service.model.AdminAccessToken;
 import me.own.learn.role.service.RoleService;
 import me.own.learn.role.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,19 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
+    @ApiOperation("获取管理员基本信息接口")
+    @RequestMapping(value = "/mine", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
+    public ResponseEntity mine(HttpServletRequest request, AdminAccessToken aat) {
+        Map<String, Object> response = new HashMap<>();
+        AdminVo adminVo = adminService.getById(aat.getAdminId());
+        decorator(adminVo);
+        response.put("code", 200);
+        response.put("data", adminVo);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
     @ApiOperation("创建管理员")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity create(HttpServletRequest request,
@@ -42,6 +58,7 @@ public class AdminController {
         Map<String, Object> response = new HashMap<>();
         roleService.getById(adminDto.getRoleId());
         AdminVo adminVo = adminService.create(adminDto);
+        decorator(adminVo);
         response.put("code", 200);
         response.put("data", adminVo);
         return new ResponseEntity(response, HttpStatus.CREATED);
@@ -52,7 +69,7 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
                                @RequestParam(required = false) AdminQueryCondition condition,
-                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         if (condition == null) {
@@ -61,20 +78,24 @@ public class AdminController {
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<AdminVo> adminVoPageQueryResult = adminService.page(pageNum, pageSize, condition);
         for (AdminVo adminVo : adminVoPageQueryResult.getItems()) {
-            String roleName = null;
-            if (adminVo.getRoleId() != null) {
-                try {
-                    RoleVo roleVo = roleService.getById(adminVo.getRoleId());
-                    roleName = roleVo.getName();
-                } catch (BusinessException be) {
-                    roleName = null;
-                }
-            }
-            adminVo.setRoleName(roleName);
+            decorator(adminVo);
         }
         response.put("code", 200);
         response.put("data", adminVoPageQueryResult);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    private void decorator(AdminVo adminVo) {
+        String roleName = null;
+        if (adminVo.getRoleId() != null) {
+            try {
+                RoleVo roleVo = roleService.getById(adminVo.getRoleId());
+                roleName = roleVo.getName();
+            } catch (BusinessException be) {
+                roleName = null;
+            }
+        }
+        adminVo.setRoleName(roleName);
     }
 
 }

@@ -11,7 +11,8 @@ import java.util.List;
  * @author yexudong
  * @date 2019/5/28 15:00
  */
-@Entity(name = "learn_role")
+@Entity
+@Table(name = "learn_role")
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

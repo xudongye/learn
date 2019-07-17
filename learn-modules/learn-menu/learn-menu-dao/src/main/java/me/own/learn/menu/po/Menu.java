@@ -1,43 +1,35 @@
 package me.own.learn.menu.po;
 
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author:simonye
  * @date 22:18 2019/6/1
  **/
-@Entity(name = "learn_menu")
+@Entity
+@Table(name = "learn_menu")
 public class Menu implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String icon;
-    private String path;
-    private String component;
+    private String url;
+    private String keyWord;
+    private Long parentId;
+    /**
+     * 自动展开
+     */
+    private Boolean isExpend;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
-    private Boolean deleted;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    private Menu parent;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "PARENT_ID", insertable = true, updatable = true)
-    @Where(clause = "deleted = 0")
-    @org.hibernate.annotations.OrderBy(clause = "sequence asc")
-    private List<Menu> children;
     private Long permissionId;
-    /**
-     * 排序规则
-     */
-    private Double sequence;
+    private Boolean deleted;
 
     public Long getId() {
         return id;
@@ -63,20 +55,36 @@ public class Menu implements Serializable {
         this.icon = icon;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getComponent() {
-        return component;
+    public String getKeyWord() {
+        return keyWord;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Boolean getIsExpend() {
+        return isExpend;
+    }
+
+    public void setIsExpend(Boolean isExpend) {
+        this.isExpend = isExpend;
     }
 
     public Date getCreateTime() {
@@ -95,30 +103,6 @@ public class Menu implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Menu getParent() {
-        return parent;
-    }
-
-    public void setParent(Menu parent) {
-        this.parent = parent;
-    }
-
-    public List<Menu> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Menu> children) {
-        this.children = children;
-    }
-
     public Long getPermissionId() {
         return permissionId;
     }
@@ -127,11 +111,11 @@ public class Menu implements Serializable {
         this.permissionId = permissionId;
     }
 
-    public Double getSequence() {
-        return sequence;
+    public Boolean getDeleted() {
+        return deleted;
     }
 
-    public void setSequence(Double sequence) {
-        this.sequence = sequence;
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -20,5 +20,6 @@ public interface MenuService {
 
     PageQueryResult<MenuVo> page(int pageNum, int pageSize, MenuQueryCondition condition);
 
-    List<MenuVo> getAllDisplayMenu();
+    List<MenuVo> getDisplayMenuByPermIds(List<Long> permIds);
+
 }

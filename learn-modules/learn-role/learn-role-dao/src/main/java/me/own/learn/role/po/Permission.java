@@ -8,7 +8,8 @@ import java.util.Date;
  * @author yexudong
  * @date 2019/5/28 15:13
  */
-@Entity(name = "learn_permission")
+@Entity
+@Table(name = "learn_permission")
 public class Permission implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

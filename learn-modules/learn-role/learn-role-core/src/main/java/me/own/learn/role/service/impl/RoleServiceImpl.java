@@ -19,6 +19,7 @@ import me.own.learn.role.service.RoleQueryCondition;
 import me.own.learn.role.service.RoleService;
 import me.own.learn.role.vo.PermissionVo;
 import me.own.learn.role.vo.RoleVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,5 +199,15 @@ public class RoleServiceImpl implements RoleService {
             throw new PermissionNotFoundException();
         }
         permission.setDeleted(true);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> getPermIdsByRoleId(long roleId) {
+        List<Long> pemIds = permissionDao.getPermIdsByRoleId(roleId);
+        if (CollectionUtils.isNotEmpty(pemIds)) {
+            return pemIds;
+        }
+        return null;
     }
 }

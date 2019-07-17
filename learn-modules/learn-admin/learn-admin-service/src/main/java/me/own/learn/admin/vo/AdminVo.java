@@ -8,7 +8,7 @@ import java.util.Date;
  * @author yexudong
  * @date 2019/5/28 14:18
  */
-@JsonIgnoreProperties(value = {"password", "roleId"})
+@JsonIgnoreProperties(value = {"password"})
 public class AdminVo {
     private Long id;
     private String name;

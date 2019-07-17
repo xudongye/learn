@@ -6,6 +6,8 @@ import me.own.learn.role.dto.RoleDto;
 import me.own.learn.role.vo.PermissionVo;
 import me.own.learn.role.vo.RoleVo;
 
+import java.util.List;
+
 /**
  * @author yexudong
  * @date 2019/5/28 15:27
@@ -31,4 +33,6 @@ public interface RoleService {
     PermissionVo getPermById(long permId);
 
     void deletedPerm(long permId);
+
+    List<Long> getPermIdsByRoleId(long roleId);
 }

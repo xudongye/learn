@@ -11,15 +11,18 @@ public class MenuVo {
     private Long id;
     private String name;
     private String icon;
-    private String path;
-    private String component;
+    private String url;
+    private String keyWord;
+    private Long parentId;
+    /**
+     * 自动展开
+     */
+    private Boolean isExpend;
     private Date createTime;
     private Date modifyTime;
-    private Boolean deleted;
-    private MenuVo parent;
-    private List<MenuVo> children;
     private Long permissionId;
-    private Double sequence;
+    private Boolean deleted;
+    private List<MenuVo> children;
 
     public Long getId() {
         return id;
@@ -45,20 +48,36 @@ public class MenuVo {
         this.icon = icon;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getComponent() {
-        return component;
+    public String getKeyWord() {
+        return keyWord;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Boolean getIsExpend() {
+        return isExpend;
+    }
+
+    public void setIsExpend(Boolean isExpend) {
+        this.isExpend = isExpend;
     }
 
     public Date getCreateTime() {
@@ -77,30 +96,6 @@ public class MenuVo {
         this.modifyTime = modifyTime;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public MenuVo getParent() {
-        return parent;
-    }
-
-    public void setParent(MenuVo parent) {
-        this.parent = parent;
-    }
-
-    public List<MenuVo> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<MenuVo> children) {
-        this.children = children;
-    }
-
     public Long getPermissionId() {
         return permissionId;
     }
@@ -109,11 +104,19 @@ public class MenuVo {
         this.permissionId = permissionId;
     }
 
-    public Double getSequence() {
-        return sequence;
+    public Boolean getDeleted() {
+        return deleted;
     }
 
-    public void setSequence(Double sequence) {
-        this.sequence = sequence;
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<MenuVo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<MenuVo> children) {
+        this.children = children;
     }
 }

@@ -1,7 +1,6 @@
 package me.own.learn.menu.dto;
 
 
-import java.util.List;
 
 /**
  * @author:simonye
@@ -11,9 +10,13 @@ public class MenuDto {
     private Long id;
     private String name;
     private String icon;
-    private String path;
-    private String component;
-    private Long parent;
+    private String url;
+    private String keyWord;
+    private Long parentId;
+    /**
+     * 自动展开
+     */
+    private Boolean isExpend;
     private Long permissionId;
 
     public Long getId() {
@@ -40,28 +43,36 @@ public class MenuDto {
         this.icon = icon;
     }
 
-    public String getPath() {
-        return path;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getComponent() {
-        return component;
+    public String getKeyWord() {
+        return keyWord;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 
-    public Long getParent() {
-        return parent;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setParent(Long parent) {
-        this.parent = parent;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Boolean getIsExpend() {
+        return isExpend;
+    }
+
+    public void setIsExpend(Boolean isExpend) {
+        this.isExpend = isExpend;
     }
 
     public Long getPermissionId() {

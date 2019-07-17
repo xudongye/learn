@@ -7,6 +7,7 @@ import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.menu.dao.MenuDao;
 import me.own.learn.menu.dto.MenuDto;
+import me.own.learn.menu.exception.MenuMatchByPermException;
 import me.own.learn.menu.exception.MenuNotFoundException;
 import me.own.learn.menu.po.Menu;
 import me.own.learn.menu.service.MenuQueryCondition;
@@ -15,12 +16,14 @@ import me.own.learn.menu.vo.MenuVo;
 import me.own.learn.role.service.RoleService;
 import me.own.learn.role.vo.PermissionVo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,15 +47,10 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public MenuVo create(MenuDto menuDto) {
         PermissionVo permissionVo = roleService.getPermById(menuDto.getPermissionId());
-
-        Double sequence = selectMaxSequence(menuDto.getParent());
-
-        Menu menu = Mapper.Default().map(menuDto, Menu.class);
-        if (menuDto.getParent() != null) {
-            Menu parent = menuDao.get(menuDto.getParent());
-            menu.setParent(parent);
+        if (permMenuExist(menuDto.getPermissionId())) {
+            throw new MenuMatchByPermException();
         }
-        menu.setSequence(sequence);
+        Menu menu = Mapper.Default().map(menuDto, Menu.class);
         menu.setDeleted(false);
         menu.setCreateTime(new Date());
         menuDao.create(menu);
@@ -60,19 +58,13 @@ public class MenuServiceImpl implements MenuService {
         return Mapper.Default().map(menu, MenuVo.class);
     }
 
-    private double selectMaxSequence(Long parent) {
+    private boolean permMenuExist(long permId) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(Menu.class);
-        double addSequence = 0.1;
-        if (parent != null) {
-            addSequence = 1.0;
-            query.setSimpleCondition("parent.id", parent + "", QueryConstants.SimpleQueryMode.Equal);
-        }
-        List<Menu> menus = menuDao.filter(query, null, new QueryOrder("sequence", QueryOrder.ASC));
-        if (CollectionUtils.isNotEmpty(menus)) {
-            return menus.get(0).getSequence() + addSequence;
-        }
-        return 0.0;
+        query.setDeletedFalseCondition();
+        query.setSimpleCondition("permissionId", permId + "", QueryConstants.SimpleQueryMode.Equal);
+        return menuDao.getCount(query) > 0;
     }
+
 
     @Override
     @Transactional
@@ -81,8 +73,11 @@ public class MenuServiceImpl implements MenuService {
         if (menu == null || menu.getDeleted()) {
             throw new MenuNotFoundException();
         }
-        if (menuDto.getComponent() != null) {
-            menu.setComponent(menuDto.getComponent());
+        if (menuDto.getIsExpend() != null) {
+            menu.setIsExpend(menuDto.getIsExpend());
+        }
+        if (menuDto.getKeyWord() != null) {
+            menu.setKeyWord(menuDto.getKeyWord());
         }
         if (menuDto.getIcon() != null) {
             menu.setIcon(menuDto.getIcon());
@@ -90,8 +85,8 @@ public class MenuServiceImpl implements MenuService {
         if (menuDto.getName() != null) {
             menu.setName(menuDto.getName());
         }
-        if (menuDto.getPath() != null) {
-            menu.setPath(menuDto.getPath());
+        if (menuDto.getUrl() != null) {
+            menu.setUrl(menuDto.getUrl());
         }
         if (menuDto.getPermissionId() != null) {
             PermissionVo permissionVo = roleService.getPermById(menuDto.getPermissionId());
@@ -117,23 +112,20 @@ public class MenuServiceImpl implements MenuService {
     public PageQueryResult<MenuVo> page(int pageNum, int pageSize, MenuQueryCondition condition) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(Menu.class);
         if (condition != null) {
-            if (condition.getComponent() != null) {
-                query.setSimpleCondition("component", condition.getComponent(), QueryConstants.SimpleQueryMode.Like);
-            }
             if (condition.getName() != null) {
                 query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Like);
             }
-            if (condition.getPath() != null) {
-                query.setSimpleCondition("path", condition.getPath(), QueryConstants.SimpleQueryMode.Like);
+            if (condition.getIcon() != null) {
+                query.setSimpleCondition("icon", condition.getIcon(), QueryConstants.SimpleQueryMode.Like);
             }
-            if (condition.getSequence() != null) {
-                query.setSimpleCondition("sequence", condition.getSequence() + "", QueryConstants.SimpleQueryMode.Equal);
+            if (condition.getUrl() != null) {
+                query.setSimpleCondition("url", condition.getUrl() + "", QueryConstants.SimpleQueryMode.Equal);
             }
         }
         List<QueryOrder> orders = new ArrayList<>();
         QueryOrder order = new QueryOrder();
-        order.setColumnName("sequence");
-        order.setOder(QueryOrder.ASC);
+        order.setColumnName("createTime");
+        order.setOder(QueryOrder.DESC);
 
         PageQueryResult<Menu> result = menuDao.pageQuery(pageNum, pageSize, query, orders);
 
@@ -142,8 +134,38 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MenuVo> getAllDisplayMenu() {
+    public List<MenuVo> getDisplayMenuByPermIds(List<Long> permIds) {
+        List<Menu> menus = getDisplayMenuByPermIds(permIds, 0);
 
-        return null;
+        List<MenuVo> parentMenuVo = Mapper.Default().mapArray(menus, MenuVo.class);
+        for (MenuVo menuVo : parentMenuVo) {
+            List<Menu> childrenMenus = getDisplayMenuByPermIds(permIds, menuVo.getId());
+            //只查二级菜单
+            if (CollectionUtils.isNotEmpty(childrenMenus)) {
+                List<MenuVo> childrenMenuVo = Mapper.Default().mapArray(childrenMenus, MenuVo.class);
+                menuVo.setChildren(childrenMenuVo);
+            }
+        }
+        return parentMenuVo;
+    }
+
+    private List<Menu> getDisplayMenuByPermIds(List<Long> permIds, long parentId) {
+        QueryCriteriaUtil query = new QueryCriteriaUtil(Menu.class);
+        query.setDeletedFalseCondition();
+        //父级
+        query.setSimpleCondition("parentId", parentId + "", QueryConstants.SimpleQueryMode.Equal);
+        List<String> strings = new ArrayList<>();
+        CollectionUtils.collect(permIds,
+                new Transformer() {
+                    public Object transform(Object input) {
+                        return String.valueOf((Long) input);
+                    }
+                }, strings);
+        query.setComplexCondition("permissionId", strings, QueryConstants.ComplexQueryMode.In);
+        List<Menu> menus = menuDao.filter(query, null, null);
+        if (CollectionUtils.isEmpty(menus)) {
+            return null;
+        }
+        return menus;
     }
 }
