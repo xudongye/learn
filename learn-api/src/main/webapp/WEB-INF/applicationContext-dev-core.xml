@@ -42,7 +42,14 @@
     </bean>
 
     <bean class="me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate" factory-method="getInstance"/>
-
+    <!-- API 接口跨域配置 -->
+    <mvc:cors>
+        <mvc:mapping path="/**"
+                     allowed-origins="*"
+                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT"
+                     allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+                     allow-credentials="true"/>
+    </mvc:cors>
     <!--serve the template.css file as /resources/template.css-->
     <!--<mvc:resources mapping="/resources/*" location="/WEB-INF/classes/"/>-->
 
