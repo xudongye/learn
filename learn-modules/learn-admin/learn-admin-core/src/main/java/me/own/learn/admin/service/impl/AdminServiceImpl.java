@@ -1,6 +1,5 @@
 package me.own.learn.admin.service.impl;
 
-import me.own.commons.base.utils.date.DateTimeUtils;
 import me.own.learn.admin.dao.AdminDao;
 import me.own.learn.admin.dto.AdminDto;
 import me.own.learn.admin.exception.AdminNameExistException;
@@ -23,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,8 +72,9 @@ public class AdminServiceImpl implements AdminService {
         }
         List<QueryOrder> orders = new ArrayList<>();
         QueryOrder order = new QueryOrder();
-        order.setColumnName("createTime");
+        order.setColumnName("id");
         order.setOder(QueryOrder.DESC);
+        orders.add(order);
         PageQueryResult<Admin> result = adminDao.pageQuery(pageNum, pageSize, query, orders);
         return result.mapItems(AdminVo.class);
     }
@@ -142,6 +141,12 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminNotFoundException();
         }
         admin.setDeleted(true);
+    }
+
+    @Override
+    @Transactional
+    public void batchDelete(List<Long> adminIds) {
+        adminDao.batchDelete(adminIds);
     }
 
     @Override

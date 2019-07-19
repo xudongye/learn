@@ -20,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,6 +85,17 @@ public class AdminController {
         response.put("code", 200);
         response.put("data", adminVoPageQueryResult);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("批量删除管理员")
+    @RequestMapping(method = RequestMethod.DELETE)
+    @AdminAuthenticationRequired
+    @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
+    public ResponseEntity batchDeleted(HttpServletRequest request, AdminAccessToken aat,
+                                       @RequestParam Long[] adminIds) {
+        List<Long> adminIdss = Arrays.asList(adminIds);
+        adminService.batchDelete(adminIdss);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     private void decorator(AdminVo adminVo) {

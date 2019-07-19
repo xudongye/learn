@@ -5,8 +5,12 @@ import me.own.learn.admin.po.Admin;
 import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.commons.base.utils.regx.RegxUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -31,5 +35,13 @@ public class AdminDaoImpl extends BaseDaoImpl<Admin> implements AdminDao {
         }
         Admin admin = (Admin) criteria.uniqueResult();
         return admin;
+    }
+
+    @Override
+    public void batchDelete(List<Long> adminIds) {
+        Query query = getCurrentSession().createQuery("update Admin set deleted = true ,modifyTime = :modifyTime where id in :adminIds");
+        query.setParameterList("adminIds", adminIds);
+        query.setParameter("modifyTime", new Date());
+        query.executeUpdate();
     }
 }
