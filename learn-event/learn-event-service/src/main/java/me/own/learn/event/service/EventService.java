@@ -9,4 +9,10 @@ public interface EventService {
     void publish(String topicDestination, MessageCarriable message);
 
     void enqueue(String queueDestination, MessageCarriable message);
+
+    interface EventName {
+        interface AgentEvent {
+            String AGENT_PASS = "AGENT_PASS";
+        }
+    }
 }

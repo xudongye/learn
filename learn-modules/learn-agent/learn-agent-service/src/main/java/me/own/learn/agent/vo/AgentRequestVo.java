@@ -28,6 +28,8 @@ public class AgentRequestVo {
 
     private Long customerId;
 
+    private Long handlerId;
+
     public Long getId() {
         return id;
     }
@@ -122,5 +124,13 @@ public class AgentRequestVo {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public Long getHandlerId() {
+        return handlerId;
+    }
+
+    public void setHandlerId(Long handlerId) {
+        this.handlerId = handlerId;
     }
 }

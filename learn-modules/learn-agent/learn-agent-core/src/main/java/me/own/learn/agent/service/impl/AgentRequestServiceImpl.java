@@ -6,14 +6,26 @@ import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.date.DateTimeUtils;
 import me.own.commons.base.utils.mapper.Mapper;
+import me.own.learn.admin.dto.AdminDto;
+import me.own.learn.admin.service.AdminService;
+import me.own.learn.admin.vo.AdminVo;
+import me.own.learn.agent.constant.AgentConstant;
 import me.own.learn.agent.dao.AgentRequestDao;
+import me.own.learn.agent.dto.AgentDto;
 import me.own.learn.agent.dto.AgentRequestDto;
 import me.own.learn.agent.dto.AgentRequestHandleDto;
 import me.own.learn.agent.exception.AgentRequestNotFoundException;
 import me.own.learn.agent.po.AgentRequest;
 import me.own.learn.agent.service.AgentRequestQueryCondition;
 import me.own.learn.agent.service.AgentRequestService;
+import me.own.learn.agent.service.AgentService;
 import me.own.learn.agent.vo.AgentRequestVo;
+import me.own.learn.agent.vo.AgentVo;
+import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
+import me.own.learn.customer.service.CustomerService;
+import me.own.learn.customer.vo.CustomerVo;
+import me.own.learn.event.service.EventService;
+import me.own.learn.event.service.message.agent.AgentMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +49,22 @@ public class AgentRequestServiceImpl implements AgentRequestService {
     @Autowired
     private AgentRequestDao agentRequestDao;
 
+    @Autowired
+    private EventService eventService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AgentService agentService;
+
+    @Autowired
+    private AdminService adminService;
+
+    private LearnConfigurationServiceDelegate delegate = LearnConfigurationServiceDelegate.getInstance();
+
+    private static final Long AGENT_ROLE = 2L;
+
     @Override
     @Transactional
     public AgentRequestVo create(AgentRequestDto requestDto) {
@@ -44,7 +72,9 @@ public class AgentRequestServiceImpl implements AgentRequestService {
         agentRequest.setCreateTime(new Date());
         agentRequest.setAgentType(requestDto.getAgentType().getCode());
         agentRequest.setStatus(requestDto.getRequestStatus().getCode());
-        return null;
+        agentRequestDao.create(agentRequest);
+        LOGGER.info("create new agent request {} from customer {}", agentRequest.getId(), agentRequest.getCustomerId());
+        return Mapper.Default().map(agentRequest, AgentRequestVo.class);
     }
 
     @Override
@@ -58,14 +88,49 @@ public class AgentRequestServiceImpl implements AgentRequestService {
     @Transactional
     public AgentRequestVo handle(AgentRequestHandleDto handleDto) {
         AgentRequest agentRequest = agentRequestDao.get(handleDto.getId());
+
         if (agentRequest == null) {
             throw new AgentRequestNotFoundException();
         }
-        agentRequest.setRemark(handleDto.getRemark());
+        CustomerVo customerVo = customerService.getById(agentRequest.getCustomerId());
         agentRequest.setStatus(handleDto.getRequestStatus().getCode());
+        agentRequest.setRemark(handleDto.getRemark());
+        agentRequest.setHandlerId(handleDto.getHandlerId());
         agentRequest.setHandledTime(new Date());
         LOGGER.info("agent {} request been {} with remark {}", agentRequest.getName(), handleDto.getRequestStatus().getName(), handleDto.getRemark());
         agentRequestDao.update(agentRequest);
+        //判断受理状态是否为批准成为分销商
+        if (handleDto.getRequestStatus().getCode() == AgentConstant.AgentRequestStatus.approval.getCode()) {
+            AdminDto adminDto = new AdminDto();
+            adminDto.setCellphone(agentRequest.getTelephone());
+            adminDto.setEmail(agentRequest.getEmail());
+            adminDto.setName(agentRequest.getName());
+            adminDto.setHeadImg(customerVo.getHeadImage());
+            adminDto.setRoleId(AGENT_ROLE);
+            adminDto.setPassword(delegate.getConfiguration().getDefaultPassword());
+            AdminVo adminVo = adminService.create(adminDto);
+            LOGGER.info("create admin {} from agent request pass.", adminVo.getName());
+
+            AgentDto agentDto = new AgentDto();
+            //父级代理商
+            agentDto.setParentId(customerVo.getSourceAgentId());
+            //新增管理员
+            agentDto.setAdminId(adminVo.getId());
+            //申请会员
+            agentDto.setCustomerId(agentRequest.getCustomerId());
+            agentDto.setName(agentRequest.getName());
+            agentDto.setTelephone(agentRequest.getTelephone());
+            agentDto.setAddress(agentRequest.getAddress());
+            agentDto.setEmail(agentRequest.getEmail());
+            //是否为顶级分销商
+            agentDto.setRoot(customerVo.getSourceAgentId() == 1);
+            //个人的可以发展下线
+            agentDto.setMemberJoinShareEnable(agentRequest.getAgentType() == AgentConstant.AgentType.individual.getCode());
+            AgentVo agentVo = agentService.create(agentDto);
+            LOGGER.info("create new agent {} success", agentVo.getName());
+            eventService.enqueue(EventService.EventName.AgentEvent.AGENT_PASS,
+                    new AgentMessage(agentRequest.getName(), customerVo.getHeadImage(), agentRequest.getTelephone(), agentRequest.getEmail()));
+        }
         return Mapper.Default().map(agentRequest, AgentRequestVo.class);
     }
 

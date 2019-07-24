@@ -33,6 +33,7 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthday;
     private Long pubAccountId;
+    private Long sourceAgentId;
 
     public Long getId() {
         return id;
@@ -160,5 +161,13 @@ public class Customer implements Serializable {
 
     public void setPubAccountId(Long pubAccountId) {
         this.pubAccountId = pubAccountId;
+    }
+
+    public Long getSourceAgentId() {
+        return sourceAgentId;
+    }
+
+    public void setSourceAgentId(Long sourceAgentId) {
+        this.sourceAgentId = sourceAgentId;
     }
 }

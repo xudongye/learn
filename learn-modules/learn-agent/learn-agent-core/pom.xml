@@ -23,5 +23,15 @@
             <artifactId>learn-agent-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-customer-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-admin-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

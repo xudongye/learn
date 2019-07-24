@@ -10,6 +10,7 @@ public class AgentRequestHandleDto {
     private Long id;
     private String remark;
     private AgentConstant.AgentRequestStatus requestStatus;
+    private Long handlerId;
 
     public Long getId() {
         return id;
@@ -33,5 +34,13 @@ public class AgentRequestHandleDto {
 
     public void setRequestStatus(AgentConstant.AgentRequestStatus requestStatus) {
         this.requestStatus = requestStatus;
+    }
+
+    public Long getHandlerId() {
+        return handlerId;
+    }
+
+    public void setHandlerId(Long handlerId) {
+        this.handlerId = handlerId;
     }
 }

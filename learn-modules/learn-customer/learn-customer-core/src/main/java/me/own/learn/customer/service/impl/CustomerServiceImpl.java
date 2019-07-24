@@ -50,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = Mapper.Default().map(customerDto, Customer.class);
         customer.setCreateTime(new Date());
         customer.setSubscribeTime(new Date());
+        customer.setSourceAgentId(customerDto.getSourceAgentId() == null ? 1L : customerDto.getSourceAgentId());
         customerDao.create(customer);
         LOGGER.info("create customer {} source {}", customer.getNickName(), customer.getSource());
         return Mapper.Default().map(customer, CustomerVo.class);

@@ -12,12 +12,18 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
     private String domain;
 
+    private String defaultPassword;
+
     private LearnTmcConfigurationBean tmc;
 
     private LearnFileConfigurationBean file;
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public void setDefaultPassword(String defaultPassword) {
+        this.defaultPassword = defaultPassword;
     }
 
     public void setTmc(LearnTmcConfigurationBean tmc) {
@@ -31,6 +37,11 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
     @Override
     public String getDomain() {
         return domain;
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return defaultPassword;
     }
 
     @Override

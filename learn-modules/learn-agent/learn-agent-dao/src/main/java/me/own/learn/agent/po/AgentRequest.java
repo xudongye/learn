@@ -35,6 +35,8 @@ public class AgentRequest implements Serializable {
     private Integer agentType;
 
     private Long customerId;
+    //审核管理员id
+    private Long handlerId;
 
     public Long getId() {
         return id;
@@ -130,5 +132,13 @@ public class AgentRequest implements Serializable {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public Long getHandlerId() {
+        return handlerId;
+    }
+
+    public void setHandlerId(Long handlerId) {
+        this.handlerId = handlerId;
     }
 }

@@ -8,6 +8,8 @@ public interface LearnConfigurationTemplate {
 
     String getDomain();
 
+    String getDefaultPassword();
+
     LearnTmcConfigurationTemplate getTmc();
 
     LearnFileConfigurationTemplate getFile();
