@@ -61,6 +61,7 @@ public class RoleServiceImpl implements RoleService {
         QueryOrder order = new QueryOrder();
         order.setColumnName("id");
         order.setOder(QueryOrder.ASC);
+        orders.add(order);
         PageQueryResult<Role> result = roleDao.pageQuery(pageNum, pageSize, query, orders);
         return result.mapItems(RoleVo.class);
     }

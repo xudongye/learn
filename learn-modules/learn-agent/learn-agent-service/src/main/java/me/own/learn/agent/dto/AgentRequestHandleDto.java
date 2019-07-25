@@ -11,6 +11,7 @@ public class AgentRequestHandleDto {
     private String remark;
     private AgentConstant.AgentRequestStatus requestStatus;
     private Long handlerId;
+    private Integer assignedQR;
 
     public Long getId() {
         return id;
@@ -42,5 +43,13 @@ public class AgentRequestHandleDto {
 
     public void setHandlerId(Long handlerId) {
         this.handlerId = handlerId;
+    }
+
+    public Integer getAssignedQR() {
+        return assignedQR;
+    }
+
+    public void setAssignedQR(Integer assignedQR) {
+        this.assignedQR = assignedQR;
     }
 }

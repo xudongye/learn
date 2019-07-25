@@ -29,10 +29,9 @@ public class CookieUtils {
         return null;
     }
 
-    public static void setAdminUserTokenInCookie(HttpServletRequest request, HttpServletResponse response, String tokenValue) {
+    public static void setAdminUserTokenInCookie(HttpServletResponse response, String tokenValue) {
         Cookie cookie = new Cookie(COOKIE_NAME_ADMIN_TOKEN, tokenValue);
-        cookie.setDomain("127.0.0.1");
-        cookie.setPath(request.getContextPath());
+        cookie.setPath("/");
         cookie.setMaxAge(3600 * 24 * 7);
         response.addCookie(cookie);
     }

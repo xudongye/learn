@@ -47,14 +47,13 @@ public class AdminLoginController {
             @RequestBody AdminLoginDto loginBo
     ) {
         AdminTokenVo token = adminLoginService.login(loginBo);
-        CookieUtils.setAdminUserTokenInCookie(request, response, token.getValue());
+        CookieUtils.setAdminUserTokenInCookie(response, token.getValue());
         return new ResponseEntity(token, HttpStatus.CREATED);
     }
 
     @ApiOperation("管理员登出")
     @RequestMapping(method = RequestMethod.DELETE)
     @AdminAuthenticationRequired
-//    @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
     public ResponseEntity logout(
             HttpServletRequest request,
             HttpServletResponse response,
@@ -68,7 +67,7 @@ public class AdminLoginController {
         }
         tokenService.remove(aat.getValue());
         // set empty string to cookie(delete the token cookie)
-        CookieUtils.setAdminUserTokenInCookie(request, response, "");
+        CookieUtils.setAdminUserTokenInCookie(response, "");
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

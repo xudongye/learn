@@ -1,5 +1,6 @@
 package me.own.learn.agent.service;
 
+import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.agent.dto.AgentDto;
 import me.own.learn.agent.vo.AgentVo;
 
@@ -12,4 +13,6 @@ public interface AgentService {
     AgentVo create(AgentDto agentDto);
 
     AgentVo getById(long agentId);
+
+    PageQueryResult<AgentVo> page(int pageNum, int pageSize, AgentQueryCondition condition);
 }

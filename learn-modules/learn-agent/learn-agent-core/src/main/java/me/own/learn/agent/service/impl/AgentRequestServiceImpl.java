@@ -101,6 +101,7 @@ public class AgentRequestServiceImpl implements AgentRequestService {
         agentRequestDao.update(agentRequest);
         //判断受理状态是否为批准成为分销商
         if (handleDto.getRequestStatus().getCode() == AgentConstant.AgentRequestStatus.approval.getCode()) {
+
             AdminDto adminDto = new AdminDto();
             adminDto.setCellphone(agentRequest.getTelephone());
             adminDto.setEmail(agentRequest.getEmail());
@@ -116,6 +117,7 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             agentDto.setParentId(customerVo.getSourceAgentId());
             //新增管理员
             agentDto.setAdminId(adminVo.getId());
+            agentDto.setAssignedQR(handleDto.getAssignedQR());
             //申请会员
             agentDto.setCustomerId(agentRequest.getCustomerId());
             agentDto.setName(agentRequest.getName());
@@ -128,9 +130,11 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             agentDto.setMemberJoinShareEnable(agentRequest.getAgentType() == AgentConstant.AgentType.individual.getCode());
             AgentVo agentVo = agentService.create(agentDto);
             LOGGER.info("create new agent {} success", agentVo.getName());
+
             eventService.enqueue(EventService.EventName.AgentEvent.AGENT_PASS,
                     new AgentMessage(agentRequest.getName(), customerVo.getHeadImage(), agentRequest.getTelephone(), agentRequest.getEmail()));
         }
+
         return Mapper.Default().map(agentRequest, AgentRequestVo.class);
     }
 

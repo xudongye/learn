@@ -33,7 +33,6 @@ public class AgentVo {
      */
     private Double rate;
     private Double childrenRate;
-    private String code;
     /**
      * 累计总提成
      */
@@ -160,14 +159,6 @@ public class AgentVo {
 
     public void setChildrenRate(Double childrenRate) {
         this.childrenRate = childrenRate;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public double getTotalCommission() {

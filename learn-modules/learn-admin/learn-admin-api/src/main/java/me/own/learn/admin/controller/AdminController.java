@@ -54,7 +54,8 @@ public class AdminController {
 
     @ApiOperation("创建管理员")
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(HttpServletRequest request,
+    @AdminAuthenticationRequired
+    public ResponseEntity create(HttpServletRequest request,AdminAccessToken aat,
                                  @RequestBody AdminDto adminDto) {
 
         Map<String, Object> response = new HashMap<>();
@@ -69,7 +70,8 @@ public class AdminController {
 
     @ApiOperation("分页查询管理员")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity page(HttpServletRequest request,
+    @AdminAuthenticationRequired
+    public ResponseEntity page(HttpServletRequest request,AdminAccessToken aat,
                                @RequestParam(required = false) AdminQueryCondition condition,
                                @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {

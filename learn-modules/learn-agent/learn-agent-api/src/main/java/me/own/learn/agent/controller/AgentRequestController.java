@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
+import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.agent.dto.AgentRequestDto;
 import me.own.learn.agent.dto.AgentRequestHandleDto;
 import me.own.learn.agent.service.AgentRequestQueryCondition;
@@ -49,6 +50,9 @@ public class AgentRequestController {
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
     ) {
+        if (condition == null) {
+            condition = RequestUtils.buildQueryFilter(request, AgentRequestQueryCondition.class);
+        }
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<AgentRequestVo> requestVoPageQueryResult = agentRequestService.page(pageNum, pageSize, condition);
         response.put("code", 200);
