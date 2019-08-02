@@ -10,10 +10,7 @@ import me.own.learn.agent.vo.AgentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -24,7 +21,7 @@ import java.util.Map;
  * @date 2019/7/25 10:50
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/agents")
+@RequestMapping(value = "/api/v1/agents")
 @Api(value = "分销商模块", description = "管理分销商用户")
 public class AgentController {
 
@@ -36,7 +33,7 @@ public class AgentController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
                                @RequestParam(required = false) AgentQueryCondition condition,
-                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
     ) {
         if (condition == null) {
@@ -47,5 +44,27 @@ public class AgentController {
         response.put("code", 200);
         response.put("data", requestVoPageQueryResult);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("查看分销商详细信息")
+    @RequestMapping(value = "/{agentId}", method = RequestMethod.GET)
+    public ResponseEntity getById(HttpServletRequest request,
+                                  @PathVariable Long agentId) {
+        Map<String, Object> response = new HashMap<>();
+        AgentVo agentVo = agentService.getById(agentId);
+        response.put("code", 200);
+        response.put("data", agentVo);
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation("分销用户生成专属二维码")
+    @RequestMapping(value = "/{agentId}", method = RequestMethod.PUT)
+    public ResponseEntity createQrCode(HttpServletRequest request,
+                                       @PathVariable Long agentId) {
+        Map<String, Object> response = new HashMap<>();
+        AgentVo agentVo = agentService.generateQrCodeById(agentId);
+        response.put("code", 200);
+        response.put("data", agentVo);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 }

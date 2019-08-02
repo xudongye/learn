@@ -88,6 +88,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public ProductVo getById(long productId) {
+        Product product = productDao.get(productId);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
+        return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    @Override
     @Transactional
     public void soldOut(long productId) {
         Product product = productDao.get(productId);

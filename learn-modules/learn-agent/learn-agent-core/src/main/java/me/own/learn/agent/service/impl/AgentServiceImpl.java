@@ -13,6 +13,11 @@ import me.own.learn.agent.po.Agent;
 import me.own.learn.agent.service.AgentQueryCondition;
 import me.own.learn.agent.service.AgentService;
 import me.own.learn.agent.vo.AgentVo;
+import me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate;
+import me.own.learn.customer.service.CustomerService;
+import me.own.learn.customer.vo.CustomerVo;
+import me.own.learn.pubaccount.service.QRCodeCreateService;
+import me.own.learn.pubconfiguration.service.PubConfigurationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +42,18 @@ public class AgentServiceImpl implements AgentService {
 
     @Autowired
     private AgentDao agentDao;
+
+    @Autowired
+    private QRCodeCreateService qrCodeCreateService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private PubConfigurationService pubConfigurationService;
+
+    private LearnConfigurationServiceDelegate delegate = LearnConfigurationServiceDelegate.getInstance();
+
 
     @Override
     @Transactional
@@ -127,5 +144,27 @@ public class AgentServiceImpl implements AgentService {
 
         PageQueryResult<Agent> pageQueryResult = agentDao.pageQuery(pageNum, pageSize, query, orders);
         return pageQueryResult.mapItems(AgentVo.class);
+    }
+
+    @Override
+    @Transactional
+    public AgentVo generateQrCodeById(long agentId) {
+        Agent agent = agentDao.get(agentId);
+        if (agent == null) {
+            throw new AgentNotFoundException();
+        }
+        CustomerVo customerVo = customerService.getById(agent.getCustomerId());
+        String pubAppId = pubConfigurationService.getById(customerVo.getPubAccountId()).getPubAccountAppId();
+        String fileName = agentId + ".JPG";
+        String qrCodeFilePath = delegate.getConfiguration().getFile().getQrCodePath();
+        String logoPath = delegate.getConfiguration().getFile().getQrCodeLogoPath();
+        String qrCodeContent = qrCodeCreateService.createQRCode(pubAppId,
+                String.valueOf(agentId), qrCodeFilePath, logoPath, fileName, true);
+        agent.setQrUrl("qrcode/" + fileName);
+        agent.setQrContent(qrCodeContent);
+        agent.setUsedQR(1);
+        agentDao.update(agent);
+        LOGGER.info("create qrcode {} for agent {}", qrCodeContent, agentId);
+        return Mapper.Default().map(agent, AgentVo.class);
     }
 }

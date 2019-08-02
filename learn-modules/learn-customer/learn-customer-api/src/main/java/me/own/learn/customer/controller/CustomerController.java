@@ -10,10 +10,7 @@ import me.own.learn.customer.vo.CustomerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -34,7 +31,7 @@ public class CustomerController {
     @ApiOperation("分页查询会员")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
-                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                @RequestParam(required = false) CustomerQueryCondition condition) {
         if (condition == null) {
@@ -42,6 +39,17 @@ public class CustomerController {
         }
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<CustomerVo> result = customerService.page(pageNum, pageSize, condition);
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("获取会员详情")
+    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
+    public ResponseEntity getById(HttpServletRequest request,
+                                  @PathVariable Long customerId) {
+        Map<String, Object> response = new HashMap<>();
+        CustomerVo result = customerService.getById(customerId);
         response.put("code", 200);
         response.put("data", result);
         return new ResponseEntity(response, HttpStatus.OK);

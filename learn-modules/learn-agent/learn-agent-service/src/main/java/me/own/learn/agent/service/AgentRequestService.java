@@ -15,6 +15,8 @@ public interface AgentRequestService {
 
     AgentRequestVo update(AgentRequestDto requestDto);
 
+    AgentRequestVo getById(long requestId);
+
     AgentRequestVo handle(AgentRequestHandleDto handleDto);
 
     PageQueryResult<AgentRequestVo> page(int pageNum, int pageSize, AgentRequestQueryCondition condition);

@@ -19,6 +19,10 @@ public class Agent implements Serializable {
     private Long id;
     private String name;
     /**
+     * 代理商类型。individual,enterprise
+     */
+    private Integer agentType;
+    /**
      * 营业执照编号
      */
     private String businessLicense;
@@ -112,6 +116,14 @@ public class Agent implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAgentType() {
+        return agentType;
+    }
+
+    public void setAgentType(Integer agentType) {
+        this.agentType = agentType;
     }
 
     public String getBusinessLicense() {

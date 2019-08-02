@@ -25,7 +25,7 @@ import java.util.Map;
  * @date 2019/7/5 10:44
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/agent_requests")
+@RequestMapping(value = "/api/v1/agent_requests")
 @Api(value = "分销商申请", description = "管理用户申请分销商")
 public class AgentRequestController {
 
@@ -43,11 +43,22 @@ public class AgentRequestController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
+    @ApiOperation("创建成为代理商申请")
+    @RequestMapping(value = "/{requestId}", method = RequestMethod.GET)
+    public ResponseEntity getById(HttpServletRequest request,
+                                  @PathVariable Long requestId) {
+        Map<String, Object> response = new HashMap<>();
+        AgentRequestVo agentRequestVo = agentRequestService.getById(requestId);
+        response.put("code", 200);
+        response.put("data", agentRequestVo);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
     @ApiOperation("分页分销商申请记录表")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
                                @RequestParam(required = false) AgentRequestQueryCondition condition,
-                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
     ) {
         if (condition == null) {

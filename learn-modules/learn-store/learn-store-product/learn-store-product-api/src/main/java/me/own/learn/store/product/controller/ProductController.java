@@ -24,7 +24,7 @@ import java.util.Map;
  * @date 2019/7/4 14:38
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/products")
+@RequestMapping(value = "/api/v1/products")
 @Api(value = "商品模块", description = "商品管理模块")
 public class ProductController {
 
@@ -61,6 +61,17 @@ public class ProductController {
         response.put("code", 200);
         response.put("data", productVo);
         return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation("获取商品信息")
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+    public ResponseEntity getById(HttpServletRequest request,
+                                  @PathVariable Long productId) {
+        Map<String, Object> response = new HashMap<>();
+        ProductVo productVo = productService.getById(productId);
+        response.put("code", 200);
+        response.put("data", productVo);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @ApiOperation("分页查询商品信息")

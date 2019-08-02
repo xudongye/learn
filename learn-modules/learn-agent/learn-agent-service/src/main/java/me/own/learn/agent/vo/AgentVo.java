@@ -10,6 +10,10 @@ public class AgentVo {
     private Long id;
     private String name;
     /**
+     * 代理商类型。individual,enterprise
+     */
+    private Integer agentType;
+    /**
      * 营业执照编号
      */
     private String businessLicense;
@@ -48,6 +52,14 @@ public class AgentVo {
     private Long parentId;
     private Long customerId;
     private Long adminId;
+
+    public Integer getAgentType() {
+        return agentType;
+    }
+
+    public void setAgentType(Integer agentType) {
+        this.agentType = agentType;
+    }
 
     public Long getId() {
         return id;

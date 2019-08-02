@@ -85,6 +85,16 @@ public class AgentRequestServiceImpl implements AgentRequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public AgentRequestVo getById(long requestId) {
+        AgentRequest agentRequest = agentRequestDao.get(requestId);
+        if (agentRequest == null) {
+            throw new AgentRequestNotFoundException();
+        }
+        return Mapper.Default().map(agentRequest, AgentRequestVo.class);
+    }
+
+    @Override
     @Transactional
     public AgentRequestVo handle(AgentRequestHandleDto handleDto) {
         AgentRequest agentRequest = agentRequestDao.get(handleDto.getId());
@@ -113,6 +123,8 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             LOGGER.info("create admin {} from agent request pass.", adminVo.getName());
 
             AgentDto agentDto = new AgentDto();
+            //分销商类型
+            agentDto.setAgentType(agentRequest.getAgentType());
             //父级代理商
             agentDto.setParentId(customerVo.getSourceAgentId());
             //新增管理员
@@ -127,7 +139,8 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             //是否为顶级分销商
             agentDto.setRoot(customerVo.getSourceAgentId() == 1);
             //个人的可以发展下线
-            agentDto.setMemberJoinShareEnable(agentRequest.getAgentType() == AgentConstant.AgentType.individual.getCode());
+            agentDto.setMemberJoinShareEnable(handleDto.getMemberJoinShareEnable());
+            agentDto.setChildrenRate(handleDto.getChildrenRate());
             AgentVo agentVo = agentService.create(agentDto);
             LOGGER.info("create new agent {} success", agentVo.getName());
 

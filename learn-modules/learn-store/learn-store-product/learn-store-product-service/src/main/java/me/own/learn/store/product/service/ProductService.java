@@ -17,6 +17,8 @@ public interface ProductService {
 
     ProductVo update(ProductDto productDto);
 
+    ProductVo getById(long productId);
+
     //商品下架
     void soldOut(long productId);
 

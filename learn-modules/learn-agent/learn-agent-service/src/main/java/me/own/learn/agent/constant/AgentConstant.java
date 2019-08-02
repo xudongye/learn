@@ -11,7 +11,7 @@ public class AgentConstant {
     public enum AgentRequestStatus implements EnumName {
 
         pending(1, "申请中"),
-        approval(2, "批准"),
+        approval(2, "通过"),
         rejected(3, "拒绝");
 
         AgentRequestStatus(int code, String name) {

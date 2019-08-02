@@ -15,4 +15,6 @@ public interface AgentService {
     AgentVo getById(long agentId);
 
     PageQueryResult<AgentVo> page(int pageNum, int pageSize, AgentQueryCondition condition);
+
+    AgentVo generateQrCodeById(long agentId);
 }

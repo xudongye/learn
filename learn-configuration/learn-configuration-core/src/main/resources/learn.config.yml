@@ -5,7 +5,7 @@ tmc:
   partnerCode: P10000048
   version: 1.0.0
 file:
-  root: /alidata/own/upload/learn/static/images/
+  root: /ala'gen'tsidata/own/upload/learn/static/images/
   urlPrefix: http://47.102.195.81:8080/learn/static/images/
   qrCodePath: /alidata/own/upload/learn/static/images/qrcode/
   qrCodeLogoPath: /alidata/own/upload/learn/static/images/qrcode/logo.jpg

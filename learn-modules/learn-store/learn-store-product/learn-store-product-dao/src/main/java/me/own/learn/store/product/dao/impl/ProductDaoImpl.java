@@ -22,10 +22,10 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao {
 
     @Override
     public void putSold(List<Long> productIds, int status) {
-        Query query = getCurrentSession().createQuery("update Product set status = :status, modifyTime = :modifyTime where id in :productIds");
+        Query query = getCurrentSession().createQuery("update Product set status = :status, soldOutTime = :soldOutTime where id in :productIds");
         query.setParameterList("productIds", productIds);
         query.setParameter("status", status);
-        query.setParameter("modifyTime", new Date());
+        query.setParameter("soldOutTime", new Date());
         query.executeUpdate();
     }
 }

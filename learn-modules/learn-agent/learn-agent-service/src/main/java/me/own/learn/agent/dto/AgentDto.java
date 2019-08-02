@@ -8,6 +8,10 @@ public class AgentDto {
     private Long id;
     private String name;
     /**
+     * 代理商类型。individual,enterprise
+     */
+    private Integer agentType;
+    /**
      * 营业执照编号
      */
     private String businessLicense;
@@ -31,7 +35,6 @@ public class AgentDto {
      */
     private Double rate;
     private Double childrenRate;
-    private String code;
     /**
      * 累计总提成
      */
@@ -60,6 +63,14 @@ public class AgentDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getAgentType() {
+        return agentType;
+    }
+
+    public void setAgentType(Integer agentType) {
+        this.agentType = agentType;
     }
 
     public String getBusinessLicense() {
@@ -156,14 +167,6 @@ public class AgentDto {
 
     public void setChildrenRate(Double childrenRate) {
         this.childrenRate = childrenRate;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public double getTotalCommission() {
