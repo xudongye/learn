@@ -43,7 +43,7 @@ public class AgentRequestController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("创建成为代理商申请")
+    @ApiOperation("获取代理商申请信息")
     @RequestMapping(value = "/{requestId}", method = RequestMethod.GET)
     public ResponseEntity getById(HttpServletRequest request,
                                   @PathVariable Long requestId) {
@@ -75,7 +75,7 @@ public class AgentRequestController {
     @RequestMapping(value = "/handler", method = RequestMethod.POST)
     @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
     public ResponseEntity handle(HttpServletRequest request, AdminAccessToken aat,
-                                 @RequestBody AgentRequestHandleDto handleDto) {
+                                 @RequestBody(required = false) AgentRequestHandleDto handleDto) {
         Map<String, Object> response = new HashMap<>();
         handleDto.setHandlerId(aat.getAdminId());
         AgentRequestVo agentRequestVo = agentRequestService.handle(handleDto);

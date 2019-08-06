@@ -2,6 +2,7 @@ package me.own.learn.store.product.service;
 
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface ProductService {
     ProductVo update(ProductDto productDto);
 
     ProductVo getById(long productId);
+
+    //获取产品详细  包含类目
+    ProductDetailVo getByProductId(long productId);
 
     //商品下架
     void soldOut(long productId);

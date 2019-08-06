@@ -14,6 +14,8 @@ import me.own.learn.store.product.exception.ProductNotFoundException;
 import me.own.learn.store.product.po.Product;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
+import me.own.learn.store.product.vo.ProductCategoryVo;
+import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +97,21 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException();
         }
         return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductDetailVo getByProductId(long productId) {
+        Product product = productDao.get(productId);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
+        ProductDetailVo detailVo = Mapper.Default().map(product, ProductDetailVo.class);
+        if (detailVo.getCategoryId() != null) {
+            CategoryVo categoryVo = categoryService.getById(detailVo.getCategoryId());
+            detailVo.setCategory(Mapper.Default().map(categoryVo, ProductCategoryVo.class));
+        }
+        return detailVo;
     }
 
     @Override

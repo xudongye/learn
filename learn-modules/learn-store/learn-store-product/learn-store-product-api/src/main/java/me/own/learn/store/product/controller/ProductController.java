@@ -8,6 +8,7 @@ import me.own.learn.store.product.constant.ProductConstant;
 import me.own.learn.store.product.dto.ProductDto;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
+import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,14 +64,14 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("获取商品信息")
+    @ApiOperation("获取商品详细信息")
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public ResponseEntity getById(HttpServletRequest request,
                                   @PathVariable Long productId) {
         Map<String, Object> response = new HashMap<>();
-        ProductVo productVo = productService.getById(productId);
+        ProductDetailVo detailVo = productService.getByProductId(productId);
         response.put("code", 200);
-        response.put("data", productVo);
+        response.put("data", detailVo);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
