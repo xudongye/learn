@@ -1,5 +1,5 @@
 # 配置项的刷新间隔，以毫秒为单位，如果设置为0，则文件一改动即生效
-domain: https://dev.youngch-cloud.com
+domain: http://dev.youngch-cloud.com
 defaultPassword: letgoit
 tmc:
   partnerCode: P10000048

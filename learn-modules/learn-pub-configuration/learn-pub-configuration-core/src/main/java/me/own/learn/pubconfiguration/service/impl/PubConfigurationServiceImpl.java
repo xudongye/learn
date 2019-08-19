@@ -2,9 +2,11 @@ package me.own.learn.pubconfiguration.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.dao.QueryConstants;
 import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.utils.mapper.Mapper;
+import me.own.commons.wechat.pubaccount.common.ConfigureManager;
 import me.own.learn.pubconfiguration.bo.PubAccountArticleMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTemplateMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTextMessageBo;
@@ -17,6 +19,7 @@ import me.own.learn.pubconfiguration.exception.PubConfigurationNotFoundException
 import me.own.learn.pubconfiguration.po.PubAccountConfiguration;
 import me.own.learn.pubconfiguration.po.PubAccountMenu;
 import me.own.learn.pubconfiguration.po.PubAccountMessage;
+import me.own.learn.pubconfiguration.service.PubConfigurationQueryCondition;
 import me.own.learn.pubconfiguration.service.PubConfigurationService;
 import me.own.learn.pubconfiguration.vo.PubAccountMenuVo;
 import me.own.learn.pubconfiguration.vo.PubAccountMessageVo;
@@ -63,6 +66,36 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
         pubAccountConfigurationDao.create(pubAccountConfiguration);
         LOGGER.info("create new pub account {} configuration", pubAccountConfiguration.getName());
         return Mapper.Default().map(pubAccountConfiguration, PubConfigurationVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageQueryResult<PubConfigurationVo> page(int pageNumber, int pageSize, PubConfigurationQueryCondition condition) {
+        QueryCriteriaUtil query = new QueryCriteriaUtil(PubAccountConfiguration.class);
+        query.setDeletedFalseCondition();
+        if (condition != null) {
+            if (condition.getName() != null) {
+                query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Like);
+            }
+            if (condition.getDomain() != null) {
+                query.setSimpleCondition("domain", condition.getDomain(), QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getPubAccountAppId() != null) {
+                query.setSimpleCondition("pubAccountAppId", condition.getPubAccountAppId(), QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getActive() != null) {
+                query.setSimpleCondition("active", condition.getActive() + "", QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getWxpayKey() != null) {
+                query.setSimpleCondition("wxpayKey", condition.getWxpayKey(), QueryConstants.SimpleQueryMode.Equal);
+            }
+            if (condition.getWxpayMerchantId() != null) {
+                query.setSimpleCondition("wxpayMerchantId", condition.getWxpayMerchantId(), QueryConstants.SimpleQueryMode.Equal);
+            }
+        }
+        PageQueryResult<PubAccountConfiguration> pageQueryResult = pubAccountConfigurationDao.pageQuery(pageNumber, pageSize, query);
+
+        return pageQueryResult.mapItems(PubConfigurationVo.class);
     }
 
     private boolean pubAccountExist(String pubAccountAppId) {
@@ -200,5 +233,19 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
             return pubAccountMenu.getContent();
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public boolean onActive(long id) {
+        PubAccountConfiguration configuration = pubAccountConfigurationDao.get(id);
+        if (configuration == null || configuration.getDeleted()) {
+            throw new PubConfigurationNotFoundException();
+        }
+        configuration.setActive(!configuration.getActive());
+        configuration.setModifyTime(new Date());
+        pubAccountConfigurationDao.update(configuration);
+        ConfigureManager.removeConfigure(configuration.getPubAccountAppId());
+        return configuration.getActive();
     }
 }

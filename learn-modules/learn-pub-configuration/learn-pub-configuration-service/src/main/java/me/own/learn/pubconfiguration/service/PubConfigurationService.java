@@ -1,5 +1,6 @@
 package me.own.learn.pubconfiguration.service;
 
+import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.pubconfiguration.bo.PubAccountArticleMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTemplateMessageBo;
 import me.own.learn.pubconfiguration.bo.PubAccountTextMessageBo;
@@ -23,6 +24,8 @@ public interface PubConfigurationService {
     //configuration
     PubConfigurationVo create(PubConfigurationDto pubConfigurationDto);
 
+    PageQueryResult<PubConfigurationVo> page(int pageNumber, int pageSize, PubConfigurationQueryCondition condition);
+
     PubConfigurationVo update(PubConfigurationDto pubConfigurationDto);
 
     List<String> domains(String appId);
@@ -42,5 +45,7 @@ public interface PubConfigurationService {
 
     //menu
     String queryMenuContentByAppId(String appId);
+
+    boolean onActive(long id);
 
 }

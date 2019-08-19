@@ -27,6 +27,7 @@ public class PubAccountConfiguration implements Serializable {
     private Date createTime;
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date modifyTime;
+    private Boolean deleted;
 
 
     public Long getId() {
@@ -123,5 +124,13 @@ public class PubAccountConfiguration implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

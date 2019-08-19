@@ -20,4 +20,11 @@
     </modules>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>me.own.commons</groupId>
+            <artifactId>wechat-pub-account</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
