@@ -1,11 +1,11 @@
 # 配置项的刷新间隔，以毫秒为单位，如果设置为0，则文件一改动即生效
-domain: https://dev.youngch-cloud.com
+domain: http://www.lant.ltd
 defaultPassword: letgoit
 tmc:
   partnerCode: P10000048
   version: 1.0.0
 file:
-  root: /ala'gen'tsidata/own/upload/learn/static/images/
+  root: /alidata/own/upload/learn/static/images/
   urlPrefix: http://47.102.195.81:8080/learn/static/images/
   qrCodePath: /alidata/own/upload/learn/static/images/qrcode/
   qrCodeLogoPath: /alidata/own/upload/learn/static/images/qrcode/logo.jpg
