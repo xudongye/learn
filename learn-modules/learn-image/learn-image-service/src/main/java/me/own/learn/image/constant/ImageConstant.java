@@ -10,8 +10,8 @@ public class ImageConstant {
 
     public enum ImageType implements EnumName {
 
-        store_product(1, "商城图片"),
-        customer_head_pic(2, "会员头像");
+        product_img(1, "productImg"),
+        head_img(2, "headImg");
 
         ImageType(int code, String name) {
             this.code = code;

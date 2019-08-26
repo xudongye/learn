@@ -8,6 +8,7 @@ package me.own.learn.image.dto;
 public class ImageDto extends ImageBaseDto {
 
     private Long productId;
+    private Long customerId;
 
     public Long getProductId() {
         return productId;
@@ -15,5 +16,13 @@ public class ImageDto extends ImageBaseDto {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 }

@@ -18,6 +18,7 @@ public class Image implements Serializable {
     private Integer type;
     private Boolean isMain;
     private Long productId;
+    private Long customerId;
     private Boolean deleted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -60,6 +61,14 @@ public class Image implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Boolean getDeleted() {
