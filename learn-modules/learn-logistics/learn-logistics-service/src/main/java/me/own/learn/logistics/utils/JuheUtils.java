@@ -8,6 +8,7 @@ import me.own.learn.logistics.bo.LogisticsBo;
 import me.own.learn.logistics.bo.LogisticsRequestBo;
 import me.own.learn.logistics.bo.LogisticsResponseBo;
 import me.own.learn.logistics.exception.JuheCallOnFailureException;
+import me.own.learn.logistics.exception.JuheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +36,19 @@ public class JuheUtils {
         Map<String, String> params = new HashMap<>();
         params.put("key", JUHE_KEY);
         String result = HttpUtils.post(params, JUHE_URL + "/com");
+        LogisticsResponseBo responseBo;
         try {
-            return mapper.readValue(result,
+            LOGGER.info("logistics company {}", result);
+            responseBo = mapper.readValue(result,
                     new TypeReference<LogisticsResponseBo<List<CompanyBo>>>() {
                     });
         } catch (IOException e) {
             throw new JuheCallOnFailureException();
         }
+        if (responseBo.getError_code() != 0) {
+            throw new JuheException(responseBo.getReason());
+        }
+        return responseBo;
     }
 
     //物流状态查询
@@ -54,12 +61,18 @@ public class JuheUtils {
         params.put("dtype", "json");
         params.put("key", JUHE_KEY);
         String result = HttpUtils.post(params, JUHE_URL + "/index");
+        LogisticsResponseBo responseBo;
         try {
-            return mapper.readValue(result, new TypeReference<LogisticsResponseBo<LogisticsBo>>() {
+            LOGGER.info("logistics status {}", result);
+            responseBo = mapper.readValue(result, new TypeReference<LogisticsResponseBo<LogisticsBo>>() {
             });
         } catch (IOException e) {
             throw new JuheCallOnFailureException();
         }
+        if (responseBo.getError_code() != 0) {
+            throw new JuheException(responseBo.getReason());
+        }
+        return responseBo;
     }
 
     public static void main(String[] args) {

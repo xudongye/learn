@@ -26,6 +26,7 @@
         <module>learn-captcha</module>
         <module>learn-image</module>
         <module>learn-logistics</module>
+        <module>learn-order</module>
     </modules>
 
 
