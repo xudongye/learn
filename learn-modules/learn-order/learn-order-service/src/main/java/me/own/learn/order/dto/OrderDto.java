@@ -1,6 +1,8 @@
 package me.own.learn.order.dto;
 
 
+import java.util.List;
+
 public class OrderDto {
     private String orderNo;
     private Double totalPrice;
@@ -11,10 +13,8 @@ public class OrderDto {
     private String logisticsCom;
     //快递单号
     private String logisticsNo;
-    //收货地址
-    private OrderAddressDto address;
-    //是否为默认收货地址
-    private Boolean beDefault;
+    //订单详情
+    private List<OrderDetailDto> details;
 
     public String getOrderNo() {
         return orderNo;
@@ -64,19 +64,11 @@ public class OrderDto {
         this.logisticsNo = logisticsNo;
     }
 
-    public OrderAddressDto getAddress() {
-        return address;
+    public List<OrderDetailDto> getDetails() {
+        return details;
     }
 
-    public void setAddress(OrderAddressDto address) {
-        this.address = address;
-    }
-
-    public Boolean getBeDefault() {
-        return beDefault;
-    }
-
-    public void setBeDefault(Boolean beDefault) {
-        this.beDefault = beDefault;
+    public void setDetails(List<OrderDetailDto> details) {
+        this.details = details;
     }
 }

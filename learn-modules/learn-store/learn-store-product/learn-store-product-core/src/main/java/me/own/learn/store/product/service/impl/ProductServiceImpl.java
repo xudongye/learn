@@ -187,6 +187,7 @@ public class ProductServiceImpl implements ProductService {
         QueryOrder order = new QueryOrder();
         order.setColumnName("id");
         order.setOder(QueryOrder.ASC);
+        orders.add(order);
         PageQueryResult<Product> result = productDao.pageQuery(pageNum, pageSize, query, orders);
 
         return result.mapItems(ProductVo.class);

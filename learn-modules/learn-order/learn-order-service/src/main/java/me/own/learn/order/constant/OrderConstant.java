@@ -8,7 +8,8 @@ public class OrderConstant {
 
         unpaid(1, "待支付"),
         canceled(2, "已取消"),
-        paid(3, "已支付");
+        paid(3, "已支付"),
+        sentOut(4, "已发货");
 
         OrderStatus(int code, String name) {
             this.code = code;

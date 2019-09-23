@@ -13,7 +13,10 @@ import me.own.learn.order.service.OrderAddressService;
 import me.own.learn.order.service.OrderQueryCondition;
 import me.own.learn.order.service.OrderService;
 import me.own.learn.order.vo.OrderAddressVo;
+import me.own.learn.order.vo.OrderDetailVo;
 import me.own.learn.order.vo.OrderVo;
+import me.own.learn.store.product.service.ProductService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,9 @@ public class OrderCustomerController {
     @Autowired
     private OrderAddressService addressService;
 
+    @Autowired
+    private ProductService productService;
+
     @ApiOperation("新建订单")
     @RequestMapping(method = RequestMethod.POST)
     @CustomerAuthenticationRequired
@@ -50,7 +56,7 @@ public class OrderCustomerController {
     }
 
     @ApiOperation("批量搜索订单")
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.GET)
     @CustomerAuthenticationRequired
     @ApiImplicitParam(name = "c_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
     public ResponseEntity onPage(HttpServletRequest request, CustomerAccessToken cat,
@@ -65,6 +71,23 @@ public class OrderCustomerController {
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<OrderVo> result = orderService.page(pageNumber, pageSize, condition);
         response.put("orders", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("通过订单编号获取订单详情列表")
+    @RequestMapping(value = "/{orderNo}/details", method = RequestMethod.GET)
+    @CustomerAuthenticationRequired
+    @ApiImplicitParam(name = "c_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
+    public ResponseEntity listDetailByOrderNo(HttpServletRequest request, CustomerAccessToken cat,
+                                              @PathVariable String orderNo) {
+        Map<String, Object> response = new HashMap<>();
+        List<OrderDetailVo> detailVos = orderService.listByOrderNo(orderNo);
+        if (CollectionUtils.isNotEmpty(detailVos)) {
+            for (OrderDetailVo detailVo : detailVos) {
+
+            }
+        }
+        response.put("details", detailVos);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
