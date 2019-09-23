@@ -13,6 +13,7 @@
         <module>learn-modules</module>
         <module>learn-configuration</module>
         <module>learn-event</module>
+        <module>learn-test</module>
     </modules>
 
     <properties>
@@ -27,12 +28,19 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <version.swagger>2.7.0</version.swagger>
         <es.version>2.0.0.RELEASE</es.version>
+        <j2cache-version>2.7.6-release</j2cache-version>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
 
+            <dependency>
+                <groupId>net.oschina.j2cache</groupId>
+                <artifactId>j2cache-core</artifactId>
+                <version>${j2cache-version}</version>
+                <scope>provided</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
@@ -348,6 +356,11 @@
                     <artifactId>log4j-over-slf4j</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.oschina.j2cache</groupId>
+            <artifactId>j2cache-core</artifactId>
         </dependency>
 
     </dependencies>

@@ -1,5 +1,7 @@
 package me.own.learn.store.product.po;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "learn_store_product")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Product implements Serializable {
 
     @Id

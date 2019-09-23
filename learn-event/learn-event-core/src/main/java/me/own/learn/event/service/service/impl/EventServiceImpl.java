@@ -30,7 +30,7 @@ public class EventServiceImpl implements EventService {
     private JmsTemplate queueJmsTemplate;
 
     @Override
-    public void publish(String topicDestination, MessageCarriable message) {
+    public void publish(final String topicDestination, final MessageCarriable message) {
         if (TransactionSynchronizationManager.isActualTransactionActive()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
                 @Override
@@ -53,7 +53,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void enqueue(String queueDestination, MessageCarriable message) {
+    public void enqueue(final String queueDestination, final MessageCarriable message) {
         if (TransactionSynchronizationManager.isActualTransactionActive()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
                 @Override
