@@ -17,16 +17,17 @@ import me.own.learn.store.product.service.ProductService;
 import me.own.learn.store.product.vo.ProductCategoryVo;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
+import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author yexudong

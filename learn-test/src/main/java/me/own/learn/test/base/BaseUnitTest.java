@@ -3,17 +3,12 @@ package me.own.learn.test.base;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 使用spring-test组件MockMvc以及测试IOC bean的基类
@@ -24,15 +19,13 @@ import org.springframework.web.context.WebApplicationContext;
  * “@ContextConfiguration(locations = {"file:F:\gitRepository\webook\Source\Trunk\lishu\lishu-api\src\main\webapp\WEB-INF\mvc-dispatcher-servlet-test.xml"})”
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@Transactional
-@Rollback
 @ContextConfiguration(locations = {
-        "file:../../../../learn-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
+        "classpath:mvc-dispatcher-servlet-test.xml"
+//        "file:../../../lishu-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
 })
-public class BaseTestConfiguration {
-
-    protected ObjectMapper objectMapper = new ObjectMapper();
+//@Transactional
+//@Rollback
+public abstract class BaseUnitTest {
 
     /***
      * Admin authentication token
@@ -40,22 +33,12 @@ public class BaseTestConfiguration {
      * The subclass test should get token by itself if auth required
      */
     protected static String adminToken;
-
     /***
      * Customer authentication token
      */
     protected static String customerToken;
-
-    @Autowired
-    protected WebApplicationContext ctx;
-
+    protected ObjectMapper objectMapper = new ObjectMapper();
     protected MockMvc mockMvc;
-
-    @Before
-    public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-        ctx.getServletContext().setInitParameter("debugMode", "true");
-    }
 
     /***
      * Convert an object to request body json string
@@ -63,7 +46,7 @@ public class BaseTestConfiguration {
      * @return a json string
      * @throws JsonProcessingException
      */
-    protected String convertToRequestBody(Object o) throws JsonProcessingException{
+    protected String convertToRequestBody(Object o) throws JsonProcessingException {
         ObjectWriter writer = objectMapper.writer().withDefaultPrettyPrinter();
         return writer.writeValueAsString(o);
     }

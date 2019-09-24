@@ -28,5 +28,11 @@
             <artifactId>learn-store-category-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-store-category-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

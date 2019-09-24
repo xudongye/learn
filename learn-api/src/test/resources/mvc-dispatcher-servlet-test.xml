@@ -1,0 +1,168 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/jms
+        http://www.springframework.org/schema/jms/spring-jms-4.3.xsd"
+       default-lazy-init="true">
+
+
+    <context:annotation-config/>
+    <context:component-scan base-package="me.own"/>
+    <mvc:annotation-driven/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+    <!--配置个人开发环境的JDBC配置-->
+    <bean id="learnDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://www.lant.ltd:3306/learn"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Admin_lant_2019"/>
+    </bean>
+
+    <!-- Hibernate Session Factory -->
+    <bean id="learnSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="learnDataSource"/>
+        <property name="packagesToScan">
+            <array>
+                <value>me.own</value>
+            </array>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+                <!--auto update database,when database is
+                                    generate, you can comment this line -->
+                <prop key="hibernate.connection.release_mode">auto</prop>
+<!--                &lt;!&ndash; 开启查询缓存 &ndash;&gt;-->
+<!--                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+<!--                &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+<!--                <prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+<!--                &lt;!&ndash; 高速缓存提供程序 &ndash;&gt;-->
+<!--                &lt;!&ndash; 由于spring也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
+<!--                <prop key="hibernate.cache.region.factory_class">-->
+<!--                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory-->
+<!--                </prop>-->
+                <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>-->
+                <!-- <prop key="hibernate.enable_lazy_load_no_trans">true</prop> -->
+            </props>
+        </property>
+    </bean>
+
+    <!-- Hibernate Transaction Manager -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="learnSessionFactory"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+    <bean class="me.own.commons.base.exception.handler.RestApiExceptionHandler"/>
+
+    <!-- Json 返回 乱码处理 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean
+                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+<!--    &lt;!&ndash; cacheManager, 指定ehcache.xml的位置 &ndash;&gt;-->
+<!--    <bean id="cacheManagerEhcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+<!--        <property name="configLocation">-->
+<!--            <value>classpath:ehcache.xml</value>-->
+<!--        </property>-->
+<!--        &lt;!&ndash; 由于hibernate也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
+<!--        <property name="shared" value="true"/>-->
+<!--    </bean>-->
+
+    <!-- Activates annotation based transaction management -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  -->
+    <!--<property name="defaultEncoding" value="UTF-8"/>  -->
+    <!--&lt;!&ndash; 指定所上传文件的总大小不能超过200KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 &ndash;&gt;  -->
+    <!--<property name="maxUploadSize" value="31457280"/>  -->
+    <!--</bean>  -->
+
+    <!--<bean class="com.jihox.pbserver.common.utils.QuartzInitListener"></bean>-->
+
+    <!--<context:property-placeholder location="/WEB-INF/redis.properties" />  -->
+    <!--redis-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="5000"/>
+        <property name="maxIdle" value="100"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="minEvictableIdleTimeMillis" value="30000"/>
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+
+    <bean id="jedisConnFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="www.lant.ltd"/>
+        <property name="port" value="6379"/>
+        <property name="password" value="AW6exN@pVw0mxcB4"/>
+        <property name="timeout" value="100000"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+        <property name="usePool" value="true"/>
+    </bean>
+
+    <bean id="jsonRedisSerializer"
+          class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnFactory"/>
+        <property name="keySerializer" ref="stringRedisSerializer"/>
+        <property name="valueSerializer" ref="jsonRedisSerializer"/>
+        <property name="hashKeySerializer" ref="stringRedisSerializer"/>
+        <property name="hashValueSerializer" ref="stringRedisSerializer"/>
+        <property name="defaultSerializer" ref="jsonRedisSerializer"/>
+    </bean>
+
+    <!-- jms -->
+    <!-- JMS ConnectionFactory to use -->
+    <bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://www.lant.ltd:61616"/>
+    </bean>
+
+    <!-- Spring JMS topic Template -->
+    <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <!-- lets wrap in a pool to avoid creating a connection per send-->
+            <bean class="org.springframework.jms.connection.SingleConnectionFactory">
+                <property name="targetConnectionFactory" ref="jmsFactory"/>
+            </bean>
+        </property>
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+
+    <bean class="me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate"
+          factory-method="getInstance"/>
+
+</beans>

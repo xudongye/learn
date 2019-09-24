@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "learn_store_product")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@org.hibernate.annotations.Cache(region = "product", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Product implements Serializable {
 
     @Id

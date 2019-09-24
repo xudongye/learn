@@ -11,16 +11,18 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Date;
 
+import static org.junit.Assert.assertTrue;
+
 //@ContextConfiguration(locations = {
-//        "file:../../../../learn-api/src/main/webapp/WEB-INF/mvc-dispatcher-servlet-test.xml"
+//        "file:../../../learn-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
 //})
 public class ProductTest extends BaseTestConfiguration {
 
     @Autowired
     private ProductDao productDao;
 
-//    @Test
-//    @Rollback(value = false)
+    @Test
+    @Rollback(value = false)
     public void testCreateProduct() throws Exception {
         Product product = new Product();
         product.setCategoryId(1L);
@@ -28,9 +30,21 @@ public class ProductTest extends BaseTestConfiguration {
         product.setDescription("测试数据");
         product.setCreateTime(new Date());
         product.setInventory(1);
+        product.setTitle("测试title");
         product.setName("测试商品");
         product.setPrice(1l);
         product.setStatus(1);
         productDao.create(product);
+    }
+
+    @Test
+    public void getProductById() {
+        Product product = productDao.get(4L);
+        System.out.println(product.getName());
+    }
+
+    @Test
+    public void getCacheProduct(){
+
     }
 }

@@ -131,4 +131,23 @@ public class ProductVo {
     public void setSoldOutTime(Date soldOutTime) {
         this.soldOutTime = soldOutTime;
     }
+
+    @Override
+    public String toString() {
+        return "ProductVo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", unit='" + unit + '\'' +
+                ", inventory=" + inventory +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", categoryId=" + categoryId +
+                ", status=" + status +
+                ", deleted=" + deleted +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                ", soldOutTime=" + soldOutTime +
+                '}';
+    }
 }
