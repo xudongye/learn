@@ -18,6 +18,8 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
     private LearnFileConfigurationBean file;
 
+    private LearnPayConfigurationBean pay;
+
     public void setDomain(String domain) {
         this.domain = domain;
     }
@@ -32,6 +34,10 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
 
     public void setFile(LearnFileConfigurationBean file) {
         this.file = file;
+    }
+
+    public void setPay(LearnPayConfigurationBean pay) {
+        this.pay = pay;
     }
 
     @Override
@@ -52,5 +58,10 @@ public class LearnConfigurationBean implements LearnConfigurationTemplate {
     @Override
     public LearnFileConfigurationBean getFile() {
         return file;
+    }
+
+    @Override
+    public LearnPayConfigurationBean getPay() {
+        return pay;
     }
 }

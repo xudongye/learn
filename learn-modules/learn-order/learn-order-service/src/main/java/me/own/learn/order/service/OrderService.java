@@ -21,4 +21,26 @@ public interface OrderService {
     OrderVo updateStatusByOrderNo(String orderNo, OrderConstant.OrderStatus status);
 
     List<OrderDetailVo> listByOrderNo(String orderNo);
+
+
+    /***
+     * Get order vo by order id
+     * @param orderid
+     * @return
+     */
+    OrderVo getOrderById(String orderid);
+
+    /***
+     * Mark order status as paid status
+     * @param orderid
+     * @param paymentType alipay, wxpay, coupon
+     */
+    void markOrderPaid(String orderid, OrderConstant.PaymentType paymentType);
+
+    /***
+     * Check if order has already been paid
+     * @param orderid order's id
+     * @return true indicates paid, other unpaid
+     */
+    boolean isOrderPaid(String orderid);
 }

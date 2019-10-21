@@ -5,6 +5,8 @@ import java.util.Date;
 public class OrderVo {
     private String orderNo;
     private Double totalPrice;
+    //减去 积分抵扣 或 优惠 金额
+    private Double subtractValue;
     private Long customerId;
     private Date payDate;
     //地址编号
@@ -34,6 +36,14 @@ public class OrderVo {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Double getSubtractValue() {
+        return subtractValue;
+    }
+
+    public void setSubtractValue(Double subtractValue) {
+        this.subtractValue = subtractValue;
     }
 
     public Long getCustomerId() {

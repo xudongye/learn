@@ -145,6 +145,21 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public OrderVo getOrderById(String orderid) {
+        return null;
+    }
+
+    @Override
+    public void markOrderPaid(String orderid, OrderConstant.PaymentType paymentType) {
+
+    }
+
+    @Override
+    public boolean isOrderPaid(String orderid) {
+        return false;
+    }
+
 
     private QueryCriteriaUtil criteriaUtil(OrderQueryCondition condition) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(Order.class);

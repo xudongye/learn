@@ -13,4 +13,6 @@ public interface LearnConfigurationTemplate {
     LearnTmcConfigurationTemplate getTmc();
 
     LearnFileConfigurationTemplate getFile();
+
+    LearnPayConfigurationTemplate getPay();
 }

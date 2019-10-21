@@ -9,3 +9,6 @@ file:
   urlPrefix: http://www.lant.ltd/learn/static/images/
   qrCodePath: /alidata/own/upload/learn/static/images/qrcode/
   qrCodeLogoPath: /alidata/own/upload/learn/static/images/qrcode/logo.jpg
+pay:
+  alipayCallback: http://www.lant.ltd/learn/callback/alipay
+  wxpayCallback: http://www.lant.ltd/learn/callback/wxpay
