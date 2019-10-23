@@ -12,4 +12,6 @@ import java.util.List;
 public interface PubAccountConfigurationDao extends BaseDao<PubAccountConfiguration> {
 
     List<String> getDomainsByAppId(String appId);
+
+    PubAccountConfiguration getByAppId(String appId);
 }

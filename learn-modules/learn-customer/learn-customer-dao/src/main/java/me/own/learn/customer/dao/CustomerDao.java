@@ -8,4 +8,6 @@ import me.own.learn.customer.po.Customer;
  * @date 2019/5/30 16:38
  */
 public interface CustomerDao extends BaseDao<Customer> {
+
+    Customer getByOpenId(String openId, long pubaccountId);
 }

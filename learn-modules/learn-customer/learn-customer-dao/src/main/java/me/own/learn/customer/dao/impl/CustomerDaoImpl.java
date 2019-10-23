@@ -3,6 +3,8 @@ package me.own.learn.customer.dao.impl;
 import me.own.commons.base.dao.impl.BaseDaoImpl;
 import me.own.learn.customer.dao.CustomerDao;
 import me.own.learn.customer.po.Customer;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +16,13 @@ public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDa
     @Override
     protected Class<Customer> getEntityClass() {
         return Customer.class;
+    }
+
+    @Override
+    public Customer getByOpenId(String openId, long pubaccountId) {
+        Criteria criteria = getCurrentSession().createCriteria(Customer.class);
+        criteria.add(Restrictions.eq("openid", openId));
+        criteria.add(Restrictions.eq("pubAccountId", pubaccountId));
+        return (Customer) criteria.uniqueResult();
     }
 }

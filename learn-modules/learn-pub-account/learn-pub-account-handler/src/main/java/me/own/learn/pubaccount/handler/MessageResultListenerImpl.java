@@ -5,6 +5,9 @@ import me.own.commons.wechat.pubaccount.message.MessageResultListener;
 import me.own.commons.wechat.pubaccount.message.response.BaseResponse;
 import me.own.commons.wechat.pubaccount.message.response.TextResponse;
 import me.own.learn.configuration.service.LearnConfigurationService;
+import me.own.learn.event.service.EventService;
+import me.own.learn.event.service.message.customer.CustomerSubscribeMessage;
+import me.own.learn.event.service.message.customer.CustomerUnSubscribeMessage;
 import me.own.learn.pubaccount.handler.customEvent.CustomMenuOnClickHandler;
 import me.own.learn.pubconfiguration.bo.PubAccountTextMessageBo;
 import me.own.learn.pubconfiguration.service.PubConfigurationService;
@@ -33,6 +36,9 @@ public class MessageResultListenerImpl implements MessageResultListener {
     @Resource(name = "doraemonMenuOnClickHandler")
     private CustomMenuOnClickHandler customMenuOnClickHandler;
 
+    @Autowired
+    private EventService eventService;
+
 
     @Override
     public BaseResponse onSubscribe(String appId, String fromUserOpenId, String eventKey) {
@@ -40,6 +46,9 @@ public class MessageResultListenerImpl implements MessageResultListener {
         String message = getResponseTextMessage(fromUserOpenId, onSubscribe.getValue());
         LOGGER.debug("onSubscribe response message {} to customer openid {}", message, fromUserOpenId);
         //fixme
+        eventService.enqueue(
+                EventService.EventName.CustomerEvent.CUSTOMER_SUBSCRIBE,
+                new CustomerSubscribeMessage(appId, fromUserOpenId, eventKey));
         return new TextResponse(message);
     }
 
@@ -50,7 +59,10 @@ public class MessageResultListenerImpl implements MessageResultListener {
 
     @Override
     public void onUnSubscribe(String appId, String fromUserOpenId) {
-
+        eventService.enqueue(
+                EventService.EventName.CustomerEvent.CUSTOMER_UNSUBSCRIBE,
+                new CustomerUnSubscribeMessage(appId, fromUserOpenId)
+        );
     }
 
     @Override

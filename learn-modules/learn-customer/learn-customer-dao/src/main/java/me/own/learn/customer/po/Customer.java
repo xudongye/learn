@@ -14,6 +14,7 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String wxid;
     private String nickName;
     private String cellphone;
     private String email;
@@ -25,6 +26,7 @@ public class Customer implements Serializable {
     private String city;
     private String country;
     private String province;
+    private Boolean subscribed;
     @Temporal(TemporalType.TIMESTAMP)
     private Date subscribeTime;
     private String source;
@@ -33,7 +35,7 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthday;
     private Long pubAccountId;
-    private Long sourceAgentId;
+    private String sourceAgentId;
 
     public Long getId() {
         return id;
@@ -123,6 +125,22 @@ public class Customer implements Serializable {
         this.province = province;
     }
 
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
+    }
+
+    public Boolean getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        this.subscribed = subscribed;
+    }
+
     public Date getSubscribeTime() {
         return subscribeTime;
     }
@@ -163,11 +181,11 @@ public class Customer implements Serializable {
         this.pubAccountId = pubAccountId;
     }
 
-    public Long getSourceAgentId() {
+    public String getSourceAgentId() {
         return sourceAgentId;
     }
 
-    public void setSourceAgentId(Long sourceAgentId) {
+    public void setSourceAgentId(String sourceAgentId) {
         this.sourceAgentId = sourceAgentId;
     }
 }

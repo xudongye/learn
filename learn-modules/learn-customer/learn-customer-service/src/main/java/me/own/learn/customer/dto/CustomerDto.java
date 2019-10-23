@@ -7,7 +7,12 @@ import java.util.Date;
  * @date 2019/5/30 16:42
  */
 public class CustomerDto {
-    private Long id;
+
+    public static final String WEIBO = "weibo";
+    public static final String QQ = "qq";
+    public static final String WECHAT = "wechat";
+
+    private Long cid;
     private String nickName;
     private String cellphone;
     private String email;
@@ -16,6 +21,8 @@ public class CustomerDto {
     private String openid;
     private String sex;
     private String city;
+    private String wxid;
+    private Boolean subscribed;
     private String country;
     private String province;
     private Date subscribeTime;
@@ -23,14 +30,14 @@ public class CustomerDto {
     private Date createTime;
     private Date birthday;
     private Long pubAccountId;
-    private Long sourceAgentId;
+    private String sourceAgentId;
 
-    public Long getId() {
-        return id;
+    public Long getCid() {
+        return cid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCid(Long cid) {
+        this.cid = cid;
     }
 
     public String getNickName() {
@@ -97,6 +104,22 @@ public class CustomerDto {
         this.city = city;
     }
 
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
+    }
+
+    public Boolean getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        this.subscribed = subscribed;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -153,11 +176,11 @@ public class CustomerDto {
         this.pubAccountId = pubAccountId;
     }
 
-    public Long getSourceAgentId() {
+    public String getSourceAgentId() {
         return sourceAgentId;
     }
 
-    public void setSourceAgentId(Long sourceAgentId) {
+    public void setSourceAgentId(String sourceAgentId) {
         this.sourceAgentId = sourceAgentId;
     }
 }

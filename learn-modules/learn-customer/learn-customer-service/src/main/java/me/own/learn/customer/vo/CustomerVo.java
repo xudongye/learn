@@ -23,7 +23,7 @@ public class CustomerVo {
     private Date createTime;
     private Date birthday;
     private Long pubAccountId;
-    private Long sourceAgentId;
+    private String sourceAgentId;
 
     public Long getId() {
         return id;
@@ -153,11 +153,11 @@ public class CustomerVo {
         this.pubAccountId = pubAccountId;
     }
 
-    public Long getSourceAgentId() {
+    public String getSourceAgentId() {
         return sourceAgentId;
     }
 
-    public void setSourceAgentId(Long sourceAgentId) {
+    public void setSourceAgentId(String sourceAgentId) {
         this.sourceAgentId = sourceAgentId;
     }
 }

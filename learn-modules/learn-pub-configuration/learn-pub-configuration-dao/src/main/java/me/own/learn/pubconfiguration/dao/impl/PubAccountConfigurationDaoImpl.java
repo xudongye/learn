@@ -29,4 +29,12 @@ public class PubAccountConfigurationDaoImpl extends BaseDaoImpl<PubAccountConfig
         criteria.setProjection(Projections.distinct(Property.forName("domain")));
         return criteria.list();
     }
+
+    @Override
+    public PubAccountConfiguration getByAppId(String appId) {
+        Criteria criteria = getCurrentSession().createCriteria(PubAccountConfiguration.class);
+        criteria.add(Restrictions.eq("pubAccountAppId", appId));
+        criteria.add(Restrictions.eq("active", true));
+        return (PubAccountConfiguration) criteria.uniqueResult();
+    }
 }

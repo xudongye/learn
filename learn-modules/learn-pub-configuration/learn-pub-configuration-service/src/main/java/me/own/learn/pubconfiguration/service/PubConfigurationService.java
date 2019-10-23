@@ -32,6 +32,8 @@ public interface PubConfigurationService {
 
     PubConfigurationVo getById(long pubAccountId);
 
+    PubConfigurationVo getByAppId(String appId);
+
     List<PubConfigurationVo> getActivePubAccountConfiguration();
 
     //message

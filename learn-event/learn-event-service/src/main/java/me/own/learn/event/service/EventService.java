@@ -14,5 +14,11 @@ public interface EventService {
         interface AgentEvent {
             String AGENT_PASS = "AGENT_PASS";
         }
+
+        interface CustomerEvent {
+            String CUSTOMER_SUBSCRIBE = "CUSTOMER_SUBSCRIBE";
+            String CUSTOMER_UNSUBSCRIBE = "CUSTOMER_UNSUBSCRIBE";
+            String CUSTOMER_SCAN_QRCODE = "CUSTOMER_SCAN_QRCODE";
+        }
     }
 }

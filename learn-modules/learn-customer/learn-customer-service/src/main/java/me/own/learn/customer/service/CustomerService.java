@@ -12,7 +12,16 @@ public interface CustomerService {
 
     CustomerVo getById(long customerId);
 
+    CustomerVo getByOpenId(String openId, long pubaccountId);
+
     CustomerVo createFromPubAccount(CustomerDto customerDto);
+
+    /**
+     * 更新客户的微信公众号订阅状态
+     * @param customerId customer.id
+     * @param subscribe 是否订阅
+     */
+    void updateSubscribeStatus(long customerId, boolean subscribe);
 
     CustomerVo createFromUnName();
 

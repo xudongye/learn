@@ -45,15 +45,34 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public CustomerVo getByOpenId(String openId, long pubaccountId) {
+        Customer customer = customerDao.getByOpenId(openId, pubaccountId);
+        if (customer != null) {
+            return Mapper.Default().map(customer, CustomerVo.class);
+        }
+        return null;
+    }
+
+    @Override
     @Transactional
     public CustomerVo createFromPubAccount(CustomerDto customerDto) {
         Customer customer = Mapper.Default().map(customerDto, Customer.class);
         customer.setCreateTime(new Date());
-        customer.setSubscribeTime(new Date());
-        customer.setSourceAgentId(customerDto.getSourceAgentId() == null ? 1L : customerDto.getSourceAgentId());
         customerDao.create(customer);
         LOGGER.info("create customer {} source {}", customer.getNickName(), customer.getSource());
         return Mapper.Default().map(customer, CustomerVo.class);
+    }
+
+    @Override
+    @Transactional
+    public void updateSubscribeStatus(long customerId, boolean subscribe) {
+        Customer customer = customerDao.get(customerId);
+        if (customer == null) {
+            throw new CustomerNotFoundException();
+        }
+        customer.setSubscribed(subscribe);
+        LOGGER.info("customer {} update pub account subscribe status {}", customerId, subscribe);
     }
 
     @Override

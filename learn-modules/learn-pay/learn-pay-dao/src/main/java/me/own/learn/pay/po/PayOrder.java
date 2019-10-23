@@ -15,6 +15,8 @@ public class PayOrder extends BaseEntity implements Serializable {
         wxpay
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 第三方支付的订单标识

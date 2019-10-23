@@ -16,6 +16,7 @@
         <module>learn-store-built</module>
         <module>learn-store-category</module>
         <module>learn-store-product</module>
+        <module>learn-store-goods</module>
     </modules>
 
 

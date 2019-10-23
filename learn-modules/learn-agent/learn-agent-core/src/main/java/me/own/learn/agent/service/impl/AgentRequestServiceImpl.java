@@ -126,7 +126,8 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             //分销商类型
             agentDto.setAgentType(agentRequest.getAgentType());
             //父级代理商
-            agentDto.setParentId(customerVo.getSourceAgentId());
+            //FIXME
+//            agentDto.setParentId(customerVo.getSourceAgentId());
             //新增管理员
             agentDto.setAdminId(adminVo.getId());
             agentDto.setAssignedQR(handleDto.getAssignedQR());
@@ -137,7 +138,8 @@ public class AgentRequestServiceImpl implements AgentRequestService {
             agentDto.setAddress(agentRequest.getAddress());
             agentDto.setEmail(agentRequest.getEmail());
             //是否为顶级分销商
-            agentDto.setRoot(customerVo.getSourceAgentId() == 1);
+            //FIXME
+//            agentDto.setRoot(customerVo.getSourceAgentId() == 1);
             //个人的可以发展下线
             agentDto.setMemberJoinShareEnable(handleDto.getMemberJoinShareEnable());
             agentDto.setChildrenRate(handleDto.getChildrenRate());

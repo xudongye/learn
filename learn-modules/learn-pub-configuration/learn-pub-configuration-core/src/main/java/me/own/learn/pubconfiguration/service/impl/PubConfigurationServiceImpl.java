@@ -161,6 +161,16 @@ public class PubConfigurationServiceImpl implements PubConfigurationService {
 
     @Override
     @Transactional(readOnly = true)
+    public PubConfigurationVo getByAppId(String appId) {
+        PubAccountConfiguration configuration = pubAccountConfigurationDao.getByAppId(appId);
+        if (configuration != null) {
+            return Mapper.Default().map(configuration, PubConfigurationVo.class);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<PubConfigurationVo> getActivePubAccountConfiguration() {
         QueryCriteriaUtil query = new QueryCriteriaUtil(PubAccountConfiguration.class);
         query.setSimpleCondition("active", true + "", QueryConstants.SimpleQueryMode.Equal);
