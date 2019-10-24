@@ -28,12 +28,8 @@ public class ProductServiceTest extends BaseTestConfiguration {
         ProductDto productDto = new ProductDto();
         productDto.setCategoryId(1L);
         productDto.setDescription("好1吃你就多吃点");
-        productDto.setInventory(1000);
         productDto.setName("好吃点2");
         productDto.setTitle("意大利进口");
-        productDto.setPrice(100L);
-        productDto.setUnit("袋");
-        productDto.setStatus(ProductConstant.Status.putaway);
         ProductVo productVo = productService.create(productDto);
         System.out.println(productVo.toString());
     }

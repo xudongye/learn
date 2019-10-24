@@ -51,8 +51,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = Mapper.Default().map(productDto, Product.class);
         product.setCreateTime(new Date());
         product.setDeleted(false);
-        product.setCategoryId(categoryVo.getId());
-        product.setStatus(productDto.getStatus().getCode());
         productDao.create(product);
         LOGGER.info("create new product {} in category {}", product.getId(), categoryVo.getName());
         return Mapper.Default().map(product, ProductVo.class);
@@ -65,26 +63,8 @@ public class ProductServiceImpl implements ProductService {
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
-        if (productDto.getDescription() != null) {
-            product.setDescription(productDto.getDescription());
-        }
-        if (productDto.getTitle() != null) {
-            product.setTitle(productDto.getTitle());
-        }
         if (productDto.getName() != null) {
             product.setName(productDto.getName());
-        }
-        if (productDto.getInventory() != null) {
-            product.setInventory(productDto.getInventory());
-        }
-        if (productDto.getUnit() != null) {
-            product.setUnit(productDto.getUnit());
-        }
-        if (productDto.getPrice() != null) {
-            product.setPrice(productDto.getPrice());
-        }
-        if (productDto.getStatus() != null) {
-            product.setStatus(productDto.getStatus().getCode());
         }
         product.setModifyTime(new Date());
         return Mapper.Default().map(product, ProductVo.class);
@@ -122,8 +102,6 @@ public class ProductServiceImpl implements ProductService {
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
-        product.setStatus(ProductConstant.Status.soldout.getCode());
-        product.setSoldOutTime(new Date());
         LOGGER.info("product {} been soldOut!", product.getName());
     }
 
@@ -151,14 +129,8 @@ public class ProductServiceImpl implements ProductService {
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
-        int reduceInventory = product.getInventory() - count;
-        product.setInventory(reduceInventory);
+
         product.setModifyTime(new Date());
-        LOGGER.info("reduce product {} inventory {}", product.getName(), reduceInventory);
-        //如果库存==0
-        if (reduceInventory <= 0) {
-            this.soldOut(productId);
-        }
     }
 
     @Override

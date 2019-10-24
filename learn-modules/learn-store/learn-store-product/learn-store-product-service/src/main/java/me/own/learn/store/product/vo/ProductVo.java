@@ -1,6 +1,7 @@
 package me.own.learn.store.product.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -9,24 +10,13 @@ import java.util.Date;
 public class ProductVo {
     private Long id;
     private String name;
-    //单位
-    private String unit;
-    //库存
-    private Integer inventory;
-
-    private String title;
-
-    //价格，单位：分
-    private Long price;
+    private String icon;
     private String description;
     //类目id
     private Long categoryId;
-    //商品状态，1-正常，2-下架
-    private Integer status;
-    private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
-    private Date soldOutTime;
+    private List<CarryVo> carries;
 
     public Long getId() {
         return id;
@@ -44,36 +34,12 @@ public class ProductVo {
         this.name = name;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getDescription() {
@@ -92,22 +58,6 @@ public class ProductVo {
         this.categoryId = categoryId;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -124,30 +74,11 @@ public class ProductVo {
         this.modifyTime = modifyTime;
     }
 
-    public Date getSoldOutTime() {
-        return soldOutTime;
+    public List<CarryVo> getCarries() {
+        return carries;
     }
 
-    public void setSoldOutTime(Date soldOutTime) {
-        this.soldOutTime = soldOutTime;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductVo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
-                ", inventory=" + inventory +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", categoryId=" + categoryId +
-                ", status=" + status +
-                ", deleted=" + deleted +
-                ", createTime=" + createTime +
-                ", modifyTime=" + modifyTime +
-                ", soldOutTime=" + soldOutTime +
-                '}';
+    public void setCarries(List<CarryVo> carries) {
+        this.carries = carries;
     }
 }

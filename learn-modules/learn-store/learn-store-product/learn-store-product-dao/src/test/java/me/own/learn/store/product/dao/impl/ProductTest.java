@@ -25,15 +25,9 @@ public class ProductTest extends BaseTestConfiguration {
     @Rollback(value = false)
     public void testCreateProduct() throws Exception {
         Product product = new Product();
-        product.setCategoryId(1L);
         product.setDeleted(false);
-        product.setDescription("测试数据");
         product.setCreateTime(new Date());
-        product.setInventory(1);
-        product.setTitle("测试title");
         product.setName("测试商品");
-        product.setPrice(1l);
-        product.setStatus(1);
         productDao.create(product);
     }
 

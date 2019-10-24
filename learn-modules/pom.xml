@@ -27,7 +27,6 @@
         <module>learn-image</module>
         <module>learn-logistics</module>
         <module>learn-order</module>
-        <module>learn-shopping-car</module>
         <module>learn-pay</module>
     </modules>
 

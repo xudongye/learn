@@ -88,12 +88,6 @@ public class CategoryServiceImpl implements CategoryService {
             if (categoryQueryCondition.getName() != null) {
                 query.setSimpleCondition("name", categoryQueryCondition.getName(), QueryConstants.SimpleQueryMode.Like);
             }
-            if (categoryQueryCondition.getParent() != null) {
-                query.setSimpleCondition("isParent", categoryQueryCondition.getParent() + "", QueryConstants.SimpleQueryMode.Equal);
-            }
-            if (categoryQueryCondition.getParentId() != null) {
-                query.setSimpleCondition("parentId", categoryQueryCondition.getParentId() + "", QueryConstants.SimpleQueryMode.Equal);
-            }
         }
         List<QueryOrder> orders = new ArrayList<>();
         QueryOrder order = new QueryOrder();

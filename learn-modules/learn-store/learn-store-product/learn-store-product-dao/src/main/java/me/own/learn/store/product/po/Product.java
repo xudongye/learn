@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -18,27 +19,17 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    //产品名称：手机，电脑
     private String name;
-    //单位
-    private String unit;
-    //库存
-    private Integer inventory;
-    private String title;
-    //价格，单位：分
-    private Long price;
-    @Lob
-    private String description;
-    //类目id
-    private Long categoryId;
-    //商品状态，1-正常，2-下架
-    private Integer status;
+    private String icon;
     private Boolean deleted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date soldOutTime;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "PRODUCT_CARRY", joinColumns = {@JoinColumn(name = "PRODUCT_ID")}, inverseJoinColumns = {@JoinColumn(name = "CARRY_ID")})
+    private List<Carry> carries;
 
     public Long getId() {
         return id;
@@ -56,60 +47,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Boolean getDeleted() {
@@ -136,11 +79,11 @@ public class Product implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public Date getSoldOutTime() {
-        return soldOutTime;
+    public List<Carry> getCarries() {
+        return carries;
     }
 
-    public void setSoldOutTime(Date soldOutTime) {
-        this.soldOutTime = soldOutTime;
+    public void setCarries(List<Carry> carries) {
+        this.carries = carries;
     }
 }

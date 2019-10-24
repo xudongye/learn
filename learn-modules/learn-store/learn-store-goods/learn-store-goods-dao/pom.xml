@@ -12,4 +12,11 @@
     <artifactId>learn-store-goods-dao</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-store-product-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

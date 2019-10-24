@@ -6,9 +6,6 @@ package me.own.learn.store.category.service;
  */
 public class CategoryQueryCondition {
     private String name;
-    //是否是父级目录
-    private Boolean isParent;
-    private Long parentId;
 
     public String getName() {
         return name;
@@ -18,19 +15,4 @@ public class CategoryQueryCondition {
         this.name = name;
     }
 
-    public Boolean getParent() {
-        return isParent;
-    }
-
-    public void setParent(Boolean parent) {
-        isParent = parent;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 }

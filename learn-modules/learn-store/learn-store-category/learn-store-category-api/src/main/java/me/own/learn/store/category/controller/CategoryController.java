@@ -23,7 +23,7 @@ import java.util.Map;
  * @date 2019/6/12 15:42
  */
 @RestController
-@RequestMapping(value = "/api/learn/v1/categories")
+@RequestMapping(value = "/api/v1/store/categories")
 @Api(value = "商城类目功能模块", description = "商城类目")
 public class CategoryController {
 

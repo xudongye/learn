@@ -17,6 +17,7 @@
         <module>learn-store-category</module>
         <module>learn-store-product</module>
         <module>learn-store-goods</module>
+        <module>learn-store-shoppingcart</module>
     </modules>
 
 

@@ -14,7 +14,7 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String name;//硬件设施，母婴哺乳
     //排序序号
     private Integer sortOrder;
     private Boolean deleted;
@@ -22,9 +22,6 @@ public class Category implements Serializable {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
-    //是否是父级目录
-    private Boolean isParent;
-    private Long parentId;
 
     public Long getId() {
         return id;
@@ -74,19 +71,4 @@ public class Category implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public Boolean getParent() {
-        return isParent;
-    }
-
-    public void setParent(Boolean parent) {
-        isParent = parent;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
 }
