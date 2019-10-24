@@ -26,14 +26,14 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/api/v1/store/products")
-@Api(value = "商品模块", description = "商品管理模块")
+@Api(value = "产品模型模块", description = "产品模型以及属性管理模块")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
 
-    @ApiOperation("添加商品")
+    @ApiOperation("添加产品")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createProduct(HttpServletRequest request,
                                         @RequestBody ProductDto productDto) {
@@ -44,7 +44,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("删除商品")
+    @ApiOperation("删除产品")
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(HttpServletRequest request,
                                      @PathVariable Long productId) {
@@ -53,7 +53,7 @@ public class ProductController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation("更新商品信息")
+    @ApiOperation("更新产品信息")
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity update(HttpServletRequest request,
                                  @RequestBody ProductDto productDto) {
@@ -64,7 +64,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("获取商品详细信息")
+    @ApiOperation("获取产品详细信息")
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public ResponseEntity getById(HttpServletRequest request,
                                   @PathVariable Long productId) {
@@ -75,7 +75,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @ApiOperation("分页查询商品信息")
+    @ApiOperation("分页查询产品信息")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -90,16 +90,6 @@ public class ProductController {
         response.put("code", 200);
         response.put("data", productVoPageQueryResult);
         return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @ApiOperation("批量下下架商品")
-    @RequestMapping(value = "/status", method = RequestMethod.PATCH)
-    public ResponseEntity soldoutOrputaway(HttpServletRequest request,
-                                           @RequestParam List<Long> productIds,
-                                           @RequestParam ProductConstant.Status status) {
-
-        productService.putSold(productIds, status.getCode());
-        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 

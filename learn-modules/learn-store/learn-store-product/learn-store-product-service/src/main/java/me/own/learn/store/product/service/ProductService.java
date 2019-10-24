@@ -23,16 +23,7 @@ public interface ProductService {
     //获取产品详细  包含类目
     ProductDetailVo getByProductId(long productId);
 
-    //商品下架
-    void soldOut(long productId);
-
-    //批量下下架
-    void putSold(List<Long> productIds, int status);
-
     void delete(long productId);
-
-    //清库存
-    void reduceInventory(long productId, int count);
 
     PageQueryResult<ProductVo> page(int pageNum, int pageSize, ProductQueryCondition condition);
 }

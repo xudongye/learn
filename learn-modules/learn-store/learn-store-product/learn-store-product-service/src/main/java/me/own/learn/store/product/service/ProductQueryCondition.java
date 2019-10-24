@@ -9,18 +9,12 @@ import me.own.learn.store.product.constant.ProductConstant;
 public class ProductQueryCondition {
     private Long id;
     private String name;
-    private String title;
-    private String description;
     //类目id
     private Long categoryId;
     //商品状态，1-正常，2-下架
     private ProductConstant.Status status;
     private Long createTimeFrom;
     private Long createTimeTo;
-    private Long modifyTimeFrom;
-    private Long modifyTimeTo;
-    private Long soldOutTimeFrom;
-    private Long soldOutTimeTo;
 
     public Long getId() {
         return id;
@@ -36,22 +30,6 @@ public class ProductQueryCondition {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Long getCategoryId() {
@@ -84,37 +62,5 @@ public class ProductQueryCondition {
 
     public void setCreateTimeTo(Long createTimeTo) {
         this.createTimeTo = createTimeTo;
-    }
-
-    public Long getModifyTimeFrom() {
-        return modifyTimeFrom;
-    }
-
-    public void setModifyTimeFrom(Long modifyTimeFrom) {
-        this.modifyTimeFrom = modifyTimeFrom;
-    }
-
-    public Long getModifyTimeTo() {
-        return modifyTimeTo;
-    }
-
-    public void setModifyTimeTo(Long modifyTimeTo) {
-        this.modifyTimeTo = modifyTimeTo;
-    }
-
-    public Long getSoldOutTimeFrom() {
-        return soldOutTimeFrom;
-    }
-
-    public void setSoldOutTimeFrom(Long soldOutTimeFrom) {
-        this.soldOutTimeFrom = soldOutTimeFrom;
-    }
-
-    public Long getSoldOutTimeTo() {
-        return soldOutTimeTo;
-    }
-
-    public void setSoldOutTimeTo(Long soldOutTimeTo) {
-        this.soldOutTimeTo = soldOutTimeTo;
     }
 }

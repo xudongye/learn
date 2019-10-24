@@ -97,40 +97,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void soldOut(long productId) {
-        Product product = productDao.get(productId);
-        if (product == null || product.getDeleted()) {
-            throw new ProductNotFoundException();
-        }
-        LOGGER.info("product {} been soldOut!", product.getName());
-    }
-
-    @Override
-    @Transactional
-    public void putSold(List<Long> productIds, int status) {
-        productDao.putSold(productIds, status);
-        LOGGER.info("batch update product {} status {}", productIds, status);
-    }
-
-    @Override
-    @Transactional
     public void delete(long productId) {
         Product product = productDao.get(productId);
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
         product.setDeleted(true);
-    }
-
-    @Override
-    @Transactional
-    public void reduceInventory(long productId, int count) {
-        Product product = productDao.get(productId);
-        if (product == null || product.getDeleted()) {
-            throw new ProductNotFoundException();
-        }
-
-        product.setModifyTime(new Date());
     }
 
     @Override
@@ -141,12 +113,6 @@ public class ProductServiceImpl implements ProductService {
         if (condition != null) {
             if (condition.getName() != null) {
                 query.setSimpleCondition("name", condition.getName(), QueryConstants.SimpleQueryMode.Like);
-            }
-            if (condition.getDescription() != null) {
-                query.setSimpleCondition("description", condition.getDescription(), QueryConstants.SimpleQueryMode.Like);
-            }
-            if (condition.getTitle() != null) {
-                query.setSimpleCondition("title", condition.getTitle(), QueryConstants.SimpleQueryMode.Like);
             }
             if (condition.getStatus() != null) {
                 query.setSimpleCondition("status", condition.getStatus().getCode() + "", QueryConstants.SimpleQueryMode.Equal);
