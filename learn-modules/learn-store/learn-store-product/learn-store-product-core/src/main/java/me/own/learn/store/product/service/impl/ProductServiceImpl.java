@@ -8,15 +8,19 @@ import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.store.category.service.CategoryService;
 import me.own.learn.store.category.vo.CategoryVo;
 import me.own.learn.store.product.constant.ProductConstant;
+import me.own.learn.store.product.dao.CarryDao;
 import me.own.learn.store.product.dao.ProductDao;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.exception.CarryPropertyNotEmptyException;
 import me.own.learn.store.product.exception.ProductNotFoundException;
+import me.own.learn.store.product.po.Carry;
 import me.own.learn.store.product.po.Product;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
 import me.own.learn.store.product.vo.ProductCategoryVo;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +44,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private CarryDao carryDao;
 
     @Autowired
     private CategoryService categoryService;
@@ -77,6 +84,29 @@ public class ProductServiceImpl implements ProductService {
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
+        return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    @Override
+    @Transactional
+    public ProductVo insertCarryProperty(long productId, List<Long> carryIds) {
+        Product product = productDao.get(productId);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
+        if (CollectionUtils.isEmpty(carryIds)) {
+            throw new CarryPropertyNotEmptyException();
+        }
+        List<Carry> carries = new ArrayList<>();
+        Carry carry = null;
+        for (Long carryId : carryIds) {
+            carry = new Carry();
+            carry.setId(carryId);
+            carries.add(carry);
+        }
+        product.setCarries(carries);
+        productDao.update(product);
+        LOGGER.info("product add carryNames");
         return Mapper.Default().map(product, ProductVo.class);
     }
 

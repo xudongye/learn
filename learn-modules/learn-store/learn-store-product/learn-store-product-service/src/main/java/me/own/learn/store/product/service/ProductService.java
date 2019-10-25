@@ -20,6 +20,9 @@ public interface ProductService {
 
     ProductVo getById(long productId);
 
+    //添加产品携带属性
+    ProductVo insertCarryProperty(long productId, List<Long> carryIds);
+
     //获取产品详细  包含类目
     ProductDetailVo getByProductId(long productId);
 
