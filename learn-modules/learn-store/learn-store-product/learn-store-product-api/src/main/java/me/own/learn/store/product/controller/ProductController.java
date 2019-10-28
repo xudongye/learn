@@ -33,7 +33,7 @@ public class ProductController {
     private ProductService productService;
 
 
-    @ApiOperation("添加产品")
+    @ApiOperation(value = "添加产品", tags = "product_admin")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createProduct(HttpServletRequest request,
                                         @RequestBody ProductDto productDto) {
@@ -44,7 +44,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("删除产品")
+    @ApiOperation(value = "删除产品",  tags = "product_admin")
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(HttpServletRequest request,
                                      @PathVariable Long productId) {
@@ -53,7 +53,7 @@ public class ProductController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation("更新产品信息")
+    @ApiOperation(value = "更新产品信息", tags = "product_admin")
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity update(HttpServletRequest request,
                                  @RequestBody ProductDto productDto) {
@@ -64,7 +64,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("获取产品详细信息")
+    @ApiOperation(value = "获取产品详细信息", tags = "product_admin")
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public ResponseEntity getById(HttpServletRequest request,
                                   @PathVariable Long productId) {
@@ -75,7 +75,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @ApiOperation("分页查询产品信息")
+    @ApiOperation(value = "分页查询产品信息", tags = "product_admin")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity page(HttpServletRequest request,
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,

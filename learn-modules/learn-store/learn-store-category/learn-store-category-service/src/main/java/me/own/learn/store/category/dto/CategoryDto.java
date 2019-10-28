@@ -9,6 +9,16 @@ public class CategoryDto {
     private String name;
     //排序序号
     private Integer sortOrder;
+    private Long parentId;
+    private String picUrl;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 
     public Long getId() {
         return id;
@@ -34,4 +44,11 @@ public class CategoryDto {
         this.sortOrder = sortOrder;
     }
 
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 }

@@ -3,6 +3,7 @@ package me.own.learn.store.category.po;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -22,6 +23,13 @@ public class Category implements Serializable {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Category parent;
+    @JoinColumn(name = "parent_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Category> children;
+    private String picUrl;
 
     public Long getId() {
         return id;
@@ -71,4 +79,27 @@ public class Category implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public Category getParent() {
+        return parent;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 }

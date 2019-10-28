@@ -7,6 +7,7 @@ import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.store.category.dto.CategoryDto;
 import me.own.learn.store.category.service.CategoryQueryCondition;
 import me.own.learn.store.category.service.CategoryService;
+import me.own.learn.store.category.vo.CategoryListVo;
 import me.own.learn.store.category.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @ApiOperation("新建类目")
+    @ApiOperation(value = "新建类目", tags = "category_admin")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createCategory(HttpServletRequest request,
                                          @RequestBody CategoryDto categoryDto) {
@@ -41,7 +42,7 @@ public class CategoryController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("更新类目-名称，排序")
+    @ApiOperation(value = "更新类目-名称，排序", tags = "category_admin")
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateCategory(HttpServletRequest request,
                                          @RequestBody CategoryDto categoryDto) {
@@ -52,7 +53,7 @@ public class CategoryController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation("分页查询类目")
+    @ApiOperation(value = "分页查询类目", tags = "category_admin")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity pageRole(HttpServletRequest request,
                                    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -69,13 +70,23 @@ public class CategoryController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @ApiOperation("获取类目")
+    @ApiOperation(value = "获取类目", tags = "category_customer")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity listCategory(HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
         List<CategoryVo> categoryVoList = categoryService.listAll();
         response.put("code", 200);
         response.put("data", categoryVoList);
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "管理员类目搜索功能", tags = "category_customer")
+    @RequestMapping(value = "/aside", method = RequestMethod.GET)
+    public ResponseEntity listCategoryForSearch(HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+        List<CategoryListVo> categoryVoList = categoryService.listCategoryForSearch();
+        response.put("code", 200);
+        response.put("aside", categoryVoList);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 

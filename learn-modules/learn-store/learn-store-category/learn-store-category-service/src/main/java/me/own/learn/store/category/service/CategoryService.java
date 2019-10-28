@@ -2,6 +2,7 @@ package me.own.learn.store.category.service;
 
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.store.category.dto.CategoryDto;
+import me.own.learn.store.category.vo.CategoryListVo;
 import me.own.learn.store.category.vo.CategoryVo;
 
 import java.util.List;
@@ -21,4 +22,11 @@ public interface CategoryService {
     List<CategoryVo> listAll();
 
     CategoryVo getById(long categoryId);
+
+    /**
+     * 首页分类查询
+     *
+     * @return
+     */
+    List<CategoryListVo> listCategoryForSearch();
 }

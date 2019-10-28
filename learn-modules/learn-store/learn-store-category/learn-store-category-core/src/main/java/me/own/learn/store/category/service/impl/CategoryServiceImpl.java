@@ -12,6 +12,7 @@ import me.own.learn.store.category.exception.CategoryNotFoundException;
 import me.own.learn.store.category.po.Category;
 import me.own.learn.store.category.service.CategoryQueryCondition;
 import me.own.learn.store.category.service.CategoryService;
+import me.own.learn.store.category.vo.CategoryListVo;
 import me.own.learn.store.category.vo.CategoryVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -45,6 +46,11 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = Mapper.Default().map(categoryDto, Category.class);
         category.setCreateTime(new Date());
         category.setDeleted(false);
+        if (categoryDto.getParentId() != null) {
+            Category parent = new Category();
+            parent.setId(categoryDto.getParentId());
+            category.setParent(parent);
+        }
         categoryDao.create(category);
         LOGGER.info("new a category {}", category.getName());
         return Mapper.Default().map(category, CategoryVo.class);
@@ -117,5 +123,20 @@ public class CategoryServiceImpl implements CategoryService {
             throw new CategoryNotFoundException();
         }
         return Mapper.Default().map(category, CategoryVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CategoryListVo> listCategoryForSearch() {
+        QueryCriteriaUtil query = new QueryCriteriaUtil(Category.class);
+        query.setDeletedFalseCondition();
+        //搜索父级类目
+        query.setSimpleCondition("parent.id", "", QueryConstants.SimpleQueryMode.IsNull);
+        List<Category> categories = categoryDao.filter(query, null, null);
+        if (CollectionUtils.isNotEmpty(categories)) {
+            List<CategoryListVo> categoryListVos = Mapper.Default().mapArray(categories, CategoryListVo.class);
+            return categoryListVos;
+        }
+        return null;
     }
 }

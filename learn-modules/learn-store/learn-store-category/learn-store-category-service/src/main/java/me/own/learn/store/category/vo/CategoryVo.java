@@ -1,6 +1,7 @@
 package me.own.learn.store.category.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -14,6 +15,17 @@ public class CategoryVo {
     private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
+    private CategoryVo parent;
+    private List<CategoryVo> children;
+    private String picUrl;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 
     public Long getId() {
         return id;
@@ -63,4 +75,19 @@ public class CategoryVo {
         this.modifyTime = modifyTime;
     }
 
+    public CategoryVo getParent() {
+        return parent;
+    }
+
+    public void setParent(CategoryVo parent) {
+        this.parent = parent;
+    }
+
+    public List<CategoryVo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<CategoryVo> children) {
+        this.children = children;
+    }
 }
