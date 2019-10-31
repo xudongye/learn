@@ -1,6 +1,7 @@
 package me.own.learn.store.product.vo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author yexudong
@@ -9,25 +10,13 @@ import java.util.Date;
 public class ProductDetailVo {
     private Long id;
     private String name;
-    //单位
-    private String unit;
-    //库存
-    private Integer inventory;
-
     private String title;
-
-    //价格，单位：分
-    private Long price;
     private String description;
-    //类目id
-    private Long categoryId;
-    private ProductCategoryVo category;
-    //商品状态，1-正常，2-下架
-    private Integer status;
     private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
-    private Date soldOutTime;
+    private ProductCategoryVo productCategory;
+    private List<PropertyItemVo> propertyItems;
 
     public Long getId() {
         return id;
@@ -45,22 +34,6 @@ public class ProductDetailVo {
         this.name = name;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Integer getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Integer inventory) {
-        this.inventory = inventory;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -69,44 +42,12 @@ public class ProductDetailVo {
         this.title = title;
     }
 
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public ProductCategoryVo getCategory() {
-        return category;
-    }
-
-    public void setCategory(ProductCategoryVo category) {
-        this.category = category;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Boolean getDeleted() {
@@ -133,11 +74,19 @@ public class ProductDetailVo {
         this.modifyTime = modifyTime;
     }
 
-    public Date getSoldOutTime() {
-        return soldOutTime;
+    public ProductCategoryVo getProductCategory() {
+        return productCategory;
     }
 
-    public void setSoldOutTime(Date soldOutTime) {
-        this.soldOutTime = soldOutTime;
+    public void setProductCategory(ProductCategoryVo productCategory) {
+        this.productCategory = productCategory;
+    }
+
+    public List<PropertyItemVo> getPropertyItems() {
+        return propertyItems;
+    }
+
+    public void setPropertyItems(List<PropertyItemVo> propertyItems) {
+        this.propertyItems = propertyItems;
     }
 }

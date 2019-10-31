@@ -1,6 +1,8 @@
 package me.own.learn.store.product.dto;
 
 
+import me.own.commons.base.model.IdSkeletonLong;
+
 /**
  * @author yexudong
  * @date 2019/6/12 18:22
@@ -12,7 +14,11 @@ public class ProductDto {
     private String title;
     private String description;
     //类目id
-    private Long categoryId;
+    private IdSkeletonLong category;
+    private Double originalPrice;
+    private Double promotionPrice;
+    private Long hitCount;
+    private Long saleCount;
 
     public Long getId() {
         return id;
@@ -54,11 +60,43 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public IdSkeletonLong getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(IdSkeletonLong category) {
+        this.category = category;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(Double promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public Long getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Long hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public Long getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Long saleCount) {
+        this.saleCount = saleCount;
     }
 }

@@ -55,7 +55,7 @@ public class CategoryController {
 
     @ApiOperation(value = "分页查询类目", tags = "category_admin")
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity pageRole(HttpServletRequest request,
+    public ResponseEntity pageCategory(HttpServletRequest request,
                                    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                    @RequestParam(required = false) CategoryQueryCondition condition) {

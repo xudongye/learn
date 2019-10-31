@@ -1,7 +1,5 @@
 package me.own.learn.store.goods.po;
 
-import me.own.learn.store.product.po.Carry;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -16,8 +14,6 @@ public class GoodsCarry implements Serializable {
     private Long id;
     @ManyToOne
     private Goods goods;
-    @ManyToOne
-    private Carry carry;
     //carry param
     private String carryParam;
 
@@ -35,14 +31,6 @@ public class GoodsCarry implements Serializable {
 
     public void setGoods(Goods goods) {
         this.goods = goods;
-    }
-
-    public Carry getCarry() {
-        return carry;
-    }
-
-    public void setCarry(Carry carry) {
-        this.carry = carry;
     }
 
     public String getCarryParam() {

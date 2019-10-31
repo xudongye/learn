@@ -1,5 +1,6 @@
 package me.own.learn.store.product.po;
 
+import me.own.learn.store.category.po.Category;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //产品名称：手机，电脑
+    //产品名称：手机，电脑，零食
     private String name;
     private String icon;
     private Boolean deleted;
@@ -27,9 +28,14 @@ public class Product implements Serializable {
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyTime;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "PRODUCT_CARRY", joinColumns = {@JoinColumn(name = "PRODUCT_ID")}, inverseJoinColumns = {@JoinColumn(name = "CARRY_ID")})
-    private List<Carry> carries;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+    private Double originalPrice;
+    private Double promotionPrice;
+    private Long hitCount;
+    private Long saleCount;
+
 
     public Long getId() {
         return id;
@@ -79,11 +85,43 @@ public class Product implements Serializable {
         this.modifyTime = modifyTime;
     }
 
-    public List<Carry> getCarries() {
-        return carries;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCarries(List<Carry> carries) {
-        this.carries = carries;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(Double promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public Long getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Long hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public Long getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Long saleCount) {
+        this.saleCount = saleCount;
     }
 }

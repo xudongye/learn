@@ -14,9 +14,7 @@ public class ProductCategoryVo {
     private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
-    //是否是父级目录
-    private Boolean isParent;
-    private Long parentId;
+    private ProductCategoryVo parent;
 
     public Long getId() {
         return id;
@@ -66,19 +64,11 @@ public class ProductCategoryVo {
         this.modifyTime = modifyTime;
     }
 
-    public Boolean getParent() {
-        return isParent;
+    public ProductCategoryVo getParent() {
+        return parent;
     }
 
-    public void setParent(Boolean parent) {
-        isParent = parent;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParent(ProductCategoryVo parent) {
+        this.parent = parent;
     }
 }

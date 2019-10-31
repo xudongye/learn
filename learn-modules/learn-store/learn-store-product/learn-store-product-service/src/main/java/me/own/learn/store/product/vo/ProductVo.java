@@ -13,10 +13,14 @@ public class ProductVo {
     private String icon;
     private String description;
     //类目id
-    private Long categoryId;
+    private ProductCategoryVo category;
     private Date createTime;
     private Date modifyTime;
-    private List<CarryVo> carries;
+    private List<PropertyItemVo> propertyItems;
+    private Double originalPrice;
+    private Double promotionPrice;
+    private Long hitCount;
+    private Long saleCount;
 
     public Long getId() {
         return id;
@@ -50,12 +54,12 @@ public class ProductVo {
         this.description = description;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public ProductCategoryVo getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(ProductCategoryVo category) {
+        this.category = category;
     }
 
     public Date getCreateTime() {
@@ -74,11 +78,43 @@ public class ProductVo {
         this.modifyTime = modifyTime;
     }
 
-    public List<CarryVo> getCarries() {
-        return carries;
+    public List<PropertyItemVo> getPropertyItems() {
+        return propertyItems;
     }
 
-    public void setCarries(List<CarryVo> carries) {
-        this.carries = carries;
+    public void setPropertyItems(List<PropertyItemVo> propertyItems) {
+        this.propertyItems = propertyItems;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(Double promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public Long getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Long hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public Long getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Long saleCount) {
+        this.saleCount = saleCount;
     }
 }

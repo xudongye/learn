@@ -5,27 +5,30 @@ import me.own.commons.base.dao.QueryConstants;
 import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
+import me.own.learn.store.category.po.Category;
 import me.own.learn.store.category.service.CategoryService;
 import me.own.learn.store.category.vo.CategoryVo;
-import me.own.learn.store.product.constant.ProductConstant;
-import me.own.learn.store.product.dao.CarryDao;
+import me.own.learn.store.product.dao.ProductPropertyItemDao;
+import me.own.learn.store.product.dao.PropertyItemDao;
 import me.own.learn.store.product.dao.ProductDao;
 import me.own.learn.store.product.dto.ProductDto;
 import me.own.learn.store.product.exception.CarryPropertyNotEmptyException;
+import me.own.learn.store.product.exception.ProductCanNotBindParentCategoryException;
 import me.own.learn.store.product.exception.ProductNotFoundException;
-import me.own.learn.store.product.po.Carry;
 import me.own.learn.store.product.po.Product;
+import me.own.learn.store.product.po.ProductPropertyItem;
+import me.own.learn.store.product.po.PropertyItem;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
+import me.own.learn.store.product.service.PropertyItemService;
 import me.own.learn.store.product.vo.ProductCategoryVo;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
+import me.own.learn.store.product.vo.PropertyItemVo;
 import org.apache.commons.collections.CollectionUtils;
-import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +49,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Autowired
-    private CarryDao carryDao;
+    private PropertyItemDao propertyItemDao;
+
+    @Autowired
+    private ProductPropertyItemDao productPropertyItemDao;
+
+    @Autowired
+    private PropertyItemService propertyItemService;
 
     @Autowired
     private CategoryService categoryService;
@@ -54,13 +63,35 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductVo create(ProductDto productDto) {
-        CategoryVo categoryVo = categoryService.getById(productDto.getCategoryId());
+        CategoryVo categoryVo = categoryService.getById(productDto.getCategory().getId());
         Product product = Mapper.Default().map(productDto, Product.class);
         product.setCreateTime(new Date());
         product.setDeleted(false);
         productDao.create(product);
         LOGGER.info("create new product {} in category {}", product.getId(), categoryVo.getName());
         return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    @Override
+    @Transactional
+    public ProductDetailVo bindProperty(long productId, List<Long> propertyIds) {
+        Product product = productDao.get(productId);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
+        ProductDetailVo productVo = Mapper.Default().map(product, ProductDetailVo.class);
+        List<PropertyItemVo> propertyItemVos = new ArrayList<>();
+        for (Long propertyId : propertyIds) {
+            PropertyItem propertyItem = propertyItemDao.get(propertyId);
+            ProductPropertyItem productPropertyItem = new ProductPropertyItem();
+            productPropertyItem.setProduct(product);
+            productPropertyItem.setEnable(true);
+            productPropertyItem.setPropertyItem(propertyItem);
+            productPropertyItemDao.create(productPropertyItem);
+            propertyItemVos.add(Mapper.Default().map(propertyItem, PropertyItemVo.class));
+        }
+        productVo.setPropertyItems(propertyItemVos);
+        return productVo;
     }
 
     @Override
@@ -73,7 +104,15 @@ public class ProductServiceImpl implements ProductService {
         if (productDto.getName() != null) {
             product.setName(productDto.getName());
         }
+        if (productDto.getCategory() != null || product.getCategory().getId() != productDto.getCategory().getId()) {
+            CategoryVo categoryVo = categoryService.getById(productDto.getCategory().getId());
+            if (categoryVo.getParent() == null) {
+                throw new ProductCanNotBindParentCategoryException();
+            }
+            product.setCategory(Mapper.Default().map(productDto.getCategory(), Category.class));
+        }
         product.setModifyTime(new Date());
+        productDao.update(product);
         return Mapper.Default().map(product, ProductVo.class);
     }
 
@@ -88,29 +127,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
-    public ProductVo insertCarryProperty(long productId, List<Long> carryIds) {
-        Product product = productDao.get(productId);
-        if (product == null || product.getDeleted()) {
-            throw new ProductNotFoundException();
-        }
-        if (CollectionUtils.isEmpty(carryIds)) {
-            throw new CarryPropertyNotEmptyException();
-        }
-        List<Carry> carries = new ArrayList<>();
-        Carry carry = null;
-        for (Long carryId : carryIds) {
-            carry = new Carry();
-            carry.setId(carryId);
-            carries.add(carry);
-        }
-        product.setCarries(carries);
-        productDao.update(product);
-        LOGGER.info("product add carryNames");
-        return Mapper.Default().map(product, ProductVo.class);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public ProductDetailVo getByProductId(long productId) {
         Product product = productDao.get(productId);
@@ -118,10 +134,13 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException();
         }
         ProductDetailVo detailVo = Mapper.Default().map(product, ProductDetailVo.class);
-        if (detailVo.getCategoryId() != null) {
-            CategoryVo categoryVo = categoryService.getById(detailVo.getCategoryId());
-            detailVo.setCategory(Mapper.Default().map(categoryVo, ProductCategoryVo.class));
+        Category category = product.getCategory();
+        //产品所属类别
+        if (category != null) {
+            detailVo.setProductCategory(Mapper.Default().map(category, ProductCategoryVo.class));
         }
+        //罗列产品属性
+        detailVo.setPropertyItems(propertyItemService.listGroupByProductId(productId));
         return detailVo;
     }
 

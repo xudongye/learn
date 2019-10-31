@@ -28,7 +28,7 @@ public class ProductTest extends BaseTestConfiguration {
         product.setDeleted(false);
         product.setCreateTime(new Date());
         product.setName("测试商品");
-        productDao.create(product);
+//        productDao.create(product);
     }
 
     @Test

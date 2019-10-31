@@ -5,11 +5,15 @@ import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.store.product.constant.ProductConstant;
+import me.own.learn.store.product.controller.cmd.ProductPropertyCmd;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.dto.PropertyItemDto;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
+import me.own.learn.store.product.service.PropertyItemService;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
+import me.own.learn.store.product.vo.PropertyItemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +36,43 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PropertyItemService propertyItemService;
+
+
+    @ApiOperation(value = "产品绑定属性", tags = "product_admin")
+    @RequestMapping(value = "/property", method = RequestMethod.PUT)
+    public ResponseEntity bindPropertyToProduct(HttpServletRequest request,
+                                                @RequestBody ProductPropertyCmd cmd) {
+        Map<String, Object> response = new HashMap<>();
+        ProductDetailVo detailVo = productService.bindProperty(cmd.getProductId(), cmd.getPropertyIds());
+        response.put("code", 201);
+        response.put("data", detailVo);
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "添加产品属性", tags = "product_admin")
+    @RequestMapping(value = "/property", method = RequestMethod.POST)
+    public ResponseEntity createProductProperty(HttpServletRequest request,
+                                                @RequestBody PropertyItemDto propertyItemDto) {
+        Map<String, Object> response = new HashMap<>();
+        PropertyItemVo propertyItemVo = propertyItemService.create(propertyItemDto);
+        response.put("code", 201);
+        response.put("data", propertyItemVo);
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "获取商品属性", tags = "product_admin")
+    @RequestMapping(value = "/properties", method = RequestMethod.GET)
+    public ResponseEntity listPropertyItem(HttpServletRequest request,
+                                           @RequestParam(required = false) Long productId) {
+        Map<String, Object> response = new HashMap<>();
+        List<PropertyItemVo> propertyItemVos = propertyItemService.listGroupByProductId(productId);
+        response.put("code", 200);
+        response.put("data", propertyItemVos);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
 
     @ApiOperation(value = "添加产品", tags = "product_admin")
     @RequestMapping(method = RequestMethod.POST)
@@ -44,7 +85,7 @@ public class ProductController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "删除产品",  tags = "product_admin")
+    @ApiOperation(value = "删除产品", tags = "product_admin")
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(HttpServletRequest request,
                                      @PathVariable Long productId) {

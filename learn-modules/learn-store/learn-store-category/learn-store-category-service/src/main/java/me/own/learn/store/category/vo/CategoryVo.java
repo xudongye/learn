@@ -16,7 +16,7 @@ public class CategoryVo {
     private Date createTime;
     private Date modifyTime;
     private CategoryVo parent;
-    private List<CategoryVo> children;
+//    private List<CategoryVo> children;
     private String picUrl;
 
     public String getPicUrl() {
@@ -83,11 +83,11 @@ public class CategoryVo {
         this.parent = parent;
     }
 
-    public List<CategoryVo> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<CategoryVo> children) {
-        this.children = children;
-    }
+//    public List<CategoryVo> getChildren() {
+//        return children;
+//    }
+//
+//    public void setChildren(List<CategoryVo> children) {
+//        this.children = children;
+//    }
 }
