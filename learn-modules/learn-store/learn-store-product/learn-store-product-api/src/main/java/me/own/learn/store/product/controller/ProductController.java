@@ -7,6 +7,7 @@ import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.store.product.constant.ProductConstant;
 import me.own.learn.store.product.controller.cmd.ProductPropertyCmd;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.dto.ProductPropertyDto;
 import me.own.learn.store.product.dto.PropertyItemDto;
 import me.own.learn.store.product.service.ProductQueryCondition;
 import me.own.learn.store.product.service.ProductService;
@@ -40,12 +41,25 @@ public class ProductController {
     private PropertyItemService propertyItemService;
 
 
-    @ApiOperation(value = "产品绑定属性", tags = "product_admin")
-    @RequestMapping(value = "/property", method = RequestMethod.PUT)
-    public ResponseEntity bindPropertyToProduct(HttpServletRequest request,
-                                                @RequestBody ProductPropertyCmd cmd) {
+    @ApiOperation(value = "产品绑定属性设置对应属性值", tags = "product_admin")
+    @RequestMapping(value = "/{productId}/propertyValue", method = RequestMethod.PUT)
+    public ResponseEntity setPropertyValueToProduct(HttpServletRequest request,
+                                                    @PathVariable Long productId,
+                                                    @RequestBody List<ProductPropertyDto> propertyDtos) {
         Map<String, Object> response = new HashMap<>();
-        ProductDetailVo detailVo = productService.bindProperty(cmd.getProductId(), cmd.getPropertyIds());
+        productService.setPropertyValue(productId, propertyDtos);
+        response.put("code", 201);
+        response.put("message", "产品属性设置成功");
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "产品绑定属性", tags = "product_admin")
+    @RequestMapping(value = "/{productId}/property", method = RequestMethod.PUT)
+    public ResponseEntity bindPropertyToProduct(HttpServletRequest request,
+                                                @PathVariable Long productId,
+                                                @RequestBody List<ProductPropertyDto> propertyDtos) {
+        Map<String, Object> response = new HashMap<>();
+        ProductDetailVo detailVo = productService.bindProperty(productId, propertyDtos);
         response.put("code", 201);
         response.put("data", detailVo);
         return new ResponseEntity(response, HttpStatus.CREATED);

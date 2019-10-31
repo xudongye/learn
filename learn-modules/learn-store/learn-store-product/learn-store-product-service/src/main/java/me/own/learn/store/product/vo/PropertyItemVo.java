@@ -1,24 +1,15 @@
 package me.own.learn.store.product.vo;
 
 public class PropertyItemVo {
-    private Long id;
-    private String name;
+    private String property;
     private String value;
 
-    public Long getId() {
-        return id;
+    public String getProperty() {
+        return property;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setProperty(String property) {
+        this.property = property;
     }
 
     public String getValue() {

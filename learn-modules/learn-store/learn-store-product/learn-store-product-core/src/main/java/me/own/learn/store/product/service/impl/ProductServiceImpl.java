@@ -12,6 +12,7 @@ import me.own.learn.store.product.dao.ProductPropertyItemDao;
 import me.own.learn.store.product.dao.PropertyItemDao;
 import me.own.learn.store.product.dao.ProductDao;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.dto.ProductPropertyDto;
 import me.own.learn.store.product.exception.CarryPropertyNotEmptyException;
 import me.own.learn.store.product.exception.ProductCanNotBindParentCategoryException;
 import me.own.learn.store.product.exception.ProductNotFoundException;
@@ -74,24 +75,54 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDetailVo bindProperty(long productId, List<Long> propertyIds) {
+    public ProductDetailVo bindProperty(long productId, List<ProductPropertyDto> propertyDtos) {
         Product product = productDao.get(productId);
         if (product == null || product.getDeleted()) {
             throw new ProductNotFoundException();
         }
         ProductDetailVo productVo = Mapper.Default().map(product, ProductDetailVo.class);
         List<PropertyItemVo> propertyItemVos = new ArrayList<>();
-        for (Long propertyId : propertyIds) {
-            PropertyItem propertyItem = propertyItemDao.get(propertyId);
-            ProductPropertyItem productPropertyItem = new ProductPropertyItem();
-            productPropertyItem.setProduct(product);
-            productPropertyItem.setEnable(true);
-            productPropertyItem.setPropertyItem(propertyItem);
-            productPropertyItemDao.create(productPropertyItem);
-            propertyItemVos.add(Mapper.Default().map(propertyItem, PropertyItemVo.class));
+        for (ProductPropertyDto productPropertyDto : propertyDtos) {
+            ProductPropertyItem productPropertyItem = productPropertyItemDao.getByProductIdAndPropertyId(productId, productPropertyDto.getPropertyId());
+
+            PropertyItem propertyItem = null;
+            if (productPropertyItem == null) {
+                propertyItem = propertyItemDao.get(productPropertyDto.getPropertyId());
+                //绑定产品属性
+                productPropertyItem = new ProductPropertyItem();
+                productPropertyItem.setProduct(product);
+                productPropertyItem.setPropertyItem(propertyItem);
+                productPropertyItem.setEnable(true);
+                productPropertyItemDao.create(productPropertyItem);
+            } else {
+                propertyItem = productPropertyItem.getPropertyItem();
+                LOGGER.warn("product {} property {}  already set in", productVo.getName(), propertyItem.getName());
+            }
+            //属性值不为空，直接set
+            if (productPropertyDto.getValue() != null) {
+                productPropertyItem.setPropertyValue(productPropertyDto.getValue());
+                productPropertyItemDao.update(productPropertyItem);
+            }
+            PropertyItemVo propertyItemVo = new PropertyItemVo();
+            propertyItemVo.setProperty(productPropertyItem.getPropertyItem().getName());
+            propertyItemVo.setValue(productPropertyItem.getPropertyValue());
+            propertyItemVos.add(propertyItemVo);
         }
         productVo.setPropertyItems(propertyItemVos);
         return productVo;
+    }
+
+    @Override
+    @Transactional
+    public void setPropertyValue(long productId, List<ProductPropertyDto> propertyDtos) {
+        Product product = productDao.get(productId);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
+        for (ProductPropertyDto propertyDto : propertyDtos) {
+            productPropertyItemDao.setValue(productId, propertyDto.getPropertyId(), propertyDto.getValue());
+            LOGGER.info("product {} set property value {}", product.getName(), propertyDto.getValue());
+        }
     }
 
     @Override

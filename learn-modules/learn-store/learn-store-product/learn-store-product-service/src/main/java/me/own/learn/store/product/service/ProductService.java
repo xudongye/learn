@@ -2,6 +2,7 @@ package me.own.learn.store.product.service;
 
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.store.product.dto.ProductDto;
+import me.own.learn.store.product.dto.ProductPropertyDto;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
 
@@ -16,7 +17,9 @@ public interface ProductService {
 
     ProductVo create(ProductDto productDto);
 
-    ProductDetailVo bindProperty(long productId, List<Long> propertyIds);
+    ProductDetailVo bindProperty(long productId, List<ProductPropertyDto> propertyDtos);
+
+    void setPropertyValue(long productId, List<ProductPropertyDto> propertyDtos);
 
     ProductVo update(ProductDto productDto);
 

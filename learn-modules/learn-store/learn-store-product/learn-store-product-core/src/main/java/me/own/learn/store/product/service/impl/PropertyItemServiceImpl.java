@@ -69,9 +69,12 @@ public class PropertyItemServiceImpl implements PropertyItemService {
         List<ProductPropertyItem> properties = productPropertyItemDao.filter(query, null, null);
         if (CollectionUtils.isNotEmpty(properties)) {
             List<PropertyItemVo> propertyItemVos = new ArrayList<>();
-//            PropertyItemVo propertyItemVo = null;
+            PropertyItemVo propertyItemVo = null;
             for (ProductPropertyItem property : properties) {
-                propertyItemVos.add(Mapper.Default().map(property.getPropertyItem(), PropertyItemVo.class));
+                propertyItemVo = new PropertyItemVo();
+                propertyItemVo.setProperty(property.getPropertyItem().getName());
+                propertyItemVo.setValue(property.getPropertyValue());
+                propertyItemVos.add(propertyItemVo);
             }
             return propertyItemVos;
         }
