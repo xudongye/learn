@@ -10,6 +10,7 @@ import me.own.learn.store.product.exception.CarryNotFoundException;
 import me.own.learn.store.product.po.ProductPropertyItem;
 import me.own.learn.store.product.po.PropertyItem;
 import me.own.learn.store.product.service.PropertyItemService;
+import me.own.learn.store.product.vo.PropertyItemValue;
 import me.own.learn.store.product.vo.PropertyItemVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -63,20 +64,21 @@ public class PropertyItemServiceImpl implements PropertyItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PropertyItemVo> listGroupByProductId(long productId) {
+    public List<PropertyItemValue> listGroupByProductId(long productId) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(ProductPropertyItem.class);
         query.setSimpleCondition("product.id", productId + "", QueryConstants.SimpleQueryMode.Equal);
         List<ProductPropertyItem> properties = productPropertyItemDao.filter(query, null, null);
         if (CollectionUtils.isNotEmpty(properties)) {
-            List<PropertyItemVo> propertyItemVos = new ArrayList<>();
-            PropertyItemVo propertyItemVo = null;
+            List<PropertyItemValue> propertyItemValues = new ArrayList<>();
+            PropertyItemValue propertyItemValue = null;
             for (ProductPropertyItem property : properties) {
-                propertyItemVo = new PropertyItemVo();
-                propertyItemVo.setProperty(property.getPropertyItem().getName());
-                propertyItemVo.setValue(property.getPropertyValue());
-                propertyItemVos.add(propertyItemVo);
+                propertyItemValue = new PropertyItemValue();
+                propertyItemValue.setPropertyId(property.getPropertyItem().getId());
+                propertyItemValue.setProperty(property.getPropertyItem().getName());
+                propertyItemValue.setValue(property.getPropertyValue());
+                propertyItemValues.add(propertyItemValue);
             }
-            return propertyItemVos;
+            return propertyItemValues;
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package me.own.learn.store.product.service;
 
 import me.own.learn.store.product.dto.PropertyItemDto;
+import me.own.learn.store.product.vo.PropertyItemValue;
 import me.own.learn.store.product.vo.PropertyItemVo;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface PropertyItemService {
 
     void delete(long id);
 
-    List<PropertyItemVo> listGroupByProductId(long productId);
+    List<PropertyItemValue> listGroupByProductId(long productId);
 }

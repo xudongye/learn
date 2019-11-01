@@ -4,8 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.utils.request.RequestUtils;
-import me.own.learn.store.product.constant.ProductConstant;
-import me.own.learn.store.product.controller.cmd.ProductPropertyCmd;
 import me.own.learn.store.product.dto.ProductDto;
 import me.own.learn.store.product.dto.ProductPropertyDto;
 import me.own.learn.store.product.dto.PropertyItemDto;
@@ -14,6 +12,7 @@ import me.own.learn.store.product.service.ProductService;
 import me.own.learn.store.product.service.PropertyItemService;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
+import me.own.learn.store.product.vo.PropertyItemValue;
 import me.own.learn.store.product.vo.PropertyItemVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,9 +69,9 @@ public class ProductController {
     public ResponseEntity createProductProperty(HttpServletRequest request,
                                                 @RequestBody PropertyItemDto propertyItemDto) {
         Map<String, Object> response = new HashMap<>();
-        PropertyItemVo propertyItemVo = propertyItemService.create(propertyItemDto);
+        PropertyItemVo propertyItemValue = propertyItemService.create(propertyItemDto);
         response.put("code", 201);
-        response.put("data", propertyItemVo);
+        response.put("data", propertyItemValue);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
@@ -81,9 +80,9 @@ public class ProductController {
     public ResponseEntity listPropertyItem(HttpServletRequest request,
                                            @RequestParam(required = false) Long productId) {
         Map<String, Object> response = new HashMap<>();
-        List<PropertyItemVo> propertyItemVos = propertyItemService.listGroupByProductId(productId);
+        List<PropertyItemValue> propertyItemValues = propertyItemService.listGroupByProductId(productId);
         response.put("code", 200);
-        response.put("data", propertyItemVos);
+        response.put("data", propertyItemValues);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

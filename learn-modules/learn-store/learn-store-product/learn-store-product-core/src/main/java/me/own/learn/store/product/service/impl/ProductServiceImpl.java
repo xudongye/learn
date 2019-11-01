@@ -13,8 +13,8 @@ import me.own.learn.store.product.dao.PropertyItemDao;
 import me.own.learn.store.product.dao.ProductDao;
 import me.own.learn.store.product.dto.ProductDto;
 import me.own.learn.store.product.dto.ProductPropertyDto;
-import me.own.learn.store.product.exception.CarryPropertyNotEmptyException;
 import me.own.learn.store.product.exception.ProductCanNotBindParentCategoryException;
+import me.own.learn.store.product.exception.ProductCategoryCanNotNullException;
 import me.own.learn.store.product.exception.ProductNotFoundException;
 import me.own.learn.store.product.po.Product;
 import me.own.learn.store.product.po.ProductPropertyItem;
@@ -25,8 +25,7 @@ import me.own.learn.store.product.service.PropertyItemService;
 import me.own.learn.store.product.vo.ProductCategoryVo;
 import me.own.learn.store.product.vo.ProductDetailVo;
 import me.own.learn.store.product.vo.ProductVo;
-import me.own.learn.store.product.vo.PropertyItemVo;
-import org.apache.commons.collections.CollectionUtils;
+import me.own.learn.store.product.vo.PropertyItemValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,13 +63,38 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductVo create(ProductDto productDto) {
+        //商品创建时类目必选
+        if (productDto.getCategory() == null) {
+            throw new ProductCategoryCanNotNullException();
+        }
+        //不可选择父子类目直接绑定商品
         CategoryVo categoryVo = categoryService.getById(productDto.getCategory().getId());
+        if (categoryVo.getParent() == null) {
+            throw new ProductCanNotBindParentCategoryException();
+        }
         Product product = Mapper.Default().map(productDto, Product.class);
         product.setCreateTime(new Date());
         product.setDeleted(false);
-        productDao.create(product);
+        product.setCategory(Mapper.Default().map(productDto.getCategory(), Category.class));
         LOGGER.info("create new product {} in category {}", product.getId(), categoryVo.getName());
+        productDao.create(product);
+        onTypeInProductNum(product.getId());
         return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    private void onTypeInProductNum(long productId) {
+        ProductPropertyItem productPropertyItem = new ProductPropertyItem();
+        productPropertyItem.setEnable(true);
+        Product product = new Product();
+        product.setId(productId);
+        productPropertyItem.setProduct(product);
+        PropertyItem propertyItem = new PropertyItem();
+        propertyItem.setId(1L);
+        productPropertyItem.setPropertyItem(propertyItem);
+        String productNumber = ProductNumberGenerator.generate();
+        productPropertyItem.setPropertyValue(productNumber);
+        productPropertyItemDao.create(productPropertyItem);
+        LOGGER.info("generator product {} number {}", productId, productNumber);
     }
 
     @Override
@@ -81,7 +105,7 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException();
         }
         ProductDetailVo productVo = Mapper.Default().map(product, ProductDetailVo.class);
-        List<PropertyItemVo> propertyItemVos = new ArrayList<>();
+        List<PropertyItemValue> propertyItemValues = new ArrayList<>();
         for (ProductPropertyDto productPropertyDto : propertyDtos) {
             ProductPropertyItem productPropertyItem = productPropertyItemDao.getByProductIdAndPropertyId(productId, productPropertyDto.getPropertyId());
 
@@ -103,12 +127,13 @@ public class ProductServiceImpl implements ProductService {
                 productPropertyItem.setPropertyValue(productPropertyDto.getValue());
                 productPropertyItemDao.update(productPropertyItem);
             }
-            PropertyItemVo propertyItemVo = new PropertyItemVo();
-            propertyItemVo.setProperty(productPropertyItem.getPropertyItem().getName());
-            propertyItemVo.setValue(productPropertyItem.getPropertyValue());
-            propertyItemVos.add(propertyItemVo);
+            PropertyItemValue propertyItemValue = new PropertyItemValue();
+            propertyItemValue.setPropertyId(productPropertyItem.getPropertyItem().getId());
+            propertyItemValue.setProperty(productPropertyItem.getPropertyItem().getName());
+            propertyItemValue.setValue(productPropertyItem.getPropertyValue());
+            propertyItemValues.add(propertyItemValue);
         }
-        productVo.setPropertyItems(propertyItemVos);
+        productVo.setPropertyItems(propertyItemValues);
         return productVo;
     }
 

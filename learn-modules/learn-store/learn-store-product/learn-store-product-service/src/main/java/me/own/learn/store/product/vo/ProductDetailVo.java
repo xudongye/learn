@@ -16,7 +16,7 @@ public class ProductDetailVo {
     private Date createTime;
     private Date modifyTime;
     private ProductCategoryVo productCategory;
-    private List<PropertyItemVo> propertyItems;
+    private List<PropertyItemValue> propertyItems;
 
     public Long getId() {
         return id;
@@ -82,11 +82,11 @@ public class ProductDetailVo {
         this.productCategory = productCategory;
     }
 
-    public List<PropertyItemVo> getPropertyItems() {
+    public List<PropertyItemValue> getPropertyItems() {
         return propertyItems;
     }
 
-    public void setPropertyItems(List<PropertyItemVo> propertyItems) {
+    public void setPropertyItems(List<PropertyItemValue> propertyItems) {
         this.propertyItems = propertyItems;
     }
 }

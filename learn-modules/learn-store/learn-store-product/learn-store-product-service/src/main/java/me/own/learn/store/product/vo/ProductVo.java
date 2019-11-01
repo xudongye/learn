@@ -16,7 +16,7 @@ public class ProductVo {
     private ProductCategoryVo category;
     private Date createTime;
     private Date modifyTime;
-    private List<PropertyItemVo> propertyItems;
+    private List<PropertyItemValue> propertyItems;
     private Double originalPrice;
     private Double promotionPrice;
     private Long hitCount;
@@ -78,11 +78,11 @@ public class ProductVo {
         this.modifyTime = modifyTime;
     }
 
-    public List<PropertyItemVo> getPropertyItems() {
+    public List<PropertyItemValue> getPropertyItems() {
         return propertyItems;
     }
 
-    public void setPropertyItems(List<PropertyItemVo> propertyItems) {
+    public void setPropertyItems(List<PropertyItemValue> propertyItems) {
         this.propertyItems = propertyItems;
     }
 
