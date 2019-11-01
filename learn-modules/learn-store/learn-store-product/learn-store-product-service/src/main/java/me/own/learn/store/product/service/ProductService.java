@@ -31,4 +31,6 @@ public interface ProductService {
     void delete(long productId);
 
     PageQueryResult<ProductVo> page(int pageNum, int pageSize, ProductQueryCondition condition);
+
+    PageQueryResult<ProductVo> pageProduct(int pageNum, int pageSize);
 }

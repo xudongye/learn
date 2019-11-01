@@ -236,4 +236,10 @@ public class ProductServiceImpl implements ProductService {
 
         return result.mapItems(ProductVo.class);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageQueryResult<ProductVo> pageProduct(int pageNum, int pageSize) {
+        return null;
+    }
 }
