@@ -28,6 +28,7 @@
         <module>learn-logistics</module>
         <module>learn-order</module>
         <module>learn-pay</module>
+        <module>learn-elsearch</module>
     </modules>
 
 

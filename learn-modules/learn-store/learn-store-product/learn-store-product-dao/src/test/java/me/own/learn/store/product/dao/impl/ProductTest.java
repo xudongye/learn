@@ -33,7 +33,7 @@ public class ProductTest extends BaseTestConfiguration {
 
     @Test
     public void getProductById() {
-        Product product = productDao.get(4L);
+        Product product = productDao.get(1L);
         System.out.println(product.getName());
     }
 

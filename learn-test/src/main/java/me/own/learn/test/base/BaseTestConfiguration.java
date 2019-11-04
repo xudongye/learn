@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Transactional
 @Rollback
 @ContextConfiguration(locations = {
-        "file:../../../../learn-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
+        "file:D:\\yc_learn_project\\learn\\learn-api\\src\\test\\resources\\mvc-dispatcher-servlet-test.xml"
 })
 public class BaseTestConfiguration {
 

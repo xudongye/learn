@@ -3,8 +3,8 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jms="http://www.springframework.org/schema/jms"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd
@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
         http://www.springframework.org/schema/jms
-        http://www.springframework.org/schema/jms/spring-jms-4.3.xsd"
+        http://www.springframework.org/schema/jms/spring-jms-4.3.xsd http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd"
        default-lazy-init="true">
 
 
@@ -49,15 +49,15 @@
                 <!--auto update database,when database is
                                     generate, you can comment this line -->
                 <prop key="hibernate.connection.release_mode">auto</prop>
-<!--                &lt;!&ndash; 开启查询缓存 &ndash;&gt;-->
-<!--                <prop key="hibernate.cache.use_query_cache">true</prop>-->
-<!--                &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
-<!--                <prop key="hibernate.cache.use_second_level_cache">true</prop>-->
-<!--                &lt;!&ndash; 高速缓存提供程序 &ndash;&gt;-->
-<!--                &lt;!&ndash; 由于spring也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
-<!--                <prop key="hibernate.cache.region.factory_class">-->
-<!--                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory-->
-<!--                </prop>-->
+                <!--                &lt;!&ndash; 开启查询缓存 &ndash;&gt;-->
+                <!--                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+                <!--                &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+                <!--                <prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+                <!--                &lt;!&ndash; 高速缓存提供程序 &ndash;&gt;-->
+                <!--                &lt;!&ndash; 由于spring也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
+                <!--                <prop key="hibernate.cache.region.factory_class">-->
+                <!--                    org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory-->
+                <!--                </prop>-->
                 <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
                 <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>-->
                 <!-- <prop key="hibernate.enable_lazy_load_no_trans">true</prop> -->
@@ -91,14 +91,14 @@
         </property>
     </bean>
 
-<!--    &lt;!&ndash; cacheManager, 指定ehcache.xml的位置 &ndash;&gt;-->
-<!--    <bean id="cacheManagerEhcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
-<!--        <property name="configLocation">-->
-<!--            <value>classpath:ehcache.xml</value>-->
-<!--        </property>-->
-<!--        &lt;!&ndash; 由于hibernate也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
-<!--        <property name="shared" value="true"/>-->
-<!--    </bean>-->
+    <!--    &lt;!&ndash; cacheManager, 指定ehcache.xml的位置 &ndash;&gt;-->
+    <!--    <bean id="cacheManagerEhcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+    <!--        <property name="configLocation">-->
+    <!--            <value>classpath:ehcache.xml</value>-->
+    <!--        </property>-->
+    <!--        &lt;!&ndash; 由于hibernate也使用了Ehcache, 保证双方都使用同一个缓存管理器 &ndash;&gt;-->
+    <!--        <property name="shared" value="true"/>-->
+    <!--    </bean>-->
 
     <!-- Activates annotation based transaction management -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -165,4 +165,18 @@
     <bean class="me.own.learn.configuration.delegate.LearnConfigurationServiceDelegate"
           factory-method="getInstance"/>
 
+
+    <!-- 扫描DAO包 自动创建实现 -->
+    <elasticsearch:repositories base-package="me.own.learn"/>
+    <!--通过transport方式与ES集群通信,不需要在本地创建节点-->
+    <!--client-transport-sniff表示是否进行自动嗅探ES集群中节点-->
+    <elasticsearch:transport-client id="es.transport.client"
+                                    cluster-nodes="www.lant.ltd:9300"
+                                    cluster-name="learn-elasticsearch"
+                                    client-transport-sniff="false"/>
+
+    <!-- spring data elasticsearch DAO 必须依赖 elasticsearchTemplate  -->
+    <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="es.transport.client"/>
+    </bean>
 </beans>
