@@ -12,6 +12,7 @@ public class ProductVo {
     private String name;
     private String icon;
     private String description;
+    private String brandName;
     //类目id
     private ProductCategoryVo category;
     private Date createTime;
@@ -52,6 +53,14 @@ public class ProductVo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
     public ProductCategoryVo getCategory() {

@@ -20,5 +20,11 @@ public interface EventService {
             String CUSTOMER_UNSUBSCRIBE = "CUSTOMER_UNSUBSCRIBE";
             String CUSTOMER_SCAN_QRCODE = "CUSTOMER_SCAN_QRCODE";
         }
+
+        interface ProductEvent {
+            String PRODUCT_CREATE = "PRODUCT_CREATE";
+            String PRODUCT_UPDATE = "PRODUCT_UPDATE";
+            String PRODUCT_DELETE = "PRODUCT_DELETE";
+        }
     }
 }

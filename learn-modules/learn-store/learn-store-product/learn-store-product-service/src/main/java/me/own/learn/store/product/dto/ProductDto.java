@@ -13,6 +13,7 @@ public class ProductDto {
     private String icon;
     private String title;
     private String description;
+    private String brandName;
     //类目id
     private IdSkeletonLong category;
     private Double originalPrice;
@@ -58,6 +59,14 @@ public class ProductDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
     public IdSkeletonLong getCategory() {

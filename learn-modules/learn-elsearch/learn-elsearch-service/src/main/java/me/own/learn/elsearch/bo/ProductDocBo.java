@@ -1,13 +1,6 @@
-package me.own.learn.elsearch.po;
+package me.own.learn.elsearch.bo;
 
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-
-@Document(indexName = "learn", type = "product")
-public class ProductDocument {
-
-    @Id
+public class ProductDocBo {
     private String skuNo;
     private String productName;//商品名
     private Long productId;//商品id

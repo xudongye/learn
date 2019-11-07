@@ -5,6 +5,9 @@ import me.own.commons.base.dao.QueryConstants;
 import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
+import me.own.learn.event.service.EventService;
+import me.own.learn.event.service.message.product.ProductCreateMessage;
+import me.own.learn.event.service.message.product.ProductDeleteMessage;
 import me.own.learn.store.category.po.Category;
 import me.own.learn.store.category.service.CategoryService;
 import me.own.learn.store.category.vo.CategoryVo;
@@ -60,6 +63,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private EventService eventService;
+
     @Override
     @Transactional
     public ProductVo create(ProductDto productDto) {
@@ -78,11 +84,14 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(Mapper.Default().map(productDto.getCategory(), Category.class));
         LOGGER.info("create new product {} in category {}", product.getId(), categoryVo.getName());
         productDao.create(product);
-        onTypeInProductNum(product.getId());
+        String skuNo = SkuNoGenerator.generate();
+        onTypeInProductNum(product.getId(), skuNo);
+        eventService.enqueue(EventService.EventName.ProductEvent.PRODUCT_CREATE,
+                new ProductCreateMessage(skuNo, categoryVo.getName(), product.getName(), product.getId(), ""));
         return Mapper.Default().map(product, ProductVo.class);
     }
 
-    private void onTypeInProductNum(long productId) {
+    private void onTypeInProductNum(long productId, String skuNo) {
         ProductPropertyItem productPropertyItem = new ProductPropertyItem();
         productPropertyItem.setEnable(true);
         Product product = new Product();
@@ -91,10 +100,9 @@ public class ProductServiceImpl implements ProductService {
         PropertyItem propertyItem = new PropertyItem();
         propertyItem.setId(1L);
         productPropertyItem.setPropertyItem(propertyItem);
-        String productNumber = ProductNumberGenerator.generate();
-        productPropertyItem.setPropertyValue(productNumber);
+        productPropertyItem.setPropertyValue(skuNo);
         productPropertyItemDao.create(productPropertyItem);
-        LOGGER.info("generator product {} number {}", productId, productNumber);
+        LOGGER.info("generator product {} skuNo {}", productId, skuNo);
     }
 
     @Override
@@ -160,6 +168,15 @@ public class ProductServiceImpl implements ProductService {
         if (productDto.getName() != null) {
             product.setName(productDto.getName());
         }
+        if (productDto.getBrandName() != null) {
+            product.setBrandName(productDto.getBrandName());
+        }
+        if (productDto.getHitCount() != null) {
+            product.setHitCount(productDto.getHitCount());
+        }
+        if (productDto.getSaleCount() != null) {
+            product.setSaleCount(productDto.getSaleCount());
+        }
         if (productDto.getCategory() != null || product.getCategory().getId() != productDto.getCategory().getId()) {
             CategoryVo categoryVo = categoryService.getById(productDto.getCategory().getId());
             if (categoryVo.getParent() == null) {
@@ -169,6 +186,8 @@ public class ProductServiceImpl implements ProductService {
         }
         product.setModifyTime(new Date());
         productDao.update(product);
+        eventService.enqueue(EventService.EventName.ProductEvent.PRODUCT_UPDATE,
+                new ProductCreateMessage(productPropertyItemDao.getSkuNoByProductId(product.getId()), product.getCategory().getName(), product.getName(), product.getId(), product.getBrandName()));
         return Mapper.Default().map(product, ProductVo.class);
     }
 
@@ -208,6 +227,8 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException();
         }
         product.setDeleted(true);
+        eventService.enqueue(EventService.EventName.ProductEvent.PRODUCT_DELETE,
+                new ProductDeleteMessage(productPropertyItemDao.getSkuNoByProductId(productId)));
     }
 
     @Override

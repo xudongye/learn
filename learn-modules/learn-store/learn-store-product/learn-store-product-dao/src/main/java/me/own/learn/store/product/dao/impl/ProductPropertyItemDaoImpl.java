@@ -32,4 +32,12 @@ public class ProductPropertyItemDaoImpl extends BaseDaoImpl<ProductPropertyItem>
         criteria.add(Restrictions.eq("propertyItem.id", propertyId));
         return (ProductPropertyItem) criteria.uniqueResult();
     }
+
+    @Override
+    public String getSkuNoByProductId(Long productId) {
+        Query query = getCurrentSession().
+                createQuery("select propertyValue from ProductPropertyItem where propertyItem.id = 1 and product.id = :productId");
+        query.setParameter("productId", productId);
+        return (String) query.uniqueResult();
+    }
 }
