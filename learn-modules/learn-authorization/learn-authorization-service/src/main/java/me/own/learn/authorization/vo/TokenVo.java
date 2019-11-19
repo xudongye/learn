@@ -6,6 +6,7 @@ package me.own.learn.authorization.vo;
  */
 public class TokenVo {
     private Long adminId;
+    private Long customerId;
     private String value;
     private long timestamp;
 
@@ -15,6 +16,14 @@ public class TokenVo {
 
     public void setAdminId(Long adminId) {
         this.adminId = adminId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getValue() {

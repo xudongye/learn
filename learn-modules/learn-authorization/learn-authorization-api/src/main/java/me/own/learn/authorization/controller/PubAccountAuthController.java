@@ -3,7 +3,10 @@ package me.own.learn.authorization.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import me.own.learn.authorization.service.TokenService;
 import me.own.learn.authorization.utils.CookieUtils;
+import me.own.learn.authorization.vo.CustomerTokenVo;
+import me.own.learn.authorization.vo.TokenVo;
 import me.own.learn.customer.dto.CustomerDto;
 import me.own.learn.customer.exception.CustomerNotFoundException;
 import me.own.learn.customer.service.CustomerService;
@@ -40,6 +43,9 @@ public class PubAccountAuthController {
 
     @Autowired
     private PubConfigurationService pubConfigurationService;
+
+    @Autowired
+    private TokenService tokenService;
 
 
     /**
@@ -154,18 +160,17 @@ public class PubAccountAuthController {
         String cookie_token = CookieUtils.getCustomerTokenInCookie(request);
         boolean needRefreshToken = true;
         if (StringUtils.isNotEmpty(cookie_token)) {
-            //todo
-//            if (!tokenService.isCustomerTokenExpired(cookie_token)) {
-//                CustomerTokenVo token = tokenService.getCustomerToken(cookie_token);
-//                needRefreshToken = token.getCustomerId() != customerId;
-//                LOGGER.debug("check request existing cookie {} and token customer {} for auth customer {} result:  needRefreshToken {}",
-//                        cookie_token, token.getCustomerId(), customerId, needRefreshToken);
-//            }
+            if (!tokenService.isExpired(cookie_token)) {
+                TokenVo token = tokenService.getByTokenValue(cookie_token);
+                needRefreshToken = token.getCustomerId() != customerId;
+                LOGGER.debug("check request existing cookie {} and token customer {} for auth customer {} result:  needRefreshToken {}",
+                        cookie_token, token.getCustomerId(), customerId, needRefreshToken);
+            }
         }
         if (needRefreshToken) {
-//            CustomerTokenVo tokenVo = tokenService.createTokenFromCustomerId(customerId);
-//            CookieUtils.setCustomerTokenInCookie(response, tokenVo.getValue());
-//            LOGGER.debug("set cookie to response {} for customer {}", tokenVo.getValue(), customerId);
+            TokenVo tokenVo = tokenService.createFromCustomer(customerId);
+            CookieUtils.setCustomerTokenInCookie(response, tokenVo.getValue());
+            LOGGER.debug("set cookie to response {} for customer {}", tokenVo.getValue(), customerId);
         }
     }
 

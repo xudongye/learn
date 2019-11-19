@@ -28,6 +28,18 @@ public class TokenServiceImpl implements TokenService {
     private TokenDao tokenDao;
 
     @Override
+    public TokenVo createFromCustomer(long customerId) {
+        String tokenValue = TokenGenerator.getInstance().generateTokenCode("CSTM" + customerId);
+        Token newToken = new Token(customerId, tokenValue);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 7);
+        newToken.setTimestamp(c.getTimeInMillis());
+        tokenDao.create(newToken);
+        LOGGER.debug("create new token " + tokenValue + " for customer " + customerId);
+        return Mapper.Default().map(newToken, TokenVo.class);
+    }
+
+    @Override
     public TokenVo createFromAdmin(long adminId, String name) {
         String token = TokenGenerator.getInstance().generateTokenCode("ADMIN" + name);
         Calendar calendar = Calendar.getInstance();
@@ -46,8 +58,8 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public TokenVo getByTokenValue(String tokenValue) {
         Token token = tokenDao.getByValue(tokenValue);
-        if (null != token){
-            return Mapper.Default().map(token,TokenVo.class);
+        if (null != token) {
+            return Mapper.Default().map(token, TokenVo.class);
         }
         return null;
     }
@@ -55,9 +67,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public boolean isConsistent(String value) {
         Token token = tokenDao.getByValue(value);
-        if ( null != token ){
+        if (null != token) {
             String realToken = token.getValue();
-            if (realToken.equals(value)){
+            if (realToken.equals(value)) {
                 return true;
             }
         }
@@ -67,8 +79,8 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public boolean isExpired(String value) {
         Token token = tokenDao.getByValue(value);
-        if ( null != token){
-            if (token.getTimestamp() == null || System.currentTimeMillis() - token.getTimestamp() <= EXPIRY_INTERVAL){
+        if (null != token) {
+            if (token.getTimestamp() == null || System.currentTimeMillis() - token.getTimestamp() <= EXPIRY_INTERVAL) {
                 return false;
             }
         }

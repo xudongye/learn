@@ -8,6 +8,8 @@ import me.own.learn.authorization.vo.TokenVo;
  */
 public interface TokenService {
 
+    TokenVo createFromCustomer(long customerId);
+
     TokenVo createFromAdmin(long adminId, String name);
 
     void remove(String value);
