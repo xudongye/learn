@@ -22,7 +22,6 @@ public class Product implements Serializable {
     private Long id;
     //产品名称：手机，电脑，零食
     private String name;
-    private String icon;
     private Boolean deleted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -36,6 +35,8 @@ public class Product implements Serializable {
     private Double promotionPrice;
     private Long hitCount;
     private Long saleCount;
+    //商品最小单元唯一编号
+    private String spuNo;
 
 
     public Long getId() {
@@ -52,14 +53,6 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     public Boolean getDeleted() {
@@ -132,5 +125,13 @@ public class Product implements Serializable {
 
     public void setSaleCount(Long saleCount) {
         this.saleCount = saleCount;
+    }
+
+    public String getSpuNo() {
+        return spuNo;
+    }
+
+    public void setSpuNo(String spuNo) {
+        this.spuNo = spuNo;
     }
 }

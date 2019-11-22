@@ -9,6 +9,7 @@ import me.own.commons.base.model.IdSkeletonLong;
  */
 public class ProductDto {
     private Long id;
+    private String spuNo;
     private String name;
     private String icon;
     private String title;
@@ -27,6 +28,14 @@ public class ProductDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSpuNo() {
+        return spuNo;
+    }
+
+    public void setSpuNo(String spuNo) {
+        this.spuNo = spuNo;
     }
 
     public String getName() {

@@ -12,6 +12,7 @@ import me.own.learn.image.po.Image;
 import me.own.learn.image.service.ImageQueryCondition;
 import me.own.learn.image.service.ImageService;
 import me.own.learn.image.vo.ImageVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,18 @@ public class ImageServiceImpl implements ImageService {
         PageQueryResult<Image> result = imageDao.pageQuery(pageNum, pageSize, query, orders);
 
         return result.mapItems(ImageVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ImageVo> getByProductId(long productId) {
+        QueryCriteriaUtil query = new QueryCriteriaUtil(Image.class);
+        query.setDeletedFalseCondition();
+        query.setSimpleCondition("productId", productId + "", QueryConstants.SimpleQueryMode.Equal);
+        List<Image> images = imageDao.filter(query, null, null);
+        if (CollectionUtils.isNotEmpty(images)) {
+            return Mapper.Default().mapArray(images, ImageVo.class);
+        }
+        return null;
     }
 }

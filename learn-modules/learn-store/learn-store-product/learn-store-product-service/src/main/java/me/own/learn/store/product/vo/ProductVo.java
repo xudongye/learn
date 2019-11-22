@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class ProductVo {
     private Long id;
+    private String spuNo;
     private String name;
     private String icon;
     private String description;
@@ -29,6 +30,14 @@ public class ProductVo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSpuNo() {
+        return spuNo;
+    }
+
+    public void setSpuNo(String spuNo) {
+        this.spuNo = spuNo;
     }
 
     public String getName() {

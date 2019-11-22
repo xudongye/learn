@@ -4,6 +4,8 @@ import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.image.dto.ImageDto;
 import me.own.learn.image.vo.ImageVo;
 
+import java.util.List;
+
 /**
  * @author yexudong
  * @date 2019/7/3 14:03
@@ -15,4 +17,6 @@ public interface ImageService {
     void delete(long imageId);
 
     PageQueryResult<ImageVo> page(int pageNum, int pageSize, ImageQueryCondition condition);
+
+    List<ImageVo> getByProductId(long productId);
 }
