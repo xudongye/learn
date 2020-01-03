@@ -56,9 +56,9 @@ public class CategoryController {
     @ApiOperation(value = "分页查询类目", tags = "category_admin")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity pageCategory(HttpServletRequest request,
-                                   @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                   @RequestParam(required = false) CategoryQueryCondition condition) {
+                                       @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                       @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                       @RequestParam(required = false) CategoryQueryCondition condition) {
 
         if (condition == null) {
             condition = RequestUtils.buildQueryFilter(request, CategoryQueryCondition.class);
@@ -80,7 +80,7 @@ public class CategoryController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "管理员类目搜索功能", tags = "category_customer")
+    @ApiOperation(value = "会员类目搜索功能首页侧边栏", tags = "category_customer")
     @RequestMapping(value = "/aside", method = RequestMethod.GET)
     public ResponseEntity listCategoryForSearch(HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();

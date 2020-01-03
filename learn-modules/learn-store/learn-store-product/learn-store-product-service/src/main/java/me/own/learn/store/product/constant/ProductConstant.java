@@ -35,16 +35,41 @@ public class ProductConstant {
         }
     }
 
-    public enum Status implements EnumName {
+    public enum SoldStatus implements EnumName {
 
         putaway(1, "上架"),
-        soldout(2, "下架");
+        soldout(2, "下架/售罄");
 
         private int code;
 
         private String name;
 
-        private Status(int code, String name) {
+        private SoldStatus(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        @Override
+        public int getCode() {
+            return code;
+        }
+
+        @Override
+        public String getName() {
+            return this.name;
+        }
+    }
+
+    public enum PriceSort implements EnumName {
+
+        lToh(1, "从低到高"),
+        hTol(2, "从高到低");
+
+        private int code;
+
+        private String name;
+
+        private PriceSort(int code, String name) {
             this.code = code;
             this.name = name;
         }

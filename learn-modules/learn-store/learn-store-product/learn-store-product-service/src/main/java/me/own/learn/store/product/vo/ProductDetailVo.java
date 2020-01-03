@@ -1,5 +1,7 @@
 package me.own.learn.store.product.vo;
 
+import me.own.commons.base.model.NameSkeletonString;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,13 +13,22 @@ public class ProductDetailVo {
     private Long id;
     private String spuNo;
     private String name;
-    private String title;
+    private String brandName;
+
+    private NameSkeletonString category;
+    private Double originalPrice;
+    private Double promotionPrice;
+    private Long hitCount;
+    private Long saleCount;
+    private int status;
     private String description;
+
     private Boolean deleted;
     private Date createTime;
     private Date modifyTime;
-    private ProductCategoryVo productCategory;
+
     private List<PropertyItemValue> propertyItems;
+    private List<ProductImageVo> images;
 
     public Long getId() {
         return id;
@@ -43,12 +54,60 @@ public class ProductDetailVo {
         this.name = name;
     }
 
-    public String getTitle() {
-        return title;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public NameSkeletonString getCategory() {
+        return category;
+    }
+
+    public void setCategory(NameSkeletonString category) {
+        this.category = category;
+    }
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Double getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(Double promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public Long getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Long hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public Long getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Long saleCount) {
+        this.saleCount = saleCount;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -83,19 +142,19 @@ public class ProductDetailVo {
         this.modifyTime = modifyTime;
     }
 
-    public ProductCategoryVo getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategoryVo productCategory) {
-        this.productCategory = productCategory;
-    }
-
     public List<PropertyItemValue> getPropertyItems() {
         return propertyItems;
     }
 
     public void setPropertyItems(List<PropertyItemValue> propertyItems) {
         this.propertyItems = propertyItems;
+    }
+
+    public List<ProductImageVo> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImageVo> images) {
+        this.images = images;
     }
 }

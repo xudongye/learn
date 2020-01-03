@@ -12,7 +12,7 @@ public class ProductQueryCondition {
     //类目id
     private Long categoryId;
     //商品状态，1-正常，2-下架
-    private ProductConstant.Status status;
+    private ProductConstant.SoldStatus soldStatus;
     private Long createTimeFrom;
     private Long createTimeTo;
 
@@ -40,12 +40,12 @@ public class ProductQueryCondition {
         this.categoryId = categoryId;
     }
 
-    public ProductConstant.Status getStatus() {
-        return status;
+    public ProductConstant.SoldStatus getSoldStatus() {
+        return soldStatus;
     }
 
-    public void setStatus(ProductConstant.Status status) {
-        this.status = status;
+    public void setSoldStatus(ProductConstant.SoldStatus soldStatus) {
+        this.soldStatus = soldStatus;
     }
 
     public Long getCreateTimeFrom() {

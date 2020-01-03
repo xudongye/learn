@@ -1,14 +1,14 @@
 # 配置项的刷新间隔，以毫秒为单位，如果设置为0，则文件一改动即生效
-domain: http://www.lant.ltd
+domain: http://www.kuanghuan.shop
 defaultPassword: letgoit
 tmc:
   partnerCode: P10000048
   version: 1.0.0
 file:
   root: /alidata/own/upload/learn/static/images/
-  urlPrefix: http://www.lant.ltd/learn/static/images/
+  urlPrefix: http://www.kuanghuan.shop/learn/static/images/
   qrCodePath: /alidata/own/upload/learn/static/images/qrcode/
   qrCodeLogoPath: /alidata/own/upload/learn/static/images/qrcode/logo.jpg
 pay:
-  alipayCallback: http://www.lant.ltd/learn/callback/alipay
-  wxpayCallback: http://www.lant.ltd/learn/callback/wxpay
+  alipayCallback: http://www.kuanghuan.shop/learn/callback/alipay
+  wxpayCallback: http://www.kuanghuan.shop/learn/callback/wxpay

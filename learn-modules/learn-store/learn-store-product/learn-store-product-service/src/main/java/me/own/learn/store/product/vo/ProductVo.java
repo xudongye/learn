@@ -1,5 +1,8 @@
 package me.own.learn.store.product.vo;
 
+import me.own.commons.base.model.IdSkeletonLong;
+import me.own.commons.base.model.NameSkeletonString;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +14,10 @@ public class ProductVo {
     private Long id;
     private String spuNo;
     private String name;
-    private String icon;
     private String description;
     private String brandName;
     //类目id
-    private ProductCategoryVo category;
+    private NameSkeletonString category;
     private Date createTime;
     private Date modifyTime;
     private List<PropertyItemValue> propertyItems;
@@ -23,6 +25,7 @@ public class ProductVo {
     private Double promotionPrice;
     private Long hitCount;
     private Long saleCount;
+    private int status;
 
     public Long getId() {
         return id;
@@ -48,14 +51,6 @@ public class ProductVo {
         this.name = name;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -72,11 +67,11 @@ public class ProductVo {
         this.brandName = brandName;
     }
 
-    public ProductCategoryVo getCategory() {
+    public NameSkeletonString getCategory() {
         return category;
     }
 
-    public void setCategory(ProductCategoryVo category) {
+    public void setCategory(NameSkeletonString category) {
         this.category = category;
     }
 
@@ -134,5 +129,13 @@ public class ProductVo {
 
     public void setSaleCount(Long saleCount) {
         this.saleCount = saleCount;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

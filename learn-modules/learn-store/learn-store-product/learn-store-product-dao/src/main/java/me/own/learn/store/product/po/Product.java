@@ -37,6 +37,7 @@ public class Product implements Serializable {
     private Long saleCount;
     //商品最小单元唯一编号
     private String spuNo;
+    private int status;
 
 
     public Long getId() {
@@ -133,5 +134,13 @@ public class Product implements Serializable {
 
     public void setSpuNo(String spuNo) {
         this.spuNo = spuNo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

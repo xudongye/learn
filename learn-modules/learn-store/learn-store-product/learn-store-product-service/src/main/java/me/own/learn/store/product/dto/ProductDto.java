@@ -2,6 +2,7 @@ package me.own.learn.store.product.dto;
 
 
 import me.own.commons.base.model.IdSkeletonLong;
+import me.own.learn.store.product.constant.ProductConstant;
 
 /**
  * @author yexudong
@@ -21,6 +22,7 @@ public class ProductDto {
     private Double promotionPrice;
     private Long hitCount;
     private Long saleCount;
+    private ProductConstant.SoldStatus soldStatus;
 
     public Long getId() {
         return id;
@@ -116,5 +118,13 @@ public class ProductDto {
 
     public void setSaleCount(Long saleCount) {
         this.saleCount = saleCount;
+    }
+
+    public ProductConstant.SoldStatus getSoldStatus() {
+        return soldStatus;
+    }
+
+    public void setSoldStatus(ProductConstant.SoldStatus soldStatus) {
+        this.soldStatus = soldStatus;
     }
 }

@@ -32,5 +32,5 @@ public interface ProductService {
 
     PageQueryResult<ProductVo> page(int pageNum, int pageSize, ProductQueryCondition condition);
 
-    PageQueryResult<ProductVo> pageProduct(int pageNum, int pageSize);
+    PageQueryResult<ProductVo> searchProduct(int pageNum, int pageSize, SearchProductCondition condition);
 }
