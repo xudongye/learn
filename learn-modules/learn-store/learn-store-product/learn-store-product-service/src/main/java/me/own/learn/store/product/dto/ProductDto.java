@@ -4,6 +4,8 @@ package me.own.learn.store.product.dto;
 import me.own.commons.base.model.IdSkeletonLong;
 import me.own.learn.store.product.constant.ProductConstant;
 
+import java.util.List;
+
 /**
  * @author yexudong
  * @date 2019/6/12 18:22
@@ -23,6 +25,7 @@ public class ProductDto {
     private Long hitCount;
     private Long saleCount;
     private ProductConstant.SoldStatus soldStatus;
+    private List<ProductImageDto> images;
 
     public Long getId() {
         return id;
@@ -126,5 +129,13 @@ public class ProductDto {
 
     public void setSoldStatus(ProductConstant.SoldStatus soldStatus) {
         this.soldStatus = soldStatus;
+    }
+
+    public List<ProductImageDto> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImageDto> images) {
+        this.images = images;
     }
 }

@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 子类必须在自己的实现中，根据自身与mvc-dispatcher-servlet-test.xml文件的位置关系自行重写，如：
  * “@ContextConfiguration(locations = {"file:../../../learn-api/src/main/webapp/WEB-INF/mvc-dispatcher-servlet-test.xml"})”
  * 也可以在此处统一配置spring application content.xml的绝对路径以省略每个子类单独定义路径，但此路径会因为个人的代码位置而不同，如：
- * “@ContextConfiguration(locations = {"file:F:\gitRepository\webook\Source\Trunk\lishu\lishu-api\src\main\webapp\WEB-INF\mvc-dispatcher-servlet-test.xml"})”
+ * “@ContextConfiguration(locations = {"file:F:\gitRepository\webook\Source\Trunk\learn\learn-api\src\main\webapp\WEB-INF\mvc-dispatcher-servlet-test.xml"})”
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

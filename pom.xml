@@ -35,6 +35,18 @@
         <dependencies>
 
             <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-websocket</artifactId>
+                <version>${version.springframework}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-messaging</artifactId>
+                <version>${version.springframework}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>net.oschina.j2cache</groupId>
                 <artifactId>j2cache-core</artifactId>
                 <version>${j2cache-version}</version>
@@ -364,11 +376,20 @@
             <artifactId>j2cache-core</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-ehcache</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.hibernate</groupId>-->
+        <!--            <artifactId>hibernate-ehcache</artifactId>-->
+        <!--        </dependency>-->
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
     </dependencies>
 
 

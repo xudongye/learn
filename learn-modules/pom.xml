@@ -29,6 +29,7 @@
         <module>learn-order</module>
         <module>learn-pay</module>
         <module>learn-elsearch</module>
+        <module>learn-chat</module>
     </modules>
 
 

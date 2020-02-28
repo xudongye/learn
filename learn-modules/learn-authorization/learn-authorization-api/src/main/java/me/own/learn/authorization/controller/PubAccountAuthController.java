@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import static me.own.commons.wechat.pubaccount.media.impl.MediaServiceImpl.LOGGER;
 
 @RestController
-@Api(value = "公众号授权接口", description = "处理非关注用户通过授权登录,获取 User info, 并创建新用户")
+@Api(value = "公众号授权接口", description = "非关注用户通过授权登录, 并创建新用户")
 public class PubAccountAuthController {
 
     @Autowired

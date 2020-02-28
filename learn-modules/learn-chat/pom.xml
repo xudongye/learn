@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>learn-modules</artifactId>
+        <groupId>me.own.learn</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>learn-chat</artifactId>
+    <packaging>pom</packaging>
+
+
+    <description>聊天系统，基于websocket实现</description>
+    <modules>
+        <module>learn-chat-dao</module>
+        <module>learn-chat-service</module>
+        <module>learn-chat-core</module>
+        <module>learn-chat-api</module>
+        <module>learn-chat-built</module>
+    </modules>
+</project>

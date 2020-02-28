@@ -92,6 +92,7 @@ public class ImageServiceImpl implements ImageService {
         if (CollectionUtils.isNotEmpty(images)) {
             return Mapper.Default().mapArray(images, ImageVo.class);
         }
+        LOGGER.warn("product {} do not set image list.", productId);
         return null;
     }
 }

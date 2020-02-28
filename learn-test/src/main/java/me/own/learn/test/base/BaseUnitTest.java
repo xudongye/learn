@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath:mvc-dispatcher-servlet-test.xml"
-//        "file:../../../lishu-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
+//        "file:../../../learn-api/src/test/resources/mvc-dispatcher-servlet-test.xml"
 })
 //@Transactional
 //@Rollback

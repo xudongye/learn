@@ -19,10 +19,7 @@ import me.own.learn.store.product.dao.PropertyItemDao;
 import me.own.learn.store.product.dao.ProductDao;
 import me.own.learn.store.product.dto.ProductDto;
 import me.own.learn.store.product.dto.ProductPropertyDto;
-import me.own.learn.store.product.exception.ProductCanNotBindParentCategoryException;
-import me.own.learn.store.product.exception.ProductCategoryCanNotNullException;
-import me.own.learn.store.product.exception.ProductCategoryUnspecifiedException;
-import me.own.learn.store.product.exception.ProductNotFoundException;
+import me.own.learn.store.product.exception.*;
 import me.own.learn.store.product.po.Product;
 import me.own.learn.store.product.po.ProductPropertyItem;
 import me.own.learn.store.product.po.PropertyItem;
@@ -90,6 +87,10 @@ public class ProductServiceImpl implements ProductService {
         CategoryVo categoryVo = categoryService.getById(productDto.getCategory().getId());
         if (categoryVo.getParent() == null) {
             throw new ProductCanNotBindParentCategoryException();
+        }
+        //product image must add
+        if (CollectionUtils.isEmpty(productDto.getImages())) {
+            throw new ProductImageMustAddException();
         }
         Product product = Mapper.Default().map(productDto, Product.class);
         product.setCreateTime(new Date());
@@ -225,7 +226,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         ProductDetailVo detailVo = Mapper.Default().map(product, ProductDetailVo.class);
-        Category category = product.getCategory();
+//        Category category = product.getCategory();
         //罗列产品属性
         detailVo.setPropertyItems(propertyItemService.listGroupByProductId(productId));
         //商品图片
