@@ -30,6 +30,7 @@
         <module>learn-pay</module>
         <module>learn-elsearch</module>
         <module>learn-chat</module>
+        <module>learn-mall</module>
     </modules>
 
 

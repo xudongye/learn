@@ -62,7 +62,7 @@ public class AdminLoginController {
         Map<String, Object> responseBody = new HashMap<>();
         if (StringUtils.isEmpty(aat.getValue())) {
             responseBody.put("success", false);
-            responseBody.put("msg", "异常退出");
+            responseBody.put("error_msg", "异常退出");
             return new ResponseEntity(responseBody, HttpStatus.BAD_REQUEST);
         }
         tokenService.remove(aat.getValue());

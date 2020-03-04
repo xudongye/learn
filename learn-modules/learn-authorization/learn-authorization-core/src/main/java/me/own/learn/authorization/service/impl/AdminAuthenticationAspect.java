@@ -56,18 +56,18 @@ public class AdminAuthenticationAspect {
         }
         if (token == null) {
             authResponse.put("success", false);
-            authResponse.put("msg", "系统访问令牌为空，请重新登录！");
+            authResponse.put("error_msg", "系统访问令牌为空，请重新登录！");
             return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
         } else {
             TokenVo tokenVo = tokenService.getByTokenValue(token);
             if (null == tokenVo || null == tokenVo.getAdminId()) {
                 authResponse.put("success", false);
-                authResponse.put("msg", "系统访问令牌错误，请重新登录！");
+                authResponse.put("error_msg", "系统访问令牌错误，请重新登录！");
                 return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
             } else {
                 if (!tokenService.isConsistent(token) && tokenService.isExpired(token)) {
                     authResponse.put("success", false);
-                    authResponse.put("msg", "系统访问令牌过期，请重新登录！");
+                    authResponse.put("error_msg", "系统访问令牌过期，请重新登录！");
                     return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
                 }
                 // set admin user id to controller input parameter

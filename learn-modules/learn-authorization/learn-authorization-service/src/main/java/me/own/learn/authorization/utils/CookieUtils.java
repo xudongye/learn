@@ -33,7 +33,7 @@ public class CookieUtils {
         Cookie cookie = new Cookie(COOKIE_NAME_ADMIN_TOKEN, tokenValue);
         cookie.setPath("/");
         cookie.setMaxAge(3600 * 24 * 7);
-        response.addCookie(cookie);
+            response.addCookie(cookie);
     }
 
     public static String getAdminUserTokenInCookie(HttpServletRequest request) {

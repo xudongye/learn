@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import me.own.learn.admin.dto.AdminDto;
 import me.own.learn.admin.service.AdminQueryCondition;
 import me.own.learn.admin.service.AdminService;
+import me.own.learn.admin.service.WebMenuService;
 import me.own.learn.admin.vo.AdminVo;
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.exception.BusinessException;
@@ -38,6 +39,25 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private WebMenuService menuService;
+
+
+    @ApiOperation("获取管理员基本信息接口")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    @ApiImplicitParam(name = "a_id", value = "调试模式", paramType = "query", dataType = "String", defaultValue = "1")
+    public ResponseEntity adminInfo(HttpServletRequest request, AdminAccessToken aat) {
+        Map<String, Object> response = new HashMap<>();
+        AdminVo adminVo = adminService.getById(aat.getAdminId());
+        decorator(adminVo);
+        response.put("code", 200);
+        response.put("username", adminVo.getName());
+        response.put("roles", new String[]{"TEST"});
+        response.put("menu", menuService.getMenus());
+        response.put("icon", adminVo.getHeadImg());
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
     @ApiOperation("获取管理员基本信息接口")
     @RequestMapping(value = "/mine", method = RequestMethod.GET)
@@ -55,7 +75,7 @@ public class AdminController {
     @ApiOperation("创建管理员")
     @RequestMapping(method = RequestMethod.POST)
     @AdminAuthenticationRequired
-    public ResponseEntity create(HttpServletRequest request,AdminAccessToken aat,
+    public ResponseEntity create(HttpServletRequest request, AdminAccessToken aat,
                                  @RequestBody AdminDto adminDto) {
 
         Map<String, Object> response = new HashMap<>();
@@ -71,7 +91,7 @@ public class AdminController {
     @ApiOperation("分页查询管理员")
     @RequestMapping(method = RequestMethod.GET)
     @AdminAuthenticationRequired
-    public ResponseEntity page(HttpServletRequest request,AdminAccessToken aat,
+    public ResponseEntity page(HttpServletRequest request, AdminAccessToken aat,
                                @RequestParam(required = false) AdminQueryCondition condition,
                                @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
