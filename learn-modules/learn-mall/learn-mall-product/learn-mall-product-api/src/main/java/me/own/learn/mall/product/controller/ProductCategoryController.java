@@ -28,7 +28,7 @@ import java.util.Map;
  * @Date: 2020/3/4 9:58
  */
 @RestController
-@RequestMapping(value = "/api/v1/product-category")
+@RequestMapping(value = "/api/v1/mall/product-category")
 @Api(tags = "ProductCategoryController", description = "商品分类管理")
 public class ProductCategoryController {
 

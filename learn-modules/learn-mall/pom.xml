@@ -14,6 +14,9 @@
     <modules>
         <module>learn-mall-built</module>
         <module>learn-mall-product</module>
+        <module>learn-mall-market</module>
+        <module>learn-mall-authority</module>
+        <module>learn-mall-security</module>
     </modules>
 
 

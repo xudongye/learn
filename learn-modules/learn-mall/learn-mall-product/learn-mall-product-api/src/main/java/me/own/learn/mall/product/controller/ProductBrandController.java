@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
-import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.model.AdminAccessToken;
 import me.own.learn.mall.product.dto.ProductBrandDto;
@@ -25,7 +24,7 @@ import java.util.Map;
  * @Date: 2020/3/3 11:39
  */
 @RestController
-@RequestMapping(value = "/api/v1/product-brands")
+@RequestMapping(value = "/api/v1/mall/product-brands")
 @Api(tags = "ProductBrandController", description = "商品品牌管理")
 public class ProductBrandController {
 
