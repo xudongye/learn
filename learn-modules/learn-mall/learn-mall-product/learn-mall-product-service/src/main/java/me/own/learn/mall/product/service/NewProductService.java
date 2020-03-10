@@ -1,6 +1,8 @@
 package me.own.learn.mall.product.service;
 
 import me.own.commons.base.dao.PageQueryResult;
+import me.own.learn.mall.product.dto.NewProductDto;
+import me.own.learn.mall.product.dto.ProductDto;
 import me.own.learn.mall.product.vo.ProductVo;
 
 /**
@@ -10,4 +12,6 @@ import me.own.learn.mall.product.vo.ProductVo;
 public interface NewProductService {
 
     PageQueryResult<ProductVo> page(int pageNum, int pageSize, NewProductQueryCondition condition);
+
+    ProductVo create(NewProductDto dto);
 }

@@ -63,7 +63,7 @@ public class ProductAttributeCategoryController {
 
     @ApiOperation("获取所有商品属性分类及其下属性")
     @RequestMapping(value = "/withAttr", method = RequestMethod.GET)
-    @AdminAuthenticationRequired
+//    @AdminAuthenticationRequired
     public ResponseEntity withAttr(HttpServletRequest request, AdminAccessToken aat) {
         Map<String, Object> response = new HashMap<>();
         List<ProductAttributeCategoryItemVo> itemVos = productAttributeCategoryService.withAttr();

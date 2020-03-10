@@ -1,6 +1,7 @@
 package me.own.learn.mall.aythority.service;
 
 import me.own.commons.base.dao.PageQueryResult;
+import me.own.learn.mall.aythority.vo.MallMenuNodeVo;
 import me.own.learn.mall.aythority.vo.MallMenuVo;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface MallMenuService {
     List<MallMenuVo> getByRoleId(long roleId);
 
     List<MallMenuVo> getMenus();
+
+    List<MallMenuNodeVo> treeList();
 }

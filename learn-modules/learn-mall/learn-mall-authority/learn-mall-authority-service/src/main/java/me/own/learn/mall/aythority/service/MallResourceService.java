@@ -12,5 +12,7 @@ import java.util.List;
 public interface MallResourceService {
     List<MallResourceVo> getByRoleId(long roleId);
 
+    List<MallResourceVo> listAll();
+
     PageQueryResult<MallResourceVo> page(int pageNum, int pageSize, Long categoryId, String nameKw, String urlKw);
 }

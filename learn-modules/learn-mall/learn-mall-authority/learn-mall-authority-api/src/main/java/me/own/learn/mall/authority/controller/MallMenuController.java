@@ -6,6 +6,7 @@ import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.model.AdminAccessToken;
 import me.own.learn.mall.aythority.service.MallMenuService;
+import me.own.learn.mall.aythority.vo.MallMenuNodeVo;
 import me.own.learn.mall.aythority.vo.MallMenuVo;
 import me.own.learn.mall.aythority.vo.MallRoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +42,18 @@ public class MallMenuController {
         PageQueryResult<MallMenuVo> result = mallMenuService.page(pageNum, pageSize, parentId);
         response.put("code", 200);
         response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("树形结构返回所有菜单列表")
+    @RequestMapping(value = "/treeList", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity treeList(HttpServletRequest request, AdminAccessToken aat) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<MallMenuNodeVo> menuNodeVos = mallMenuService.treeList();
+        response.put("code", 200);
+        response.put("data", menuNodeVos);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

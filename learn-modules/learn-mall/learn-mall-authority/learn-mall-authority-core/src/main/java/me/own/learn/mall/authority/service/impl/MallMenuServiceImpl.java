@@ -9,13 +9,16 @@ import me.own.learn.mall.authority.dao.MallRoleMenuRelationDao;
 import me.own.learn.mall.authority.po.MallMenu;
 import me.own.learn.mall.aythority.exception.MallMenuUnsetException;
 import me.own.learn.mall.aythority.service.MallMenuService;
+import me.own.learn.mall.aythority.vo.MallMenuNodeVo;
 import me.own.learn.mall.aythority.vo.MallMenuVo;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: yexudong
@@ -69,5 +72,25 @@ public class MallMenuServiceImpl implements MallMenuService {
             throw new MallMenuUnsetException();
         }
         return Mapper.Default().mapArray(menus, MallMenuVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MallMenuNodeVo> treeList() {
+        List<MallMenuVo> menuVos = this.getMenus();
+        List<MallMenuNodeVo> result = menuVos.stream()
+                .filter(menu -> menu.getParentId().equals(0L))
+                .map(menu -> covertMenuNode(menu, menuVos)).collect(Collectors.toList());
+        return result;
+    }
+
+    private MallMenuNodeVo covertMenuNode(MallMenuVo menuVo, List<MallMenuVo> menuVos) {
+        MallMenuNodeVo nodeVo = new MallMenuNodeVo();
+        BeanUtils.copyProperties(menuVo, nodeVo);
+        List<MallMenuNodeVo> children = menuVos.stream()
+                .filter(subMenu -> subMenu.getParentId().equals(menuVo.getId()))
+                .map(subMenu -> covertMenuNode(subMenu, menuVos)).collect(Collectors.toList());
+        nodeVo.setChildren(children);
+        return nodeVo;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +42,17 @@ public class MallResourceController {
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<MallResourceVo> result = mallResourceService.page(pageNum, pageSize, categoryId, nameKeyword, urlKeyword);
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("查询所有后台资源")
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity listAll(HttpServletRequest request, AdminAccessToken aat) {
+        Map<String, Object> response = new HashMap<>();
+        List<MallResourceVo> result = mallResourceService.listAll();
         response.put("code", 200);
         response.put("data", result);
         return new ResponseEntity(response, HttpStatus.OK);

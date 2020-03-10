@@ -92,7 +92,7 @@ public class ProductCategoryController {
 
     @ApiOperation("查询所有一级分类及子分类")
     @RequestMapping(value = "/withCateChildren", method = RequestMethod.GET)
-    @AdminAuthenticationRequired
+//    @AdminAuthenticationRequired
     public ResponseEntity withAttr(HttpServletRequest request, AdminAccessToken aat) {
         Map<String, Object> response = new HashMap<>();
         List<ProductCategoryWithChildrenItemVo> itemVos = productCategoryService.listWithChildren();

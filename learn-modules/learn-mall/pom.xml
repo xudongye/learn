@@ -17,6 +17,7 @@
         <module>learn-mall-market</module>
         <module>learn-mall-authority</module>
         <module>learn-mall-security</module>
+        <module>learn-mall-member</module>
     </modules>
 
 

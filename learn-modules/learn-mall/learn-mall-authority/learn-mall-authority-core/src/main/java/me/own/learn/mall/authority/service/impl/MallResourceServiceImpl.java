@@ -40,6 +40,16 @@ public class MallResourceServiceImpl implements MallResourceService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<MallResourceVo> listAll() {
+        List<MallResource> resources = mallResourceDao.getAll(null, null);
+        if (CollectionUtils.isNotEmpty(resources)) {
+            return Mapper.Default().mapArray(resources, MallResourceVo.class);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PageQueryResult<MallResourceVo> page(int pageNum, int pageSize, Long categoryId, String nameKw, String urlKw) {
         QueryCriteriaUtil query = new QueryCriteriaUtil(MallResource.class);
         if (categoryId != null) {

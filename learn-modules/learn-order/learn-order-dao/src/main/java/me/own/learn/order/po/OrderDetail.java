@@ -13,6 +13,7 @@ public class OrderDetail implements Serializable {
     private String orderNo;
     //商品id
     private Long productId;
+    private Long mallProductId;
     //商品价格
     private Double price;
     //购买数量
@@ -40,6 +41,14 @@ public class OrderDetail implements Serializable {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getMallProductId() {
+        return mallProductId;
+    }
+
+    public void setMallProductId(Long mallProductId) {
+        this.mallProductId = mallProductId;
     }
 
     public Double getPrice() {

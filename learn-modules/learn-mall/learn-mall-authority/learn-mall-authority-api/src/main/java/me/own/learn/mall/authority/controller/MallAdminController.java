@@ -69,7 +69,7 @@ public class MallAdminController {
 
     @ApiOperation("分页查询品牌列表")
     @RequestMapping(method = RequestMethod.GET)
-    @AdminAuthenticationRequired
+//    @AdminAuthenticationRequired
     public ResponseEntity page(HttpServletRequest request, AdminAccessToken aat,
                                @RequestParam(required = false) String keyword,
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,

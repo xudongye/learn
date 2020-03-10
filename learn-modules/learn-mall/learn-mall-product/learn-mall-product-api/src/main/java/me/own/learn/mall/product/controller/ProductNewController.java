@@ -6,16 +6,15 @@ import me.own.commons.base.dao.PageQueryResult;
 import me.own.commons.base.utils.request.RequestUtils;
 import me.own.learn.authorization.service.AdminAuthenticationRequired;
 import me.own.learn.authorization.service.model.AdminAccessToken;
+import me.own.learn.mall.product.dto.NewProductDto;
+import me.own.learn.mall.product.dto.ProductDto;
 import me.own.learn.mall.product.service.NewProductQueryCondition;
 import me.own.learn.mall.product.service.NewProductService;
 import me.own.learn.mall.product.vo.ProductVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ public class ProductNewController {
 
     @ApiOperation("分页查询商品列表")
     @RequestMapping(method = RequestMethod.GET)
-    @AdminAuthenticationRequired
+//    @AdminAuthenticationRequired
     public ResponseEntity page(HttpServletRequest request, AdminAccessToken aat,
                                @RequestParam(required = false) NewProductQueryCondition condition,
                                @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -50,5 +49,17 @@ public class ProductNewController {
         response.put("code", 200);
         response.put("data", result);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("新建商品")
+    @RequestMapping(method = RequestMethod.POST)
+    @AdminAuthenticationRequired
+    public ResponseEntity create(HttpServletRequest request, AdminAccessToken aat,
+                                 @RequestBody NewProductDto dto) {
+        Map<String, Object> response = new HashMap<>();
+        ProductVo productVo = newProductService.create(dto);
+        response.put("code", 201);
+        response.put("data", productVo);
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 }
