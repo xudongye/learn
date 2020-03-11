@@ -62,20 +62,20 @@ public class HomeFlashPromotionServiceImpl implements HomeFlashPromotionService 
         }
         //获取当前秒杀场次
         HomeFlashPromotionSession promotionSession = getFlashPromotionSession();
-        if (promotionSession != null) {
-            flashInfo.setStartTime(promotionSession.getStartTime());
-            flashInfo.setEndTime(promotionSession.getEndTime());
-            //获取秒杀商品
-            List<MarketProductInfo> productInfos = this.getAll(flashPromotion.getId(), promotionSession.getId());
-            flashInfo.setProductList(productInfos);
+        if (promotionSession == null) {
+            return null;
         }
+        flashInfo.setStartTime(promotionSession.getStartTime());
+        flashInfo.setEndTime(promotionSession.getEndTime());
+        //获取秒杀商品
+        List<MarketProductInfo> productInfos = this.getAll(flashPromotion.getId(), promotionSession.getId());
+        flashInfo.setProductList(productInfos);
         //获取下一个秒杀场次
         HomeFlashPromotionSession nextSession = getNextFlashPromotion();
         if (nextSession != null) {
             flashInfo.setNextStartTime(nextSession.getStartTime());
             flashInfo.setNextEndTime(nextSession.getEndTime());
         }
-
         return flashInfo;
     }
 
