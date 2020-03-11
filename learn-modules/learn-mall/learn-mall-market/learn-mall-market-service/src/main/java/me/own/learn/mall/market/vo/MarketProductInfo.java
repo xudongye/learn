@@ -22,6 +22,10 @@ public class MarketProductInfo {
     @ApiModelProperty(value = "品牌名称")
     private String brandName;
 
+    private BigDecimal flashPromotionPrice;
+    private Integer flashPromotionCount;
+    private Integer flashPromotionLimit;
+
     public Long getProductId() {
         return productId;
     }
@@ -84,5 +88,29 @@ public class MarketProductInfo {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    public BigDecimal getFlashPromotionPrice() {
+        return flashPromotionPrice;
+    }
+
+    public void setFlashPromotionPrice(BigDecimal flashPromotionPrice) {
+        this.flashPromotionPrice = flashPromotionPrice;
+    }
+
+    public Integer getFlashPromotionCount() {
+        return flashPromotionCount;
+    }
+
+    public void setFlashPromotionCount(Integer flashPromotionCount) {
+        this.flashPromotionCount = flashPromotionCount;
+    }
+
+    public Integer getFlashPromotionLimit() {
+        return flashPromotionLimit;
+    }
+
+    public void setFlashPromotionLimit(Integer flashPromotionLimit) {
+        this.flashPromotionLimit = flashPromotionLimit;
     }
 }

@@ -2,6 +2,9 @@ package me.own.learn.mall.market.service;
 
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.mall.market.vo.HomeRecommendProductVo;
+import me.own.learn.mall.market.vo.MarketProductInfo;
+
+import java.util.List;
 
 /**
  * @author: yexudong
@@ -10,4 +13,6 @@ import me.own.learn.mall.market.vo.HomeRecommendProductVo;
 public interface HomeRecommendProductService {
 
     PageQueryResult<HomeRecommendProductVo> page(int pageNum, int pageSize, String productName, Integer recommendStatus);
+
+    List<MarketProductInfo> listHotProduct();
 }
