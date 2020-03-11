@@ -1,6 +1,6 @@
 package me.own.learn.mall.market.service;
 
-import me.own.commons.base.dao.PageQueryResult;
+import me.own.learn.mall.market.vo.MarketHomeContent;
 
 /**
  * @author: yexudong
@@ -8,5 +8,5 @@ import me.own.commons.base.dao.PageQueryResult;
  */
 public interface MarketHomeContentService {
 
-//    PageQueryResult<>
+    MarketHomeContent getHomeContent();
 }

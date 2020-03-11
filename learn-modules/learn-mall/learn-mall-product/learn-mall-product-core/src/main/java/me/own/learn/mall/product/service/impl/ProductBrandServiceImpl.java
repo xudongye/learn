@@ -13,6 +13,7 @@ import me.own.learn.mall.product.vo.ProductBrandVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -59,7 +60,7 @@ public class ProductBrandServiceImpl implements ProductBrandService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public ProductBrandVo getById(long id) {
         ProductBrand productBrand = productBrandDao.get(id);
         if (productBrand == null) {

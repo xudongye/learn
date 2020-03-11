@@ -1,9 +1,7 @@
 package me.own.learn.mall.market.service;
 
 import me.own.commons.base.dao.PageQueryResult;
-import me.own.learn.mall.market.vo.HomeFlashProductVo;
-import me.own.learn.mall.market.vo.HomeFlashPromotionSessionVo;
-import me.own.learn.mall.market.vo.HomeFlashPromotionVo;
+import me.own.learn.mall.market.vo.*;
 
 import java.util.List;
 
@@ -12,6 +10,10 @@ import java.util.List;
  * @Date: 2020/3/10 21:09
  */
 public interface HomeFlashPromotionService {
+
+    MarketFlashInfo getHomePromotion();
+
+    List<MarketProductInfo> getAll(Long flashPromotionId, Long flashPromotionSessionId);
 
     PageQueryResult<HomeFlashPromotionVo> page(int pageNum, int pageSize, String keyword);
 

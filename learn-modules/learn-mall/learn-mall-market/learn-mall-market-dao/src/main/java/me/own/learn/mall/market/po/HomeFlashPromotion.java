@@ -16,9 +16,9 @@ public class HomeFlashPromotion implements Serializable {
     private Long id;
 
     private String title;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date endDate;
 
     private Integer status;
