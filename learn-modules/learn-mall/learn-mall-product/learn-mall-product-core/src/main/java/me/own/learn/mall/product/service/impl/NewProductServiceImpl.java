@@ -12,6 +12,7 @@ import me.own.learn.mall.product.dao.*;
 import me.own.learn.mall.product.dto.NewProductDto;
 import me.own.learn.mall.product.dto.ProductDto;
 import me.own.learn.mall.product.dto.ProductMemberPriceDto;
+import me.own.learn.mall.product.exception.ProductNotFoundException;
 import me.own.learn.mall.product.po.*;
 import me.own.learn.mall.product.service.NewProductQueryCondition;
 import me.own.learn.mall.product.service.NewProductService;
@@ -113,6 +114,16 @@ public class NewProductServiceImpl implements NewProductService {
         //关联优选
         relateAndInsertList(preferenceAreaProductRelationDao,
                 Mapper.Default().mapArray(dto.getPrefrenceAreaProductRelationList(), MallPreferenceAreaProductRelation.class), productId);
+        return Mapper.Default().map(product, ProductVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProductVo getById(long id) {
+        NewProduct product = newProductDao.get(id);
+        if (product == null || product.getDeleted()) {
+            throw new ProductNotFoundException();
+        }
         return Mapper.Default().map(product, ProductVo.class);
     }
 

@@ -22,6 +22,11 @@
             <artifactId>learn-mall-market-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>me.own.learn</groupId>
+            <artifactId>learn-mall-product-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

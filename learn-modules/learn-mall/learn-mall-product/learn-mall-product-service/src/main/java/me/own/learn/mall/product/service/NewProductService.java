@@ -14,4 +14,6 @@ public interface NewProductService {
     PageQueryResult<ProductVo> page(int pageNum, int pageSize, NewProductQueryCondition condition);
 
     ProductVo create(NewProductDto dto);
+
+    ProductVo getById(long id);
 }

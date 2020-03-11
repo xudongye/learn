@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +37,8 @@ public class HomeManageController {
     private HomeRecommendNewProductService newProductService;
     @Autowired
     private HomeBrandService brandService;
+    @Autowired
+    private HomeFlashPromotionService promotionService;
 
     @ApiOperation("分页查询首页广告列表")
     @RequestMapping(value = "/home-advertises", method = RequestMethod.GET)
@@ -103,10 +106,10 @@ public class HomeManageController {
     @RequestMapping(value = "/home-new-products", method = RequestMethod.GET)
     @AdminAuthenticationRequired
     public ResponseEntity pageNewProd(HttpServletRequest request, AdminAccessToken aat,
-                                   @RequestParam(value = "productName", required = false) String productName,
-                                   @RequestParam(value = "recommendStatus", required = false) Integer recommendStatus,
-                                   @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                                      @RequestParam(value = "productName", required = false) String productName,
+                                      @RequestParam(value = "recommendStatus", required = false) Integer recommendStatus,
+                                      @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<HomeRecommendNewProductVo> result = newProductService.page(pageNum, pageSize, productName, recommendStatus);
@@ -119,13 +122,69 @@ public class HomeManageController {
     @RequestMapping(value = "/home-brands", method = RequestMethod.GET)
     @AdminAuthenticationRequired
     public ResponseEntity pageBrand(HttpServletRequest request, AdminAccessToken aat,
-                                      @RequestParam(value = "brandName", required = false) String brandName,
-                                      @RequestParam(value = "recommendStatus", required = false) Integer recommendStatus,
-                                      @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                                    @RequestParam(value = "brandName", required = false) String brandName,
+                                    @RequestParam(value = "recommendStatus", required = false) Integer recommendStatus,
+                                    @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         Map<String, Object> response = new HashMap<>();
         PageQueryResult<HomeBrandVo> result = brandService.page(pageNum, pageSize, brandName, recommendStatus);
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("分页查询首页秒杀活动列表")
+    @RequestMapping(value = "/home-flash-promotions", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity pageFlashPromotion(HttpServletRequest request, AdminAccessToken aat,
+                                             @RequestParam(value = "keyword", required = false) String keyword,
+                                             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
+        Map<String, Object> response = new HashMap<>();
+        PageQueryResult<HomeFlashPromotionVo> result = promotionService.page(pageNum, pageSize, keyword);
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("首页秒杀活动列表时间段")
+    @RequestMapping(value = "/home-flash-promotion-sessions", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity listFlashSession(HttpServletRequest request, AdminAccessToken aat) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<HomeFlashPromotionSessionVo> result = promotionService.listAllSession();
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("获取全部可选场次及其商品数量")
+    @RequestMapping(value = "/home-flash-promotion-sessions-select", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity listSelectedFlashSession(HttpServletRequest request, AdminAccessToken aat,
+                                                   @RequestParam Long flashPromotionId) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<HomeFlashPromotionSessionVo> result = promotionService.listByPromotionId(flashPromotionId);
+        response.put("code", 200);
+        response.put("data", result);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ApiOperation("分页获取全部场次及其商品信息")
+    @RequestMapping(value = "/home-flash-promotion-sessions-product", method = RequestMethod.GET)
+    @AdminAuthenticationRequired
+    public ResponseEntity listSelectedFlashSession(HttpServletRequest request, AdminAccessToken aat,
+                                                   @RequestParam(value = "flashPromotionId") Long flashPromotionId,
+                                                   @RequestParam(value = "flashPromotionSessionId") Long flashPromotionSessionId,
+                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+
+        Map<String, Object> response = new HashMap<>();
+        PageQueryResult<HomeFlashProductVo> result = promotionService.pageFlashProductInfo(pageNum,pageSize,flashPromotionId,flashPromotionSessionId);
         response.put("code", 200);
         response.put("data", result);
         return new ResponseEntity(response, HttpStatus.OK);
