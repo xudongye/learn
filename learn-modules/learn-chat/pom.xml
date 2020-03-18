@@ -21,4 +21,5 @@
         <module>learn-chat-api</module>
         <module>learn-chat-built</module>
     </modules>
+
 </project>

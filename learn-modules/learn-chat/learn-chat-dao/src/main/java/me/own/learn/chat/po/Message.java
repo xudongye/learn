@@ -23,6 +23,8 @@ public class Message implements Serializable {
     private Boolean markRead;
     //所属聊天室
     private String chatRoomNo;
+    //发送者身份 1.管理员 2.会员发送
+    private String senderType;
 
     public String getText() {
         return text;
@@ -86,5 +88,13 @@ public class Message implements Serializable {
 
     public void setChatRoomNo(String chatRoomNo) {
         this.chatRoomNo = chatRoomNo;
+    }
+
+    public String getSenderType() {
+        return senderType;
+    }
+
+    public void setSenderType(String senderType) {
+        this.senderType = senderType;
     }
 }

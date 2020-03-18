@@ -25,7 +25,7 @@ public class MessageServiceImpl implements MessageService {
     public void save(MessageModel messageModel) {
         Message message = Mapper.Default().map(messageModel, Message.class);
         message.setTimestamp(Calendar.getInstance().getTimeInMillis());
-        messageDao.leftPush(messageModel.getChatRoomId(), message);
+        messageDao.leftPush(messageModel.getReceiver_cid(), message);
     }
 
     @Override

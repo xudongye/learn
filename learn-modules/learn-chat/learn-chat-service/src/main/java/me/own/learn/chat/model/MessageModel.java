@@ -13,8 +13,46 @@ public class MessageModel {
     private String videoUrl;
     //发送时间
     private Long timestamp;
+    //发送者
+    private Long sender_cid;
+    //接收者
+    private Long receiver_cid;
+    //已读
+    private Boolean markRead;
+    //所属聊天室
+    private String chatRoomNo;
 
-    private Long chatRoomId;
+    public Long getSender_cid() {
+        return sender_cid;
+    }
+
+    public void setSender_cid(Long sender_cid) {
+        this.sender_cid = sender_cid;
+    }
+
+    public Long getReceiver_cid() {
+        return receiver_cid;
+    }
+
+    public void setReceiver_cid(Long receiver_cid) {
+        this.receiver_cid = receiver_cid;
+    }
+
+    public Boolean getMarkRead() {
+        return markRead;
+    }
+
+    public void setMarkRead(Boolean markRead) {
+        this.markRead = markRead;
+    }
+
+    public String getChatRoomNo() {
+        return chatRoomNo;
+    }
+
+    public void setChatRoomNo(String chatRoomNo) {
+        this.chatRoomNo = chatRoomNo;
+    }
 
     public String getText() {
         return text;
@@ -48,11 +86,4 @@ public class MessageModel {
         this.timestamp = timestamp;
     }
 
-    public Long getChatRoomId() {
-        return chatRoomId;
-    }
-
-    public void setChatRoomId(Long chatRoomId) {
-        this.chatRoomId = chatRoomId;
-    }
 }

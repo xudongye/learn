@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * @Date: 2020/3/11 10:39
  */
 public class MarketProductInfo {
-    private Long productId;
+    private Long id;
     private String name;
     private String pic;
     private BigDecimal price;
@@ -26,12 +26,12 @@ public class MarketProductInfo {
     private Integer flashPromotionCount;
     private Integer flashPromotionLimit;
 
-    public Long getProductId() {
-        return productId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
