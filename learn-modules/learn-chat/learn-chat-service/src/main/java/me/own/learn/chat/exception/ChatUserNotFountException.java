@@ -6,7 +6,7 @@ import me.own.commons.base.exception.BusinessException;
  * @author: yexudong
  * @Date: 2020/1/8 15:06
  */
-public class ChatRobotIsNotSetException extends BusinessException {
+public class ChatUserNotFountException extends BusinessException {
     @Override
     public String getErrorCode() {
         return null;
@@ -14,6 +14,6 @@ public class ChatRobotIsNotSetException extends BusinessException {
 
     @Override
     public String getErrorMsg() {
-        return "系统未设置客服人员账号！";
+        return "聊天账号不存在！！";
     }
 }

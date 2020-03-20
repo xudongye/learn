@@ -1,21 +1,50 @@
-package me.own.learn.chat.dto;
+package me.own.learn.chat.vo;
+
+import java.util.Date;
 
 /**
  * @author: yexudong
- * @Date: 2020/1/9 14:31
+ * @Date: 2020/3/19 9:27
  */
-public class ChatRoomDto {
+public class ChatRoomVo {
+
     private Long id;
 
     private Long customerId;
 
+    private String customername;
+
     private Long userId;
+
+    private String username;
     //用户删除状态
     private Boolean cDeleted;
     //管理员删除状态
     private Boolean uDeleted;
 
     private Boolean deleted;
+
+    private Date createTime;
+
+    private Date modifyTime;
+
+    private Long msgCount;
+
+    public String getCustomername() {
+        return customername;
+    }
+
+    public void setCustomername(String customername) {
+        this.customername = customername;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Long getId() {
         return id;
@@ -63,5 +92,29 @@ public class ChatRoomDto {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public Long getMsgCount() {
+        return msgCount;
+    }
+
+    public void setMsgCount(Long msgCount) {
+        this.msgCount = msgCount;
     }
 }

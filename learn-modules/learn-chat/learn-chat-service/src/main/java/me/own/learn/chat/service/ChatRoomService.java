@@ -1,7 +1,7 @@
 package me.own.learn.chat.service;
 
 import me.own.learn.chat.dto.ChatRoomDto;
-import me.own.learn.chat.model.ChatRoomModel;
+import me.own.learn.chat.vo.ChatRoomVo;
 
 import java.util.List;
 
@@ -10,12 +10,14 @@ import java.util.List;
  * @Date: 2020/1/9 14:30
  */
 public interface ChatRoomService {
+    ChatRoomVo getById(long id);
 
-    ChatRoomModel create(ChatRoomDto dto);
+    ChatRoomVo create(ChatRoomDto dto);
 
-    void delete(long roomId);
+    void cDelete(long roomId);
 
-    List<ChatRoomModel> getByRobotId(long robotId);
+    void uDelete(long roomId);
 
-    List<ChatRoomModel> getByCustomerId(long customerId);
+    List<ChatRoomVo> getRooms(long userId,long customerId);
+
 }

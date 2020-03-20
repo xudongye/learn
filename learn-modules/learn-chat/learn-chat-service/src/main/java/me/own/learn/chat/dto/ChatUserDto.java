@@ -1,22 +1,10 @@
-package me.own.learn.chat.po;
-
-import me.own.commons.base.model.BaseEntity;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.io.Serializable;
+package me.own.learn.chat.dto;
 
 /**
  * @author: yexudong
- * @Date: 2020/1/7 13:53
+ * @Date: 2020/1/8 14:53
  */
-@Entity
-public class ChatRobot extends BaseEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ChatUserDto {
     private Long id;
     private String headImg;
     private String name;
