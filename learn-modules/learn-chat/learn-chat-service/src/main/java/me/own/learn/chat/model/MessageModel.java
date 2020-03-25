@@ -14,7 +14,7 @@ import java.util.Map;
 public class MessageModel {
 
     private String content;
-    private Map<String, String> names;
+    private Map<String, Long> userIds;
     private Date sendTime = new Date();
 
     private static ObjectMapper mapper = new ObjectMapper();
@@ -27,9 +27,9 @@ public class MessageModel {
         return mapper.writeValueAsString(this);
     }
 
-    public MessageModel(String content, Map<String, String> names) {
+    public MessageModel(String content, Map<String, Long> userIds) {
         this.content = content;
-        this.names = names;
+        this.userIds = userIds;
     }
 
     public MessageModel() {
@@ -43,12 +43,12 @@ public class MessageModel {
         this.content = content;
     }
 
-    public Map<String, String> getNames() {
-        return names;
+    public Map<String, Long> getUserIds() {
+        return userIds;
     }
 
-    public void setNames(Map<String, String> names) {
-        this.names = names;
+    public void setUserIds(Map<String, Long> userIds) {
+        this.userIds = userIds;
     }
 
     public Date getSendTime() {

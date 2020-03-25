@@ -1,7 +1,5 @@
 package me.own.learn.chat.model;
 
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author: yexudong

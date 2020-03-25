@@ -5,12 +5,16 @@ import me.own.commons.base.dao.QueryConstants;
 import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
-import me.own.learn.chat.dao.ChatMessageDao;
+import me.own.learn.chat.dao.ChatMsgDao;
+import me.own.learn.chat.dao.ChatUserMsgRelationDao;
 import me.own.learn.chat.model.ContentModel;
-import me.own.learn.chat.po.ChatMessage;
-import me.own.learn.chat.service.ChatMessageService;
+import me.own.learn.chat.po.ChatMsg;
+import me.own.learn.chat.po.ChatUserMsgRelation;
+import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.vo.ChatMessageVo;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,49 +26,56 @@ import java.util.*;
  * @Date: 2020/1/9 17:38
  */
 @Service
-public class ChatMessageServiceImpl implements ChatMessageService {
+public class ChatMsgServiceImpl implements ChatMsgService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatMsgServiceImpl.class);
 
     @Autowired
-    private ChatMessageDao chatMessageDao;
+    private ChatMsgDao chatMsgDao;
+
+    @Autowired
+    private ChatUserMsgRelationDao userMsgRelationDao;
 
     @Override
     @Transactional
     public void save(ContentModel messageModel) {
-        ChatMessage chatMessage = Mapper.Default().map(messageModel, ChatMessage.class);
-        chatMessage.setDeleted(false);
-        chatMessage.setMarkRead(false);
-        chatMessage.setSendTime(new Date());
-        chatMessageDao.create(chatMessage);
+        ChatMsg chatMsg = new ChatMsg();
+        chatMsg.setContent(messageModel.getContent());
+        chatMsg.setSendTime(new Date());
+        chatMsg.setUserId(messageModel.getFrom());
+        chatMsgDao.create(chatMsg);
+        LOGGER.info("new msg {} ,content :{}", chatMsg.getMsgId(), chatMsg.getContent());
+        ChatUserMsgRelation relation = new ChatUserMsgRelation();
+        relation.setDeleted(false);
+        relation.setRead(false);
+        relation.setMsgId(chatMsg.getMsgId());
+        relation.setUserId(messageModel.getTo());
+        userMsgRelationDao.create(relation);
+        LOGGER.info("send to user {}", messageModel.getTo());
     }
 
     @Override
     @Transactional
-    public void cBatchDelete(List<Long> ids) {
-        chatMessageDao.cBatchDeleted(ids);
+    public void readMark(String msgId, long userId) {
+        userMsgRelationDao.msgReadMark(msgId, userId);
     }
 
     @Override
     @Transactional
-    public void uBatchDelete(List<Long> ids) {
-        chatMessageDao.uBatchDeleted(ids);
-    }
-
-    @Override
-    @Transactional
-    public void readMarked(List<Long> ids) {
-        chatMessageDao.readMarked(ids);
+    public void delete(String msgId, long userId) {
+        userMsgRelationDao.msgDelete(msgId, userId);
     }
 
     @Override
     @Transactional(readOnly = true)
     public PageQueryResult<ChatMessageVo> getMsgByChatRoomId(int pageNum, int pageSize, long roomId) {
-        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMessage.class);
+        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMsg.class);
         query.setDeletedFalseCondition();
         query.setSimpleCondition("roomId", roomId + "", QueryConstants.SimpleQueryMode.Equal);
         query.setSimpleCondition("markRead", false + "", QueryConstants.SimpleQueryMode.Equal);
         List<QueryOrder> queryOrders = new ArrayList<>();
         queryOrders.add(new QueryOrder("sendTime", QueryOrder.DESC));
-        PageQueryResult<ChatMessage> result = chatMessageDao.pageQuery(pageNum, pageSize, query, queryOrders);
+        PageQueryResult<ChatMsg> result = chatMsgDao.pageQuery(pageNum, pageSize, query, queryOrders);
 
         return result.mapItems(ChatMessageVo.class);
     }
@@ -72,7 +83,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     @Transactional
     public List<ChatMessageVo> listAllUnReadMsg(long roomId, long customerId, long userId) {
-        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMessage.class);
+        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMsg.class);
         query.setDeletedFalseCondition();
         query.setSimpleCondition("markRead", false + "", QueryConstants.SimpleQueryMode.Equal);
         if (roomId != 0) {
@@ -84,7 +95,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         if (userId != 0) {
             query.setSimpleCondition("userId", userId + "", QueryConstants.SimpleQueryMode.Equal);
         }
-        List<ChatMessage> messages = chatMessageDao.filter(query, null, new QueryOrder("sendTime", QueryOrder.DESC));
+        List<ChatMsg> messages = chatMsgDao.filter(query, null, new QueryOrder("sendTime", QueryOrder.DESC));
         if (CollectionUtils.isNotEmpty(messages)) {
             return Mapper.Default().mapArray(messages, ChatMessageVo.class);
         }
@@ -94,7 +105,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     @Transactional
     public Long count(long roomId, long customerId, long userId) {
-        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMessage.class);
+        QueryCriteriaUtil query = new QueryCriteriaUtil(ChatMsg.class);
         query.setDeletedFalseCondition();
         query.setSimpleCondition("markRead", false + "", QueryConstants.SimpleQueryMode.Equal);
         if (roomId != 0) {
@@ -106,6 +117,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         if (userId != 0) {
             query.setSimpleCondition("userId", userId + "", QueryConstants.SimpleQueryMode.Equal);
         }
-        return chatMessageDao.getCount(query);
+        return chatMsgDao.getCount(query);
     }
 }

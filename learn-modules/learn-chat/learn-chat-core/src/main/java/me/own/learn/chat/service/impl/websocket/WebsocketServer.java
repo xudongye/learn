@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.own.learn.chat.model.ContentModel;
 import me.own.learn.chat.model.MessageModel;
-import me.own.learn.chat.service.ChatMessageService;
+import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.service.ChatRoomService;
 import me.own.learn.chat.service.ChatUserService;
 import me.own.learn.chat.vo.ChatUserVo;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,6 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -34,7 +32,7 @@ public class WebsocketServer {
 
     public static ChatRoomService chatRoomService;
 
-    public static ChatMessageService chatMessageService;
+    public static ChatMsgService chatMsgService;
 
     public static ChatUserService chatUserService;
 
@@ -48,7 +46,7 @@ public class WebsocketServer {
 
     private static CopyOnWriteArraySet<WebsocketServer> webSockets = new CopyOnWriteArraySet<>();
 
-    private static Map<String, String> map = new HashMap<>();
+    private static Map<String, Long> map = new HashMap<>();
 
     /**
      * 用户接入
@@ -62,7 +60,7 @@ public class WebsocketServer {
         webSockets.add(this);
         ChatUserVo chatUserVo = chatUserService.getById(userId);
         username = chatUserVo.getName();
-        map.put(session.getId(), username);
+        map.put(session.getId(), userId);
         String content = username + "进入聊天室！";
         System.out.println("有新的连接，总数：" + webSockets.size() + "  sessionId：" + session.getId() + "  用户" + username);
         MessageModel messageModel = new MessageModel(content, map);
@@ -84,12 +82,12 @@ public class WebsocketServer {
         if (contentModel.getTo() == null) {
             MessageModel messageModel = new MessageModel();
             messageModel.setContent(contentModel.getContent());
-            messageModel.setNames(map);
+            messageModel.setUserIds(map);
             sendMsg(messageModel.toJson());
         } else {//单聊
             MessageModel messageModel = new MessageModel();
             messageModel.setContent(contentModel.getContent());
-            messageModel.setNames(map);
+            messageModel.setUserIds(map);
             for (WebsocketServer webSocket : webSockets) {
                 if (webSocket.userId == contentModel.getTo().longValue() && webSocket.session.getId() != this.session.getId()) {
                     try {

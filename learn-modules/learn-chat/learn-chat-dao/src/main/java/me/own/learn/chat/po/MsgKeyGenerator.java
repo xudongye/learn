@@ -26,9 +26,9 @@ import java.util.Properties;
  * @author: yexudong
  * @Date: 2020/3/20 11:26
  */
-public class MessageKeyGenerator implements IdentifierGenerator, Configurable {
+public class MsgKeyGenerator implements IdentifierGenerator, Configurable {
 
-    private final static Logger log = LoggerFactory.getLogger(MessageKeyGenerator.class);
+    private final static Logger log = LoggerFactory.getLogger(MsgKeyGenerator.class);
 
     public static final Map<Long,String> single = new HashMap<Long,String>();
 
@@ -56,10 +56,10 @@ public class MessageKeyGenerator implements IdentifierGenerator, Configurable {
             con.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
             synchronized (lock){
-                lockPstmt = con.prepareStatement("lock tables MessageIdentifier write");
+                lockPstmt = con.prepareStatement("lock tables MsgIdentifier write");
                 lockPstmt.execute();
 
-                queryPstmt = con.prepareStatement("select count(*) from MessageIdentifier where date = ?");
+                queryPstmt = con.prepareStatement("select count(*) from MsgIdentifier where date = ?");
                 queryPstmt.setString(1, date);
                 rs= queryPstmt.executeQuery();
 
@@ -77,7 +77,7 @@ public class MessageKeyGenerator implements IdentifierGenerator, Configurable {
 
                 icount++;
 
-                insertPstmt = con.prepareStatement("insert into MessageIdentifier (dailySequence, date) values (?,?)");;
+                insertPstmt = con.prepareStatement("insert into MsgIdentifier (dailySequence, date) values (?,?)");;
                 insertPstmt.setInt(1, icount);
                 insertPstmt.setString(2, date);
 

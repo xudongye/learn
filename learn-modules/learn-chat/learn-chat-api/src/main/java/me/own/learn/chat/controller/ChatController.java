@@ -3,13 +3,9 @@ package me.own.learn.chat.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
-import me.own.learn.authorization.service.AdminAuthenticationRequired;
-import me.own.learn.authorization.service.CustomerAuthenticationRequired;
-import me.own.learn.authorization.service.model.CustomerAccessToken;
 import me.own.learn.chat.dto.ChatRoomDto;
-import me.own.learn.chat.model.MessageModel;
 import me.own.learn.chat.service.ChatRoomService;
-import me.own.learn.chat.service.ChatMessageService;
+import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.vo.ChatMessageVo;
 import me.own.learn.chat.vo.ChatRoomVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author: yexudong
@@ -36,13 +31,13 @@ public class ChatController {
     private ChatRoomService roomService;
 
     @Autowired
-    private ChatMessageService chatMessageService;
+    private ChatMsgService chatMsgService;
 
     @ApiOperation("会员批量删除消息")
     @RequestMapping(value = "customer/msg", method = RequestMethod.DELETE)
     public ResponseEntity cBatchDeleted(HttpServletRequest request,
                                         @RequestParam(value = "ids") List<Long> ids) {
-        chatMessageService.cBatchDelete(ids);
+        chatMsgService.cBatchDelete(ids);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -50,7 +45,7 @@ public class ChatController {
     @RequestMapping(value = "user/msg", method = RequestMethod.DELETE)
     public ResponseEntity uBatchDeleted(HttpServletRequest request,
                                         @RequestParam(value = "ids") List<Long> ids) {
-        chatMessageService.uBatchDelete(ids);
+        chatMsgService.uBatchDelete(ids);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -58,7 +53,7 @@ public class ChatController {
     @RequestMapping(value = "user/msg", method = RequestMethod.PUT)
     public ResponseEntity readMarked(HttpServletRequest request,
                                      @RequestParam(value = "ids") List<Long> ids) {
-        chatMessageService.readMarked(ids);
+        chatMsgService.readMarked(ids);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -69,7 +64,7 @@ public class ChatController {
                                       @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                       @PathVariable Long roomId) {
         Map<String, Object> response = new HashMap<>();
-        PageQueryResult<ChatMessageVo> result = chatMessageService.getMsgByChatRoomId(pageNum, pageSize, roomId);
+        PageQueryResult<ChatMessageVo> result = chatMsgService.getMsgByChatRoomId(pageNum, pageSize, roomId);
         response.put("code", 200);
         response.put("data", result);
         return new ResponseEntity(response, HttpStatus.OK);

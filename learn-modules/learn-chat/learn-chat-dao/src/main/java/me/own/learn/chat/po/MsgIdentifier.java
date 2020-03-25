@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Date: 2020/3/20 11:26
  */
 @Entity
-public class MessageIdentifier implements Serializable {
+public class MsgIdentifier implements Serializable {
 
     /**
      *

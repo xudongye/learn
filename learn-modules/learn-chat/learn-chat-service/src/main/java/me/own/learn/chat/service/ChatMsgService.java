@@ -10,16 +10,14 @@ import java.util.List;
  * @author: yexudong
  * @Date: 2020/1/7 11:38
  */
-public interface ChatMessageService {
+public interface ChatMsgService {
 
     //缓存存储
     void save(ContentModel messageModel);
 
-    void cBatchDelete(List<Long> ids);
+    void readMark(String msgId, long userId);
 
-    void uBatchDelete(List<Long> ids);
-
-    void readMarked(List<Long> ids);
+    void delete(String msgId, long userId);
 
     PageQueryResult<ChatMessageVo> getMsgByChatRoomId(int pageNum, int pageSize, long roomId);
 

@@ -1,7 +1,6 @@
 package me.own.learn.chat.service.impl.config;
 
-import me.own.learn.chat.po.ChatUser;
-import me.own.learn.chat.service.ChatMessageService;
+import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.service.ChatRoomService;
 import me.own.learn.chat.service.ChatUserService;
 import me.own.learn.chat.service.impl.websocket.WebsocketServer;
@@ -34,8 +33,8 @@ public class WebSocketConfig {
      * @param messageService
      */
     @Autowired
-    public void setMessageService(ChatMessageService messageService) {
-        WebsocketServer.chatMessageService = messageService;
+    public void setMessageService(ChatMsgService messageService) {
+        WebsocketServer.chatMsgService = messageService;
     }
 
     @Autowired
