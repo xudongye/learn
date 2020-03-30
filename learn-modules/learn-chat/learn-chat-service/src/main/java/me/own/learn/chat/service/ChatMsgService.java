@@ -2,6 +2,8 @@ package me.own.learn.chat.service;
 
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.chat.model.ContentModel;
+import me.own.learn.chat.model.ChannelModel;
+import me.own.learn.chat.model.LinkModel;
 import me.own.learn.chat.vo.ChatMessageVo;
 
 import java.util.List;
@@ -19,9 +21,13 @@ public interface ChatMsgService {
 
     void delete(String msgId, long userId);
 
+    List<ChannelModel> getChatListByUserId(long userId);
+
     PageQueryResult<ChatMessageVo> getMsgByChatRoomId(int pageNum, int pageSize, long roomId);
 
     List<ChatMessageVo> listAllUnReadMsg(long roomId, long customerId, long userId);
 
     Long count(long roomId, long customerId, long userId);
+
+    LinkModel getByUserId(long userId);
 }

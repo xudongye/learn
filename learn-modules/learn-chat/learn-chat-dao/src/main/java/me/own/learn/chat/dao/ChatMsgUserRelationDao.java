@@ -1,15 +1,15 @@
 package me.own.learn.chat.dao;
 
 import me.own.commons.base.dao.BaseDao;
-import me.own.learn.chat.po.ChatUserMsgRelation;
+import me.own.learn.chat.po.ChatMsgUserRelation;
 
 /**
  * @author: yexudong
  * @Date: 2020/3/25 9:37
  */
-public interface ChatUserMsgRelationDao extends BaseDao<ChatUserMsgRelation> {
+public interface ChatMsgUserRelationDao extends BaseDao<ChatMsgUserRelation> {
 
-    ChatUserMsgRelation getByMsgIdAndUserId(String msgId, long userId);
+    ChatMsgUserRelation getByMsgIdAndUserId(String msgId, long userId);
 
     void msgReadMark(String msgId, long userId);
 

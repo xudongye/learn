@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import me.own.commons.base.dao.PageQueryResult;
 import me.own.learn.chat.dto.ChatRoomDto;
+import me.own.learn.chat.model.ChannelModel;
 import me.own.learn.chat.service.ChatRoomService;
 import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.vo.ChatMessageVo;
@@ -28,16 +29,13 @@ import java.util.Map;
 public class ChatController {
 
     @Autowired
-    private ChatRoomService roomService;
-
-    @Autowired
     private ChatMsgService chatMsgService;
 
     @ApiOperation("会员批量删除消息")
     @RequestMapping(value = "customer/msg", method = RequestMethod.DELETE)
     public ResponseEntity cBatchDeleted(HttpServletRequest request,
                                         @RequestParam(value = "ids") List<Long> ids) {
-        chatMsgService.cBatchDelete(ids);
+//        chatMsgService.cBatchDelete(ids);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -45,7 +43,7 @@ public class ChatController {
     @RequestMapping(value = "user/msg", method = RequestMethod.DELETE)
     public ResponseEntity uBatchDeleted(HttpServletRequest request,
                                         @RequestParam(value = "ids") List<Long> ids) {
-        chatMsgService.uBatchDelete(ids);
+//        chatMsgService.uBatchDelete(ids);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -53,7 +51,7 @@ public class ChatController {
     @RequestMapping(value = "user/msg", method = RequestMethod.PUT)
     public ResponseEntity readMarked(HttpServletRequest request,
                                      @RequestParam(value = "ids") List<Long> ids) {
-        chatMsgService.readMarked(ids);
+//        chatMsgService.readMarked(ids);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -74,7 +72,7 @@ public class ChatController {
     @RequestMapping(value = "/customer/{roomId}", method = RequestMethod.DELETE)
     public ResponseEntity cDeleted(HttpServletRequest request,
                                    @PathVariable Long roomId) {
-        roomService.cDelete(roomId);
+//        roomService.cDelete(roomId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -82,28 +80,17 @@ public class ChatController {
     @RequestMapping(value = "/user/{roomId}", method = RequestMethod.DELETE)
     public ResponseEntity uDeleted(HttpServletRequest request,
                                    @PathVariable Long roomId) {
-        roomService.uDelete(roomId);
+//        roomService.uDelete(roomId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-
-    @ApiOperation("发起聊天-创建聊天室")
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity callOnRoom(HttpServletRequest request,
-                                     @RequestBody ChatRoomDto roomDto) {
-        Map<String, Object> responseBody = new HashMap<>();
-        ChatRoomVo chatRoomModel = roomService.create(roomDto);
-        responseBody.put("code", 200);
-        responseBody.put("data", chatRoomModel);
-        return new ResponseEntity(responseBody, HttpStatus.CREATED);
     }
 
     @ApiOperation("通过用户 customer id 获取所在聊天室列表")
     @RequestMapping(value = "/customer/{customerId}", method = RequestMethod.GET)
     public ResponseEntity listChatRoomsByCustomerId(HttpServletRequest request, @PathVariable long customerId) {
         Map<String, Object> responseBody = new HashMap<>();
-        List<ChatRoomVo> roomModels = roomService.getRooms(0, customerId);
+//        List<ChatRoomVo> roomModels = roomService.getRooms(0, customerId);
         responseBody.put("code", 200);
-        responseBody.put("data", roomModels);
+//        responseBody.put("data", roomModels);
         return new ResponseEntity(responseBody, HttpStatus.ACCEPTED);
     }
 
@@ -111,9 +98,9 @@ public class ChatController {
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public ResponseEntity listChatRoomsByRobotId(HttpServletRequest request, @PathVariable long userId) {
         Map<String, Object> responseBody = new HashMap<>();
-        List<ChatRoomVo> roomModels = roomService.getRooms(userId, 0);
+        List<ChannelModel> channelModels = chatMsgService.getChatListByUserId(userId);
         responseBody.put("code", 200);
-        responseBody.put("data", roomModels);
+        responseBody.put("data", channelModels);
         return new ResponseEntity(responseBody, HttpStatus.OK);
     }
 

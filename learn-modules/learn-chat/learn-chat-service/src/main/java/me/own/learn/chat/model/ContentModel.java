@@ -1,20 +1,23 @@
 package me.own.learn.chat.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: yexudong
  * @Date: 2020/3/19 10:42
  */
 public class ContentModel {
 
-    //1.text 2.image 3.video 4.
+    //1.text 2.image 3.video 4.channel
     private int type;
 
     private String content;
 
     private Long from;
 
-    private Long to;
+    private List<Long> tos = new ArrayList<>();
 
     public int getType() {
         return type;
@@ -40,11 +43,11 @@ public class ContentModel {
         this.from = from;
     }
 
-    public Long getTo() {
-        return to;
+    public List<Long> getTos() {
+        return tos;
     }
 
-    public void setTo(Long to) {
-        this.to = to;
+    public void setTos(List<Long> tos) {
+        this.tos = tos;
     }
 }

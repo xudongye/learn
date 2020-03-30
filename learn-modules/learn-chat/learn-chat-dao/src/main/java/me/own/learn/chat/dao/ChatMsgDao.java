@@ -1,6 +1,7 @@
 package me.own.learn.chat.dao;
 
 import me.own.commons.base.dao.BaseDao;
+import me.own.learn.chat.model.Channel;
 import me.own.learn.chat.po.ChatMsg;
 
 import java.util.List;
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface ChatMsgDao extends BaseDao<ChatMsg> {
 
+    List<Channel> getByUserId(long userId);
 }

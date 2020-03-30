@@ -6,11 +6,14 @@ import me.own.commons.base.dao.QueryCriteriaUtil;
 import me.own.commons.base.dao.QueryOrder;
 import me.own.commons.base.utils.mapper.Mapper;
 import me.own.learn.chat.dao.ChatMsgDao;
-import me.own.learn.chat.dao.ChatUserMsgRelationDao;
+import me.own.learn.chat.dao.ChatMsgUserRelationDao;
+import me.own.learn.chat.model.ChannelModel;
 import me.own.learn.chat.model.ContentModel;
+import me.own.learn.chat.model.LinkModel;
 import me.own.learn.chat.po.ChatMsg;
-import me.own.learn.chat.po.ChatUserMsgRelation;
+import me.own.learn.chat.po.ChatMsgUserRelation;
 import me.own.learn.chat.service.ChatMsgService;
+import me.own.learn.chat.model.Channel;
 import me.own.learn.chat.vo.ChatMessageVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -34,7 +37,7 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     private ChatMsgDao chatMsgDao;
 
     @Autowired
-    private ChatUserMsgRelationDao userMsgRelationDao;
+    private ChatMsgUserRelationDao userMsgRelationDao;
 
     @Override
     @Transactional
@@ -42,16 +45,21 @@ public class ChatMsgServiceImpl implements ChatMsgService {
         ChatMsg chatMsg = new ChatMsg();
         chatMsg.setContent(messageModel.getContent());
         chatMsg.setSendTime(new Date());
+        chatMsg.setType(messageModel.getType());
         chatMsg.setUserId(messageModel.getFrom());
         chatMsgDao.create(chatMsg);
         LOGGER.info("new msg {} ,content :{}", chatMsg.getMsgId(), chatMsg.getContent());
-        ChatUserMsgRelation relation = new ChatUserMsgRelation();
-        relation.setDeleted(false);
-        relation.setRead(false);
-        relation.setMsgId(chatMsg.getMsgId());
-        relation.setUserId(messageModel.getTo());
-        userMsgRelationDao.create(relation);
-        LOGGER.info("send to user {}", messageModel.getTo());
+
+        for (Long to : messageModel.getTos()) {
+            ChatMsgUserRelation relation = new ChatMsgUserRelation();
+            relation.setDeleted(false);
+            relation.setReadMark(false);
+            relation.setMsgId(chatMsg.getMsgId());
+            relation.setUserId(to);
+            userMsgRelationDao.create(relation);
+            LOGGER.info("send to user {}", to);
+        }
+
     }
 
     @Override
@@ -64,6 +72,16 @@ public class ChatMsgServiceImpl implements ChatMsgService {
     @Transactional
     public void delete(String msgId, long userId) {
         userMsgRelationDao.msgDelete(msgId, userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ChannelModel> getChatListByUserId(long userId) {
+        List<Channel> channels = chatMsgDao.getByUserId(userId);
+        if (CollectionUtils.isNotEmpty(channels)) {
+            return Mapper.Default().mapArray(channels, ChannelModel.class);
+        }
+        return null;
     }
 
     @Override
@@ -118,5 +136,13 @@ public class ChatMsgServiceImpl implements ChatMsgService {
             query.setSimpleCondition("userId", userId + "", QueryConstants.SimpleQueryMode.Equal);
         }
         return chatMsgDao.getCount(query);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LinkModel getByUserId(long userId) {
+        LinkModel linkModel = new LinkModel();
+        linkModel.setMsgCount(0);
+        return null;
     }
 }

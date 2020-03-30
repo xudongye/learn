@@ -2,11 +2,13 @@ package me.own.learn.chat.service.impl.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.own.learn.chat.model.ChannelModel;
 import me.own.learn.chat.model.ContentModel;
 import me.own.learn.chat.model.MessageModel;
 import me.own.learn.chat.service.ChatMsgService;
 import me.own.learn.chat.service.ChatRoomService;
 import me.own.learn.chat.service.ChatUserService;
+import me.own.learn.chat.model.Channel;
 import me.own.learn.chat.vo.ChatUserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +18,11 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author: yexudong
@@ -42,9 +46,8 @@ public class WebsocketServer {
 
     private String username;
 
-    private Long userId;
 
-    private static CopyOnWriteArraySet<WebsocketServer> webSockets = new CopyOnWriteArraySet<>();
+    private static ConcurrentHashMap<Long, WebsocketServer> webSockets = new ConcurrentHashMap<Long, WebsocketServer>();
 
     private static Map<String, Long> map = new HashMap<>();
 
@@ -56,15 +59,24 @@ public class WebsocketServer {
     @OnOpen
     public void onOpen(@PathParam(value = "userId") Long userId, Session session) throws JsonProcessingException {
         this.session = session;
-        this.userId = userId;
-        webSockets.add(this);
+        webSockets.put(userId, this);
         ChatUserVo chatUserVo = chatUserService.getById(userId);
         username = chatUserVo.getName();
         map.put(session.getId(), userId);
         String content = username + "进入聊天室！";
         System.out.println("有新的连接，总数：" + webSockets.size() + "  sessionId：" + session.getId() + "  用户" + username);
         MessageModel messageModel = new MessageModel(content, map);
-        sendMsg(messageModel.toJson());
+
+        sendAll(messageModel.toJson());
+
+        refreshChannels(userId);
+    }
+
+    private void refreshChannels(long userId) throws JsonProcessingException {
+        List<ChannelModel> channelVos = chatMsgService.getChatListByUserId(userId);
+        String channels = new ObjectMapper().writeValueAsString(channelVos);
+        MessageModel messageModel = new MessageModel(channels, map);
+        sendAll(messageModel.toJson());
     }
 
     /**
@@ -75,41 +87,52 @@ public class WebsocketServer {
      */
     @OnMessage
     public void onMessage(String message) throws IOException {
-
         ContentModel contentModel = mapper.readValue(message, ContentModel.class);
-
-        //tos size > 1 群聊
-        if (contentModel.getTo() == null) {
-            MessageModel messageModel = new MessageModel();
-            messageModel.setContent(contentModel.getContent());
-            messageModel.setUserIds(map);
-            sendMsg(messageModel.toJson());
-        } else {//单聊
-            MessageModel messageModel = new MessageModel();
-            messageModel.setContent(contentModel.getContent());
-            messageModel.setUserIds(map);
-            for (WebsocketServer webSocket : webSockets) {
-                if (webSocket.userId == contentModel.getTo().longValue() && webSocket.session.getId() != this.session.getId()) {
-                    try {
-                        webSocket.session.getBasicRemote().sendText(messageModel.toJson());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        String content = contentModel.getContent();
+        Long from = contentModel.getFrom();
+        List<Long> tos = contentModel.getTos();
+        MessageModel msg = new MessageModel();
+        switch (contentModel.getType()) {
+            //text
+            case 1:
+                LOGGER.info("send text {}", content);
+            case 2:
+                LOGGER.info("send image url {}", content);
+            case 3:
+                LOGGER.info("send video url {}", content);
+            case 4:
+                LOGGER.info("send channel list {}", content);
+                msg.setUserIds(map);
+                msg.setContent(content);
+                //群聊
+                if (tos.size() == 0) {
+                    tos = new ArrayList<>(webSockets.keySet());
+                    sendAll(msg.toJson());
+                } else {//单聊
+                    tos.add(from);
+                    sendOne(msg.toJson(), tos.get(0));
                 }
-            }
+                contentModel.setTos(tos);
+                chatMsgService.save(contentModel);
         }
-
     }
 
-    public void sendMsg(String content) {
-        for (WebsocketServer webSocket : webSockets) {
+    private void sendAll(String content) {
+        for (Long aLong : webSockets.keySet()) {
             try {
-                webSocket.session.getBasicRemote().sendText(content);
+                webSockets.get(aLong).session.getBasicRemote().sendText(content);
             } catch (IOException e) {
                 LOGGER.error(e.getMessage());
             }
         }
+    }
 
+    public void sendOne(String content, Long to) {
+        try {
+            webSockets.get(to).session.getBasicRemote().sendText(content);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 
     /**
@@ -124,7 +147,7 @@ public class WebsocketServer {
         System.out.println("有新的断开，总数：" + webSockets.size() + "  sessionId：" + session.getId());
         String content = username + "离开了聊天室！";
         MessageModel message = new MessageModel(content, map);
-        sendMsg(message.toJson());
+        sendAll(message.toJson());
     }
 
     /**
