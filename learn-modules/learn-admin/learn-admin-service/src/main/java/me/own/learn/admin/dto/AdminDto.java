@@ -13,6 +13,7 @@ public class AdminDto {
     private String cellphone;
     private String email;
     private Long roleId;
+    private Long chatUserId;
 
     public Long getId() {
         return id;
@@ -68,5 +69,13 @@ public class AdminDto {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public Long getChatUserId() {
+        return chatUserId;
+    }
+
+    public void setChatUserId(Long chatUserId) {
+        this.chatUserId = chatUserId;
     }
 }

@@ -128,6 +128,9 @@ public class AdminServiceImpl implements AdminService {
             }
             admin.setName(adminDto.getName());
         }
+        if (adminDto.getChatUserId() != null) {
+            admin.setChatUserId(adminDto.getChatUserId());
+        }
         admin.setModifyTime(new Date());
         adminDao.update(admin);
         return Mapper.Default().map(admin, AdminVo.class);

@@ -21,6 +21,7 @@ public class AdminVo {
     private Boolean deleted;
     private Long roleId;
     private String roleName;
+    private Long chatUserId;
 
     public Long getId() {
         return id;
@@ -108,5 +109,13 @@ public class AdminVo {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Long getChatUserId() {
+        return chatUserId;
+    }
+
+    public void setChatUserId(Long chatUserId) {
+        this.chatUserId = chatUserId;
     }
 }

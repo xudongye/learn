@@ -37,6 +37,8 @@ public class Customer implements Serializable {
     private Long pubAccountId;
     private String sourceAgentId;
 
+    private Long chatUserId;
+
     public Long getId() {
         return id;
     }
@@ -187,5 +189,13 @@ public class Customer implements Serializable {
 
     public void setSourceAgentId(String sourceAgentId) {
         this.sourceAgentId = sourceAgentId;
+    }
+
+    public Long getChatUserId() {
+        return chatUserId;
+    }
+
+    public void setChatUserId(Long chatUserId) {
+        this.chatUserId = chatUserId;
     }
 }

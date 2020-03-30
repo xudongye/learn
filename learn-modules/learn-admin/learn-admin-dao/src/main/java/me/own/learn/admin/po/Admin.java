@@ -27,6 +27,8 @@ public class Admin implements Serializable {
     private Boolean deleted;
     private Long roleId;
 
+    private Long chatUserId;
+
     public Long getId() {
         return id;
     }
@@ -105,5 +107,13 @@ public class Admin implements Serializable {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public Long getChatUserId() {
+        return chatUserId;
+    }
+
+    public void setChatUserId(Long chatUserId) {
+        this.chatUserId = chatUserId;
     }
 }
